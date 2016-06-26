@@ -1,0 +1,108 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="UserInterface_MasterPage" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+     <meta http-equiv ="Page-Enter" content ="blendTrans(Duration=0)"/>
+ 
+<meta http-equiv="Page-Exit"content="blendTrans(Duration=0)"/>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../css/style.css" rel="stylesheet" />
+    <script src="../js/jquery.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+
+       
+
+        $(document).ready(function () {
+            // Highlights selected menu item.
+          //  $("ul li").click(function (e) {
+          //     $(this).parent().children().removeClass("active");
+          //     $(this).addClass("active");
+          ////  e.preventDefault()
+          //      });
+
+            $("ul li").click(function (e) {
+               
+              //  document.getElementById('hiddenField').value = $(this).attr("ID");
+             //   $('#hiddenField').val = $(this).attr("ID");
+                //   var v = (this).Attr("ID");
+                window.open("lesson.aspx?ID=" + $(this).attr("id"));
+              //  $(this).parent().children().removeClass("active");
+              //  $(this).addClass("active");
+
+            });
+
+            //$("#navSideMenu a").click(function (e) {
+            //    e.preventDefault();
+            //    $(this).tab("show");
+            //});
+
+            //$("ul.nav-stacked > li > a").on("show.bs.tab", function (e) {
+            //    var id = $(e.target).attr("href").substr(1);
+            //    window.location.hash = id;
+            //});
+
+            //var hash = window.location.hash;
+            //$('#navSideMenu a[href="' + hash + '"]').tab('show');
+
+            //$('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
+            //    localStorage.setItem('activeTab', $(e.target).attr('href'));
+            //});
+            //var activeTab = localStorage.getItem('activeTab');
+            //if (activeTab) {
+            //    $('#myTab a[href="' + activeTab + '"]').tab('show');
+            //}
+        });
+    </script>
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+        <div id="master-content">
+            <form id="form1" runat="server" >
+
+                <asp:ScriptManager ID="ScriptManager1" runat="server" >
+                </asp:ScriptManager>
+                
+
+            <!-- Navigation bar using bootstrap style-->
+            <div class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="#">The SQL Learning Platform</a>
+                    </div>
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="~/Default.aspx">Home</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <asp:Label ID="lblLogged" runat="server" CssClass="navbar-text"></asp:Label></li>
+                        <li>
+                            <asp:Button ID="btnSignOut" runat="server" CssClass="btn btn-default navbar-btn" Text="Sign out" OnClick="btnSignOut_Click"/></li>
+                    </ul>
+                </div>
+            </div>
+          
+                 <!-- Side menu -->
+            <div id="masterSideMenu">
+                <h3 style="margin:0px; height:50px;">
+                   <asp:Label ID="lblSideMenuTitle" runat="server" CssClass="page-header no-margin"  Text="SQL Lessons"></asp:Label>
+                </h3>
+                <ul class="nav nav-pills nav-stacked" id="navSideMenu" runat="server" style="width: 100%">
+                   
+                </ul>               
+            </div>
+
+                  <!-- Page Container -->
+                <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                
+                </asp:ContentPlaceHolder>                     
+                </form>
+        </div>
+    
+</body>
+</html>

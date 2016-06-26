@@ -1,0 +1,197 @@
+﻿.main
+ {
+     width:730px;
+    height:550px;
+}
+
+.main-login
+{
+width:730px;
+    height:400px;
+}
+
+.form-center {
+    position: absolute;
+    top: 50%;
+    bottom: 50%;
+    left: 50%;
+    right: 50%;
+    margin-top: -250px;
+    margin-left: -140px;
+}
+
+.message-center
+{
+    width:100%;
+    position:absolute;
+    left:50%;
+    right:50%;
+    margin-top: -250px;
+    margin-left: -140px;
+}
+
+.medium
+{
+    width:275px;
+  height:500px;
+}
+
+.text-align{
+
+    vertical-align:middle;
+}
+
+.underline
+{
+    
+  width: 100%; 
+  background-color: black; 
+  height: 1px; 
+  float: left; 
+
+}
+
+.right-align
+{
+    position:absolute;
+    right:0px;
+}
+
+.login-dimension
+{
+    height:500px;
+    width:500px;
+}
+
+#master-content
+{
+    margin-left:10px;
+    margin-right:10px;
+    height:1000px;
+    width:100%;
+}
+
+#lesson-content
+{
+    margin-left:10px;
+    margin-right:10px;
+    height:1000px;
+    width:80%;
+    right:0px;
+    position:absolute;
+}
+
+body
+{
+   height:100%;
+}
+
+html
+{
+    height:100%;
+}
+
+.no-margin{
+    margin:0px;
+}
+
+#masterPageContent
+{
+    width:800px;
+}
+
+#masterSideMenu
+{
+   width:14%;
+   float:left;
+   height:100%;
+   border-right:solid;
+   border-bottom-color:black;
+   border-width:2px;
+   text-align:center;
+}
+
+#defaultContent
+{
+    width:80%;
+    height:100%;
+    position:absolute;
+    left:20%;  
+}
+
+#lesson-nav
+{
+    width:14%;
+    height:100%;
+    position:absolute;
+    left:0px;
+    border-right:solid;
+   border-bottom-color:black;
+   border-width:2px;
+   text-align:center;
+}
+
+.error-message
+{
+    width:80%;
+    height: 50px;
+    position:absolute;
+    top:50%;
+    color:red;
+    font-family:Arial;
+    text-align:center;
+    font-size:x-large;
+}
+
+#page-lesson
+{
+    
+    margin-left:10px;
+    margin-right:10px;
+    height:1000px;
+    width:100%;
+}
+
+#page-topic
+{
+    position:relative;
+    margin-left:10px;
+    margin-right:10px;
+    height:1000px;
+    width:100%;
+}
+
+#topic-body
+{
+    position:absolute;
+    width:inherit;
+    height:auto;
+    margin-top:20px;
+}
+
+.topic-info
+{
+    display:block;
+    width:inherit;
+    height:auto;
+    margin-left:50px;
+    margin-top:20px;
+    margin-bottom:20px;
+}
+
+.video-holder
+{
+    display:block;
+    width:inherit;
+    height:500px;
+
+}
+
+.video
+{ 
+    display:block;
+    width:700px;
+    height:450px;  
+    margin-left:auto;
+    margin-right:auto; 
+}
