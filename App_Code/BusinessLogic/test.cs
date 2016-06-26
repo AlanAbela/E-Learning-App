@@ -4,11 +4,11 @@ using System.Linq;
 using System.Web;
 
 /// <summary>
-/// Summary description for Test
+/// Summary description for test
 /// </summary>
-public class Test
+public class test
 {
-    public Test()
+    public test()
     {
         //
         // TODO: Add constructor logic here
