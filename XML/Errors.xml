@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Content>
-<Error id="1" desc="Invalid Lesson ID."> 
-</Error>
+<Error id="1" desc="Invalid Lesson ID."> </Error>
+  <Error id="2" desc="Invalid Lesson ID."></Error>
 </Content>

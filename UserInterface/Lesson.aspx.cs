@@ -28,6 +28,7 @@ public partial class UserInterface_Lesson : System.Web.UI.Page
             {
               
                     Validation();
+
                     LessonID = Convert.ToInt32(Request.QueryString["ID"]);
                     BindNavMenu(LessonID);
 
