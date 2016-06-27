@@ -16,6 +16,10 @@
     <script type="text/javascript">
 
        
+        function homeRedirect()
+        {
+            window.open("Default.aspx", "_self");
+        }
 
         $(document).ready(function () {
             // Highlights selected menu item.
@@ -25,16 +29,16 @@
           ////  e.preventDefault()
           //      });
 
-            $("ul li").click(function (e) {
+         //   $("ul li").click(function (e) {
                
               //  document.getElementById('hiddenField').value = $(this).attr("ID");
              //   $('#hiddenField').val = $(this).attr("ID");
                 //   var v = (this).Attr("ID");
-                window.open("lesson.aspx?ID=" + $(this).attr("id"));
+               // window.open("lesson.aspx?ID=" + $(this).attr("id"));
               //  $(this).parent().children().removeClass("active");
               //  $(this).addClass("active");
 
-            });
+         //   });
 
             //$("#navSideMenu a").click(function (e) {
             //    e.preventDefault();
@@ -76,7 +80,7 @@
                         <a class="navbar-brand" href="#">The SQL Learning Platform</a>
                     </div>
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="~/Default.aspx">Home</a></li>
+                            <li class="active"><a href="#" onclick="homeRedirect()">Home</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li>
@@ -87,15 +91,7 @@
                 </div>
             </div>
           
-                 <!-- Side menu -->
-            <div id="masterSideMenu">
-                <h3 style="margin:0px; height:50px;">
-                   <asp:Label ID="lblSideMenuTitle" runat="server" CssClass="page-header no-margin"  Text="SQL Lessons"></asp:Label>
-                </h3>
-                <ul class="nav nav-pills nav-stacked" id="navSideMenu" runat="server" style="width: 100%">
-                   
-                </ul>               
-            </div>
+            
 
                   <!-- Page Container -->
                 <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">

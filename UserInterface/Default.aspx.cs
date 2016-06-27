@@ -19,11 +19,13 @@ public partial class UserInterface_Default : System.Web.UI.Page
         }
         else
         {
-                lblTitle.Text = "Welcome to SQL Learning Platform";                   
+                lblTitle.Text = "Welcome to SQL Learning Platform";
+
+                BindSideMenu();                
         }
     }
 
-      //private void MenuItemSelect(string selection)
+    //private void MenuItemSelect(string selection)
     //{
     //    foreach (Control control in navSideMenu.Controls)
 
@@ -36,7 +38,7 @@ public partial class UserInterface_Default : System.Web.UI.Page
 
     //            StringWriter stringWriter = new StringWriter();
     //            HtmlTextWriter textWriter = new HtmlTextWriter(stringWriter);
-                
+
     //            genericControl.RenderControl(textWriter);
 
     //            string value = stringWriter.GetStringBuilder().ToString();
@@ -49,8 +51,35 @@ public partial class UserInterface_Default : System.Web.UI.Page
     //    }
     //}
 
-    protected void btnLink_Click (object sender, EventArgs e)
+    private void BindSideMenu()
     {
+        try
+        {
+            LessonBL lesson = new LessonBL();
+            DataTable table = lesson.GetLessons();
 
+            if (table.Rows.Count > 0)
+            {
+                foreach (DataRow dr in table.Rows)
+                {
+                    HtmlGenericControl listItem = new HtmlGenericControl("li");
+                    //  listItem.Attributes.Add("id", dr["ID"].ToString());
+                    string ID = dr["ID"].ToString();
+
+                    LinkButton linkB = new LinkButton();
+                    linkB.Text = dr[1].ToString();
+                    linkB.Attributes.Add("runat", "server");
+                    linkB.Attributes.Add("onclick", "lessonRedirect("+ ID + ")");
+                    listItem.Controls.Add(linkB);
+
+                    navSideMenu.Controls.Add(listItem);
+                }
+            }
+
+        }
+        catch (SqlException ex)
+        {
+
+        }
     }
 }

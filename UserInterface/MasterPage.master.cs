@@ -26,8 +26,6 @@ public partial class UserInterface_MasterPage : System.Web.UI.MasterPage
             {
                 lblLogged.Text = "Loggen in as " + table.Rows[0].Field<string>("Username");
             }
-
-            BindSideMenu();
         }
     }
 
@@ -39,39 +37,6 @@ public partial class UserInterface_MasterPage : System.Web.UI.MasterPage
 
     #endregion
 
-    #region Private methods
-
-    private void BindSideMenu()
-    {
-        try
-        {
-            LessonBL lesson = new LessonBL();
-            DataTable table = lesson.GetLessons();
-
-            if (table.Rows.Count > 0)
-            {
-                foreach (DataRow dr in table.Rows)
-                {
-                    HtmlGenericControl listItem = new HtmlGenericControl("li");
-                    listItem.Attributes.Add("id", dr["ID"].ToString());
-
-                    LinkButton linkB = new LinkButton();
-                    linkB.Text = dr[1].ToString();
-                    linkB.Attributes.Add("runat", "server");
-                    listItem.Controls.Add(linkB);
-
-                    navSideMenu.Controls.Add(listItem);
-                }
-            }
-
-        }
-        catch (SqlException ex)
-        {
-
-        }
-    }
-
-    #endregion
 
 
 }

@@ -1,27 +1,26 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Lesson.aspx.cs" Inherits="UserInterface_Lesson" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/UserInterface/MasterPage.master" AutoEventWireup="true" CodeFile="Lesson.aspx.cs" Inherits="UserInterface_Lesson" %>
 
-<!DOCTYPE html>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title></title>
-    <link href="../css/bootstrap.min.css" rel="stylesheet" />
-    <link href="../css/style.css" rel="stylesheet" />
-    <script src="../js/jquery.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
     <script type="text/javascript">
 
+        function topicRedirect(id)
+        {
+            window.open("topic.aspx?ID="+id);
+        }
+
+
         $(document).ready(function () {
-            $("ul li").click(function (e) {
-                window.location.replace("topic.aspx?ID=" + $(this).attr("id"), "_self");
-                return false;
-            });
+            //$("ul li").click(function (e) {
+            //    window.location.replace("topic.aspx?ID=" + $(this).attr("id"), "_self");
+            //    return false;
+            //});
         });
 
     </script>
-</head>
-<body>
-    <form id="form1" runat="server">
+
         <div id="page-lesson">
             <!-- Page Header -->
             <div class="page-header" style="width: 100%; text-align: center;">
@@ -45,6 +44,4 @@
                 </div>
             </div>
         </div>
-    </form>
-</body>
-</html>
+ </asp:Content>

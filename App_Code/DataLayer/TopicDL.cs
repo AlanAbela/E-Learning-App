@@ -25,17 +25,39 @@ public class TopicDL
     /// </summary>
     /// <param name="ID"></param>
     /// <returns></returns>
-    public DataTable GetTopicDLsByLessonID(int ID)
+    public DataTable GetTopicsDLsByLessonID(int lessonID)
     {
         using (connection)
         {
             SqlCommand command = new SqlCommand("GetAllTopicsByLessonID", connection);
             command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.AddWithValue("@lessonID", ID);
+            command.Parameters.AddWithValue("@lessonID", lessonID);
 
             connection.Open();
 
           SqlDataReader reader =  command.ExecuteReader();
+            table.Load(reader);
+
+            return table;
+        }
+    }
+
+    /// <summary>
+    /// Retrieves a record from the topic table by its ID.
+    /// </summary>
+    /// <param name="topicID"></param>
+    /// <returns></returns>
+    public DataTable GetTopicByID(int topicID)
+    {
+        using (connection)
+        {
+            SqlCommand command= new SqlCommand("GetTopicByID", connection);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@topicID", topicID);
+
+            connection.Open();
+
+            SqlDataReader reader = command.ExecuteReader();
             table.Load(reader);
 
             return table;

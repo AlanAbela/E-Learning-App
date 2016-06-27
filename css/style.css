@@ -71,15 +71,7 @@ width:730px;
     width:100%;
 }
 
-#lesson-content
-{
-    margin-left:10px;
-    margin-right:10px;
-    height:1000px;
-    width:80%;
-    right:0px;
-    position:absolute;
-}
+
 
 body
 {
@@ -100,23 +92,24 @@ html
     width:800px;
 }
 
-#masterSideMenu
-{
-   width:14%;
-   float:left;
-   height:100%;
-   border-right:solid;
-   border-bottom-color:black;
-   border-width:2px;
-   text-align:center;
-}
+
 
 #defaultContent
 {
     width:80%;
     height:100%;
     position:absolute;
-    left:20%;  
+    left:10px;  
+}
+
+#lesson-content
+{
+    margin-left:10px;
+    margin-right:10px;
+    height:1000px;
+    width:80%;
+    right:0px;
+    position:absolute;
 }
 
 #lesson-nav
@@ -194,4 +187,27 @@ html
     height:450px;  
     margin-left:auto;
     margin-right:auto; 
+}
+
+#masterSideMenu
+{
+   width:14%;
+   float:left;
+   height:100%;
+   border-right:solid;
+   border-bottom-color:black;
+   border-width:2px;
+   text-align:center;
+   position:relative;
+}
+
+#page-default
+{
+    position:absolute;
+    margin-left : 20px;
+    margin-right : 20px;
+    width:80%;
+    height:inherit;
+    right:0px;
+    
 }

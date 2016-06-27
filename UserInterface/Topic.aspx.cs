@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -26,6 +27,8 @@ public partial class UserInterface_Topic : System.Web.UI.Page
             Validation();
 
              TopicID = Convert.ToInt32(Request.QueryString["ID"]);
+
+            BindData(TopicID);
         }
 
         // videoSource.Src = "http://www.youtube.com/embed/bijF5_18O6I?autoplay=0";
@@ -59,5 +62,25 @@ public partial class UserInterface_Topic : System.Web.UI.Page
         }
     }
 
+
+    /// <summary>
+    /// Binds topic title and topic description.
+    /// </summary>
+    /// <param name="topicID"></param>
+    private void BindData(int topicID)
+    {
+        try
+        {
+            TopicBL topicBL = new TopicBL();
+            DataTable table = topicBL.GetTopicByID(topicID);
+
+            lblLessonTitle.Text = table.Rows[0].Field<string>("Title");
+            lblTopicText.Text = table.Rows[0].Field<string>("Text");
+        }
+        catch(Exception ex)
+        {
+
+        }
+    }
     #endregion
 }

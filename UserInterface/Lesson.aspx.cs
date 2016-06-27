@@ -64,11 +64,11 @@ public partial class UserInterface_Lesson : System.Web.UI.Page
             foreach (DataRow row in lessonTopics.Rows)
             {
                 HtmlGenericControl listItemTitle = new HtmlGenericControl("li");
-                listItemTitle.Attributes.Add("id",row.Field<int>("ID").ToString());
                 
                 LinkButton linkButton = new LinkButton();
                 linkButton.Text = row.Field<string>("Title").ToString();
                 linkButton.Attributes.Add("runat", "server");
+                linkButton.Attributes.Add("onclick", "topicRedirect("+ row.Field<int>("ID").ToString() + ")");
                 listItemTitle.Controls.Add(linkButton);
 
                 navSideMenu.Controls.Add(listItemTitle);

@@ -24,6 +24,17 @@ public class TopicBL
     public DataTable GetTopicsByLessonID(int ID)
     {
         TopicDL topicDL = new TopicDL();
-        return topicDL.GetTopicDLsByLessonID(ID);
+        return topicDL.GetTopicsDLsByLessonID(ID);
+    }
+
+    /// <summary>
+    /// Retrieves a topic record by ID>
+    /// </summary>
+    /// <param name="topicID"></param>
+    /// <returns></returns>
+    public DataTable GetTopicByID(int topicID)
+    {
+        TopicDL topicDL = new TopicDL();
+        return topicDL.GetTopicByID(topicID);
     }
 }
