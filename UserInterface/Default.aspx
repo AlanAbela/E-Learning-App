@@ -8,13 +8,15 @@
 
         function lessonRedirect(id)
         {
+            window.opener = self;
+            window.close();
             window.open("lesson.aspx?ID=" + id);
         }
 
     </script>
      
   <div id="defaultContent">
-    <div class ="page-header" style="width:100%; text-align:center;">
+    <div class ="page-header" style="width:100%; text-align:center; margin-right:auto; margin-left:auto;">
      <h1><asp:Label ID="lblTitle" runat="server"></asp:Label></h1>
     </div>
       

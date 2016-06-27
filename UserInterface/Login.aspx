@@ -63,10 +63,13 @@
             <asp:TextBox ID="txtPassword" runat="server" placeholder="Password" TextMode="Password" CssClass="form-control"></asp:TextBox>
         </div>
         <br />
-        <div class="right-align">
+        <div class="left-align" style="float:left;">
             <asp:Button ID="btnLogin" runat="server" Text="Login" OnClick="btnLogin_Click" CssClass="btn btn-primary"/>
         </div>
-      </div>
+        <div style="text-align:right;">
+        <asp:Label runat="server" Text="create account?" Font-Size="Small"><a href="Register.aspx">create account?</a></asp:Label>
+        </div>
+        </div>
      </div>
          <div style="width:100%; text-align:center; display:inline-block;">
             <asp:CustomValidator ID="valForm" runat="server" OnServerValidate="valForm_ServerValidate" ClientValidationFunction="ValidateForm" CssClass="alert alert-danger" Display="Dynamic"></asp:CustomValidator>

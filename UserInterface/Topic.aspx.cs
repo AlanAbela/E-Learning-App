@@ -10,7 +10,8 @@ public partial class UserInterface_Topic : System.Web.UI.Page
 {
 
     #region Properties
-    private int TopicID { get; set; }
+    public int TopicID { get; set; }
+    public int LessonID { get; set; }
     #endregion
 
     #region Events
@@ -23,12 +24,20 @@ public partial class UserInterface_Topic : System.Web.UI.Page
         }
         else
         {
-            // Validate Query string value.
-            Validation();
+            try
+            {
+                // Validate Query string value.
+                Validation();
 
-             TopicID = Convert.ToInt32(Request.QueryString["ID"]);
+                TopicID = Convert.ToInt32(Request.QueryString["ID"]);
+                LessonID = Convert.ToInt32(Request.QueryString["lessonid"]);
 
-            BindData(TopicID);
+                BindData(TopicID);
+            }
+            catch(Exception)
+            {
+
+            }
         }
 
         // videoSource.Src = "http://www.youtube.com/embed/bijF5_18O6I?autoplay=0";
@@ -52,6 +61,16 @@ public partial class UserInterface_Topic : System.Web.UI.Page
         }
 
         if (!int.TryParse(Request.QueryString["ID"], out output))
+        {
+            valid = false;
+        }
+
+        if (Request.QueryString["lessonid"] == null)
+        {
+            valid = false;
+        }
+
+        if(!int.TryParse(Request.QueryString["lessonid"], out output))
         {
             valid = false;
         }

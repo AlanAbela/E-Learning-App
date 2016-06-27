@@ -4,8 +4,18 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 
+    <script type="text/javascript">
+        function backClick(id)
+        {
+            window.opener = self;
+            window.close();
+            window.open("lesson.aspx?ID=" + <%= LessonID.ToString() %>);
+        }
+    </script>
+
         <div id="page-topic">
             <!-- Page Header -->
+            <div style="float:left;"><asp:Button ID="btnBack" CssClass="btn btn-default" runat="server" Text="Back" OnClientClick="backClick()"/></div>
             <div class="page-header" style="width: 100%; text-align: center;">
                 <h1>
                     <asp:Label ID="lblLessonTitle" runat="server" Text="Header test"></asp:Label>

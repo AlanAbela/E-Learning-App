@@ -12,7 +12,7 @@ public partial class UserInterface_Lesson : System.Web.UI.Page
 {
 
     #region Properties
-    private int LessonID { get; set; }
+    public int LessonID { get; set; }
     #endregion
 
     protected void Page_Load(object sender, EventArgs e)

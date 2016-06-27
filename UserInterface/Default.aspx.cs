@@ -20,8 +20,10 @@ public partial class UserInterface_Default : System.Web.UI.Page
         else
         {
                 lblTitle.Text = "Welcome to SQL Learning Platform";
-
-                BindSideMenu();                
+        if (!IsPostBack)
+            
+                BindSideMenu();
+                     
         }
     }
 
