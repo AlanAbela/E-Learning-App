@@ -63,4 +63,24 @@ public class TopicDL
             return table;
         }
     }
+
+    /// <summary>
+    /// Retrieves all recrods from table Employee.
+    /// </summary>
+    /// <returns></returns>
+    public DataTable GetExampleTable()
+    {
+        using (connection)
+        {
+            SqlCommand command = new SqlCommand("SEDB_GetAllEmployees", connection);
+            command.CommandType = CommandType.StoredProcedure;
+
+            connection.Open();
+
+            SqlDataReader reader = command.ExecuteReader();
+            table.Load(reader);
+
+            return table;
+        }
+    }
 }

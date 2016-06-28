@@ -32,6 +32,11 @@ public partial class UserInterface_Topic : System.Web.UI.Page
                 TopicID = Convert.ToInt32(Request.QueryString["ID"]);
                 LessonID = Convert.ToInt32(Request.QueryString["lessonid"]);
 
+                // hide video
+           //     pnlShowVideo.Attributes.Add("style","display:none");
+
+                videoSource.Src = "http://www.youtube.com/embed/bijF5_18O6I?autoplay=0";
+
                 BindData(TopicID);
             }
             catch(Exception)
@@ -40,8 +45,7 @@ public partial class UserInterface_Topic : System.Web.UI.Page
             }
         }
 
-        // videoSource.Src = "http://www.youtube.com/embed/bijF5_18O6I?autoplay=0";
-
+        
     }
 
     #endregion
@@ -101,5 +105,13 @@ public partial class UserInterface_Topic : System.Web.UI.Page
 
         }
     }
+
     #endregion
+
+    protected void gvTableExample_Load(object sender, EventArgs e)
+    {
+        TopicBL topicBL = new TopicBL();
+        gvTableExample.DataSource = topicBL.GetExampleTabel();
+        gvTableExample.DataBind();
+    }
 }

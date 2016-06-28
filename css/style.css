@@ -156,7 +156,7 @@ html
 
 #topic-body
 {
-    position:absolute;
+    position:relative;
     width:inherit;
     height:auto;
     margin-top:20px;
@@ -165,11 +165,14 @@ html
 .topic-info
 {
     display:block;
-    width:inherit;
+    width:696px;
     height:auto;
-    margin-left:50px;
+    text-align:left;
     margin-top:20px;
     margin-bottom:20px;
+    margin-left:auto;
+    margin-right:auto;
+   
 }
 
 .video-holder
@@ -209,5 +212,19 @@ html
     width:80%;
     height:inherit;
     right:0px;
+    
+}
+
+.table-holder
+{
+    width:696px;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.spacer
+{
+    height:20px;
+    width:auto;
     
 }

@@ -9,11 +9,13 @@ using System.Web;
 /// </summary>
 public class TopicBL
 {
+    #region Properties
+    TopicDL topicDL {get; set;}
+    #endregion
+
     public TopicBL()
     {
-        //
-        // TODO: Add constructor logic here
-        //
+        topicDL = new TopicDL();
     }
 
     /// <summary>
@@ -23,7 +25,6 @@ public class TopicBL
     /// <returns></returns>
     public DataTable GetTopicsByLessonID(int ID)
     {
-        TopicDL topicDL = new TopicDL();
         return topicDL.GetTopicsDLsByLessonID(ID);
     }
 
@@ -34,7 +35,15 @@ public class TopicBL
     /// <returns></returns>
     public DataTable GetTopicByID(int topicID)
     {
-        TopicDL topicDL = new TopicDL();
         return topicDL.GetTopicByID(topicID);
+    }
+
+    /// <summary>
+    /// Retrieve all records from the example table.
+    /// </summary>
+    /// <returns></returns>
+    public DataTable GetExampleTabel()
+    {
+        return topicDL.GetExampleTable();
     }
 }
