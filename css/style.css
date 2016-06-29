@@ -228,3 +228,19 @@ html
     width:auto;
     
 }
+
+#myModal
+{
+    position:fixed;
+  top:25%;
+}
+
+.left-align
+{
+    text-align:right;
+}
+
+.label-no-top-margin
+{
+    margin-top:0px;
+}

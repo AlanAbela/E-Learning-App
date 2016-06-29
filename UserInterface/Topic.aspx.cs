@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -32,20 +33,50 @@ public partial class UserInterface_Topic : System.Web.UI.Page
                 TopicID = Convert.ToInt32(Request.QueryString["ID"]);
                 LessonID = Convert.ToInt32(Request.QueryString["lessonid"]);
 
-                // hide video
-           //     pnlShowVideo.Attributes.Add("style","display:none");
-
                 videoSource.Src = "http://www.youtube.com/embed/bijF5_18O6I?autoplay=0";
 
                 BindData(TopicID);
+
             }
             catch(Exception)
             {
 
             }
-        }
+        }     
+    }
 
-        
+
+    protected void gvTableExample_Load(object sender, EventArgs e)
+    {
+        TopicBL topicBL = new TopicBL();
+        DataTable table = topicBL.GetExampleTabel();
+        gvTableExample.DataSource = table;
+        gvTableExample.DataBind();
+    }
+
+
+    /// <summary>
+    /// Called on submit button click.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void btnSubmit_Click(object sender, EventArgs e)
+    {
+        try
+        {
+            TopicBL topicBL = new TopicBL();
+            DataTable topic = topicBL.GetTopicByID(TopicID);
+        }
+        catch (SqlException ex)
+        {
+
+        }
+    }
+
+
+    protected void btnClose_Click(object sender, EventArgs e)
+    {
+        txtTryItOut.Text = string.Empty;
     }
 
     #endregion
@@ -108,10 +139,4 @@ public partial class UserInterface_Topic : System.Web.UI.Page
 
     #endregion
 
-    protected void gvTableExample_Load(object sender, EventArgs e)
-    {
-        TopicBL topicBL = new TopicBL();
-        gvTableExample.DataSource = topicBL.GetExampleTabel();
-        gvTableExample.DataBind();
-    }
 }

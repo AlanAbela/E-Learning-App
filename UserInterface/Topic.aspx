@@ -20,20 +20,24 @@
             window.open("lesson.aspx?ID=" + <%= LessonID.ToString() %>);
         }
 
+        // If video panel is hidden slide down. If it is visible slide up.
         function showVideo()
         {
   
             if($("#pnlShowVideo").is(":hidden"))
             {
                 $("#pnlShowVideo").slideDown("slow");
+                $('#btnShowVideo').val("Hide Video Demo");
             }
             else
             {
                 $("#pnlShowVideo").slideUp("slow");
+                $('#btnShowVideo').val("Show Video Demo");
             }
 
             return false;
         }
+
     </script>
 
         <div id="page-topic">
@@ -52,7 +56,9 @@
                 <div class="table-holder">
                     <asp:GridView ID="gvTableExample" runat="server" CssClass="table table-striped" OnLoad="gvTableExample_Load"></asp:GridView>
                 </div>
-              <div style="text-align:center;"><asp:Button ID="btnShowVideo" runat="server" CssClass="btn-default btn-info" Width="200px" Height="50px" Text="Show Video Demo" Font-Bold="true" OnClientClick="showVideo(); return false;" /></div>
+                <div style="text-align: center;">
+                    <asp:Button ID="btnShowVideo" ClientIDMode="Static" runat="server" CssClass="btn-default btn-info" Width="200px" Height="50px" Text="Show Video Demo" Font-Bold="true" OnClientClick="showVideo(); return false;" />
+                </div>
                 <asp:Panel ID="pnlShowVideo" runat="server" ClientIDMode="Static">
                     <div class="video-holder">
                         <div class="spacer"></div>
@@ -60,6 +66,61 @@
                     </div>
                 </asp:Panel>
             </div>
+            <!-- Modal window code (source w3school.com) -->
+            <div class="spacer" ></div>
+            <!-- button to open modal window -->
+            <div style="text-align: center; text-align:center">
+                <button style="width:200px; height:50px;" type="button" class="btn-default btn-info" data-toggle="modal" data-backdrop="static" data-target="#myModal" data-keyboard="false">Try it out</button>
+            </div>
+            <!-- modal window -->
+            <div id="myModal" class="modal fade">
+                <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Try it out</h4>
+            </div>
+            <div class="modal-body">
+                <asp:UpdatePanel ID="upModalText" runat="server" ChildrenAsTriggers="false" UpdateMode="Conditional">
+                    <ContentTemplate>
+                        <asp:TextBox ID="txtTryItOut" runat="server" CssClass="form-control" TextMode="MultiLine" AutoPostBack="true"></asp:TextBox>
+                    </ContentTemplate>
+                    <Triggers>
+                        <asp:AsyncPostBackTrigger ControlID="btnSubmit"/>
+                    </Triggers>
+                </asp:UpdatePanel>
+            </div>
+            <div class="modal-footer">
+                <div style="text-align: left; width: 50%; float: left;">
+                    <h3 class="label-no-top-margin">
+                        <asp:UpdatePanel ID="upModalLabel" runat="server" ChildrenAsTriggers="false" UpdateMode="Conditional">
+                            <ContentTemplate>
+                                <asp:Label ID="lblResult" CssClass="label label-success" runat="server" Visible="false"></asp:Label>
+                            </ContentTemplate>
+                            <Triggers>
+                                <asp:AsyncPostBackTrigger ControlID="btnSubmit" />
+                            </Triggers>
+                        </asp:UpdatePanel>
+                    </h3>
+                </div>
+               <%-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--%>
+                <asp:Button ID="btnClose" runat="server" CssClass="btn btn-default" Text="close" OnClick="btnClose_Click"></asp:Button>
+                <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-primary" Text="Go" ClientIDMode="Static" OnClick="btnSubmit_Click"></asp:Button>
+                <h3 style="text-align:left;">Result</h3>
+                <div class="table-holder" style="width: 100%;">
+                    <asp:UpdatePanel ID="upModalTable" runat="server" ChildrenAsTriggers="false" UpdateMode="Conditional">
+                        <ContentTemplate>
+                            <asp:GridView ID="gvResultTable" runat="server" CssClass="table table-striped"></asp:GridView>
+                        </ContentTemplate>
+                        <Triggers>
+                            <asp:AsyncPostBackTrigger ControlID="btnSubmit" />
+                        </Triggers>
+                    </asp:UpdatePanel>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
         </div>
 
     </asp:Content>
