@@ -11,7 +11,7 @@ using System.Web;
 public class TopicDL
 {
     #region Global variables
-    SqlConnection connection = new SqlConnection(Connection.ConnectionString());
+    SqlConnection connection = new SqlConnection(Connection.ConnectionString(Connection.ConType.One));
     DataTable table = new DataTable();
     #endregion
 
@@ -37,7 +37,7 @@ public class TopicDL
 
           SqlDataReader reader =  command.ExecuteReader();
             table.Load(reader);
-
+            connection.Dispose();
             return table;
         }
     }
@@ -59,7 +59,7 @@ public class TopicDL
 
             SqlDataReader reader = command.ExecuteReader();
             table.Load(reader);
-
+            connection.Dispose();
             return table;
         }
     }
@@ -79,7 +79,7 @@ public class TopicDL
 
             SqlDataReader reader = command.ExecuteReader();
             table.Load(reader);
-
+            connection.Dispose();
             return table;
         }
     }

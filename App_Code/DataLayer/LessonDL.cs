@@ -17,7 +17,7 @@ public class LessonDL
     #endregion
 
     #region Global Variables
-    SqlConnection connection = new SqlConnection(Connection.ConnectionString());
+    SqlConnection connection = new SqlConnection(Connection.ConnectionString(Connection.ConType.One));
     DataTable table = new DataTable();
     #endregion
 
@@ -44,6 +44,7 @@ public class LessonDL
             connection.Open();
             SqlDataReader reader = command.ExecuteReader();
             table.Load(reader);
+            connection.Dispose();
 
             return table;
         }
@@ -64,7 +65,7 @@ public class LessonDL
             connection.Open();
             SqlDataReader reader = command.ExecuteReader();
             table.Load(reader);
-
+            connection.Dispose();
             return table;
         }
     }

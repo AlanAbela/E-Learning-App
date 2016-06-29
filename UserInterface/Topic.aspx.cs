@@ -33,12 +33,14 @@ public partial class UserInterface_Topic : System.Web.UI.Page
                 TopicID = Convert.ToInt32(Request.QueryString["ID"]);
                 LessonID = Convert.ToInt32(Request.QueryString["lessonid"]);
 
+                BindExampleTable();
+
                 videoSource.Src = "http://www.youtube.com/embed/bijF5_18O6I?autoplay=0";
 
                 BindData(TopicID);
 
             }
-            catch(Exception)
+            catch(Exception ex)
             {
 
             }
@@ -46,14 +48,7 @@ public partial class UserInterface_Topic : System.Web.UI.Page
     }
 
 
-    protected void gvTableExample_Load(object sender, EventArgs e)
-    {
-        TopicBL topicBL = new TopicBL();
-        DataTable table = topicBL.GetExampleTabel();
-        gvTableExample.DataSource = table;
-        gvTableExample.DataBind();
-    }
-
+ 
 
     /// <summary>
     /// Called on submit button click.
@@ -64,12 +59,82 @@ public partial class UserInterface_Topic : System.Web.UI.Page
     {
         try
         {
-            TopicBL topicBL = new TopicBL();
-            DataTable topic = topicBL.GetTopicByID(TopicID);
-        }
-        catch (SqlException ex)
-        {
+            lblResult.Visible = false;
 
+            QueryBL queryBL = new QueryBL();
+            EmployeeBL employeeBL = new EmployeeBL();
+
+            // Get table to be compared with.
+            DataTable compareTable = queryBL.GetQueryResult(TopicID);
+
+
+            string query = txtTryItOut.Text.Trim();
+            DataTable resultTable = queryBL.GetQueryResult(query);
+
+
+            bool correct = true;
+            bool varied = false;
+            // If table was not deleted.
+            if (employeeBL.IsEmployee() == 1)
+            {
+                // Bind to grid view.
+                gvResultTable.DataSource = resultTable;
+                gvResultTable.DataBind();
+
+                // Check if result is correct.
+                
+                if (compareTable.Rows.Count != resultTable.Rows.Count || compareTable.Columns.Count != resultTable.Columns.Count)
+                {
+                    correct = false;
+                    varied = true;
+                }
+                else
+                {
+                    for(int i = 0; i < compareTable.Rows.Count; i++)
+                    {
+                        for(int j = 0; j < compareTable.Columns.Count; j++)
+                        {
+                            if(!(compareTable.Rows[i][j].Equals(resultTable.Rows[i][j])))
+                            {
+                                correct = false;
+                                varied = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                correct = false;
+                gvResultTable.DataSource = new DataTable();
+                gvResultTable.DataBind();
+                
+            }
+
+            if(correct)
+            {
+                lblResult.Visible = true;
+                lblResult.Attributes.Add("class", "label label-success");
+                lblResult.Text = "Correct!";
+            }
+            else
+            {
+                lblResult.Attributes.Add("class", "label label-warning");
+                lblResult.Visible = true;
+                lblResult.Text = "Try again";
+            }
+
+            // TODO create stored procedure to drop table and recreate
+            if(varied)
+            {
+
+            }
+
+        }
+        catch (Exception ex)
+        {
+            Response.Redirect("ErrorPage.aspx");
         }
     }
 
@@ -77,6 +142,10 @@ public partial class UserInterface_Topic : System.Web.UI.Page
     protected void btnClose_Click(object sender, EventArgs e)
     {
         txtTryItOut.Text = string.Empty;
+        gvResultTable.DataSource = null;
+        gvResultTable.DataBind();
+
+        lblResult.Visible = false;
     }
 
     #endregion
@@ -136,6 +205,15 @@ public partial class UserInterface_Topic : System.Web.UI.Page
 
         }
     }
+
+    private void BindExampleTable()
+    {
+        TopicBL topicBL = new TopicBL();
+        DataTable table = topicBL.GetExampleTabel();
+        gvTableExample.DataSource = table;
+        gvTableExample.DataBind();
+    }
+
 
     #endregion
 

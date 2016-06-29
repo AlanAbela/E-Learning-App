@@ -9,6 +9,13 @@ using System.Web;
 /// </summary>
 public class Connection
 {
+
+   public enum ConType
+    {
+        One,
+        Two
+    };
+
     public Connection()
     {
         //
@@ -20,9 +27,17 @@ public class Connection
     /// Get the connection string from the config file.
     /// </summary>
     /// <returns></returns>
-    public static string ConnectionString()
+    public static string ConnectionString(ConType conType )
     {
-        return ConfigurationManager.ConnectionStrings["localDB"].ConnectionString; ;
+
+        string conn = ConfigurationManager.ConnectionStrings["localDB"].ConnectionString;
+
+        if(conType == ConType.Two)
+        {
+            conn = ConfigurationManager.ConnectionStrings["userDB"].ConnectionString;
+        }
+
+        return conn;
 
     }
 }

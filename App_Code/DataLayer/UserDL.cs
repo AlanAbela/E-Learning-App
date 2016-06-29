@@ -36,7 +36,7 @@ public class UserDL
     {
         string hashedPassword = EncyptPassword(Password);
 
-        using (SqlConnection conn = new SqlConnection(Connection.ConnectionString()))
+        using (SqlConnection conn = new SqlConnection(Connection.ConnectionString(Connection.ConType.One)))
         {
 
             SqlCommand command = new SqlCommand("AddRecord", conn);
@@ -48,7 +48,7 @@ public class UserDL
             conn.Open();
 
             command.ExecuteNonQuery();
-
+            conn.Dispose();
         }
     }
 
@@ -62,7 +62,7 @@ public class UserDL
     {
 
         string hashedPassword = EncyptPassword(password);
-        using (SqlConnection conn = new SqlConnection(Connection.ConnectionString()))
+        using (SqlConnection conn = new SqlConnection(Connection.ConnectionString(Connection.ConType.One)))
         {
 
             SqlCommand command = new SqlCommand("GetUser", conn);
@@ -75,7 +75,7 @@ public class UserDL
             SqlDataReader reader = command.ExecuteReader();
             DataTable table = new DataTable();
             table.Load(reader);
-
+            conn.Dispose();
             return table;
 
            
@@ -93,7 +93,7 @@ public class UserDL
     public static int DuplicateUser(string username)
     {
 
-        using (SqlConnection conn = new SqlConnection(Connection.ConnectionString()))
+        using (SqlConnection conn = new SqlConnection(Connection.ConnectionString(Connection.ConType.One)))
         {
 
             SqlCommand command = new SqlCommand("GetUserCount", conn);
@@ -101,9 +101,11 @@ public class UserDL
             command.Parameters.AddWithValue("@username", username);
 
             conn.Open();
-
+            int result = Convert.ToInt32(command.ExecuteScalar());
+            conn.Dispose();
             // If username already exists will return a value bigger than 0.
-            return Convert.ToInt32(command.ExecuteScalar());
+            return result;
+
         }
     }
 
@@ -115,7 +117,7 @@ public class UserDL
     /// <returns>1 if present, 0 if missing.</returns>
     public static int AuthenticateUser(string username, string password)
     {
-        using (SqlConnection conn = new SqlConnection(Connection.ConnectionString()))
+        using (SqlConnection conn = new SqlConnection(Connection.ConnectionString(Connection.ConType.One)))
         {
 
             SqlCommand command = new SqlCommand("GetUser", conn);
@@ -125,9 +127,10 @@ public class UserDL
             command.Parameters.AddWithValue("@password", hashedPassword);
 
             conn.Open();
-
+            int result = Convert.ToInt32(command.ExecuteScalar());
+            conn.Dispose();
             // If username already exists will return a value bigger than 0.
-            return Convert.ToInt32(command.ExecuteScalar());
+            return result;
         }
     }
 
@@ -141,7 +144,7 @@ public class UserDL
     /// <returns></returns>
     public DataTable GetUSerByID(int ID)
     {
-        using (SqlConnection conn = new SqlConnection(Connection.ConnectionString()))
+        using (SqlConnection conn = new SqlConnection(Connection.ConnectionString(Connection.ConType.One)))
         {
             SqlCommand command = new SqlCommand("GetUserByID", conn);
             command.CommandType = CommandType.StoredProcedure;
@@ -152,6 +155,7 @@ public class UserDL
             SqlDataReader reader = command.ExecuteReader();
             DataTable table = new DataTable();
             table.Load(reader);
+            conn.Dispose();
             return table;
         }
 

@@ -54,7 +54,7 @@
                     <asp:Label ID="lblTopicText" runat="server" Text="Test Text"></asp:Label>
                 </div>
                 <div class="table-holder">
-                    <asp:GridView ID="gvTableExample" runat="server" CssClass="table table-striped" OnLoad="gvTableExample_Load"></asp:GridView>
+                    <asp:GridView ID="gvTableExample" runat="server" CssClass="table table-striped"></asp:GridView>
                 </div>
                 <div style="text-align: center;">
                     <asp:Button ID="btnShowVideo" ClientIDMode="Static" runat="server" CssClass="btn-default btn-info" Width="200px" Height="50px" Text="Show Video Demo" Font-Bold="true" OnClientClick="showVideo(); return false;" />
@@ -77,8 +77,8 @@
                 <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title">Try it out</h4>
+                <asp:Button ID="btnCornerClose" runat="server" CssClass="close" BackColor="White" BorderColor="White" Text="&times;" OnClick="btnClose_Click"/>
+                <h2 class="modal-title">Try it out</h2>
             </div>
             <div class="modal-body">
                 <asp:UpdatePanel ID="upModalText" runat="server" ChildrenAsTriggers="false" UpdateMode="Conditional">
@@ -95,7 +95,7 @@
                     <h3 class="label-no-top-margin">
                         <asp:UpdatePanel ID="upModalLabel" runat="server" ChildrenAsTriggers="false" UpdateMode="Conditional">
                             <ContentTemplate>
-                                <asp:Label ID="lblResult" CssClass="label label-success" runat="server" Visible="false"></asp:Label>
+                                <asp:Label ID="lblResult" runat="server" Visible="false"></asp:Label>
                             </ContentTemplate>
                             <Triggers>
                                 <asp:AsyncPostBackTrigger ControlID="btnSubmit" />
@@ -103,7 +103,6 @@
                         </asp:UpdatePanel>
                     </h3>
                 </div>
-               <%-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>--%>
                 <asp:Button ID="btnClose" runat="server" CssClass="btn btn-default" Text="close" OnClick="btnClose_Click"></asp:Button>
                 <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-primary" Text="Go" ClientIDMode="Static" OnClick="btnSubmit_Click"></asp:Button>
                 <h3 style="text-align:left;">Result</h3>
