@@ -47,9 +47,6 @@ public partial class UserInterface_Topic : System.Web.UI.Page
         }     
     }
 
-
- 
-
     /// <summary>
     /// Called on submit button click.
     /// </summary>
@@ -59,6 +56,8 @@ public partial class UserInterface_Topic : System.Web.UI.Page
     {
         try
         {
+            gvResultTable.DataSource = null;
+            gvResultTable.DataBind();
             lblResult.Visible = false;
 
             QueryBL queryBL = new QueryBL();
@@ -66,14 +65,16 @@ public partial class UserInterface_Topic : System.Web.UI.Page
 
             // Get table to be compared with.
             DataTable compareTable = queryBL.GetQueryResult(TopicID);
-
-
+            
+            // Remove excessive white spaces
             string query = txtTryItOut.Text.Trim();
-            DataTable resultTable = queryBL.GetQueryResult(query);
 
+            // Process the user input on the table.
+            queryBL.ProcessQuery(query);
+            DataTable resultTable = employeeBL.GetAllEmployee();
 
             bool correct = true;
-            bool varied = false;
+
             // If table was not deleted.
             if (employeeBL.IsEmployee() == 1)
             {
@@ -81,15 +82,14 @@ public partial class UserInterface_Topic : System.Web.UI.Page
                 gvResultTable.DataSource = resultTable;
                 gvResultTable.DataBind();
 
-                // Check if result is correct.
-                
+                // Compare rows and columns.                
                 if (compareTable.Rows.Count != resultTable.Rows.Count || compareTable.Columns.Count != resultTable.Columns.Count)
                 {
                     correct = false;
-                    varied = true;
                 }
+                // If rows and columns numbers match compare their content.
                 else
-                {
+                {   
                     for(int i = 0; i < compareTable.Rows.Count; i++)
                     {
                         for(int j = 0; j < compareTable.Columns.Count; j++)
@@ -97,7 +97,6 @@ public partial class UserInterface_Topic : System.Web.UI.Page
                             if(!(compareTable.Rows[i][j].Equals(resultTable.Rows[i][j])))
                             {
                                 correct = false;
-                                varied = true;
                                 break;
                             }
                         }
@@ -108,8 +107,7 @@ public partial class UserInterface_Topic : System.Web.UI.Page
             {
                 correct = false;
                 gvResultTable.DataSource = new DataTable();
-                gvResultTable.DataBind();
-                
+                gvResultTable.DataBind();              
             }
 
             if(correct)
@@ -122,16 +120,20 @@ public partial class UserInterface_Topic : System.Web.UI.Page
             {
                 lblResult.Attributes.Add("class", "label label-warning");
                 lblResult.Visible = true;
-                lblResult.Text = "Try again";
+                lblResult.Text = ErrorMessage.GetErrorDesc(4);
             }
 
-            // TODO create stored procedure to drop table and recreate
-            if(varied)
-            {
-
-            }
+            // Drop table and recreate it.
+            employeeBL.RecreateTable();
 
         }
+        catch (SqlException ex)
+        {
+            lblResult.Attributes.Add("class", "label label-warning");
+            lblResult.Visible = true;
+            lblResult.Text = ErrorMessage.GetErrorDesc(3);
+        }
+
         catch (Exception ex)
         {
             Response.Redirect("ErrorPage.aspx");
@@ -184,7 +186,6 @@ public partial class UserInterface_Topic : System.Web.UI.Page
             throw new CustomException(ErrorMessage.GetErrorDesc(2));
         }
     }
-
 
     /// <summary>
     /// Binds topic title and topic description.

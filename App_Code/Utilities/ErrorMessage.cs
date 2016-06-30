@@ -10,7 +10,7 @@ using System.Xml;
 public class ErrorMessage
 {
     #region Global variables
-    private static string XMLPath = "http://localhost:9625/XML/Errors.xml";
+    private static string XMLPath = "C:/Users/Alan/Documents/Visual Studio 2015/Projects/E-Learning App/E-Learning App/XML/Errors.xml";
     private static XmlDocument xml = new XmlDocument();
     #endregion
     public ErrorMessage()

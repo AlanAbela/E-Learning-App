@@ -2,4 +2,7 @@
 <Content>
 <Error id="1" desc="Invalid Lesson ID."> </Error>
   <Error id="2" desc="Invalid Lesson ID."></Error>
+  <Error id="3" desc="There is something wrong with the syntax."></Error>
+  <Error id="4" desc="Not the expected query"></Error>
+  <Error id="5" desc="Correct"></Error>
 </Content>
