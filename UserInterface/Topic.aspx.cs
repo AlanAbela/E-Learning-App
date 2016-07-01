@@ -13,6 +13,8 @@ public partial class UserInterface_Topic : System.Web.UI.Page
     #region Properties
     public int TopicID { get; set; }
     public int LessonID { get; set; }
+
+    public int UserID { get; set; }
     #endregion
 
     #region Events
@@ -27,6 +29,8 @@ public partial class UserInterface_Topic : System.Web.UI.Page
         {
             try
             {
+                UserID = Convert.ToInt32(Session["UserID"]);
+
                 // Validate Query string value.
                 Validation();
 
@@ -115,6 +119,10 @@ public partial class UserInterface_Topic : System.Web.UI.Page
                 lblResult.Visible = true;
                 lblResult.Attributes.Add("class", "label label-success");
                 lblResult.Text = "Correct!";
+
+                // Add record in table User_Topic
+                UserTopicBL userTopicBl = new UserTopicBL();
+                userTopicBl.InsertRecord(UserID, TopicID);
             }
             else
             {

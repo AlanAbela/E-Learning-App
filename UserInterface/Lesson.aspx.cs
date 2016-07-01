@@ -14,6 +14,7 @@ public partial class UserInterface_Lesson : System.Web.UI.Page
     #region Properties
     public int LessonID { get; set; }
     #endregion
+    public int UserID { get; set; }
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -26,11 +27,12 @@ public partial class UserInterface_Lesson : System.Web.UI.Page
             }
             else
             {
+                UserID = Convert.ToInt32(Session["UserID"]);
               
                     Validation();
 
                     LessonID = Convert.ToInt32(Request.QueryString["ID"]);
-                    BindNavMenu(LessonID);
+                    BindNavMenu(LessonID, UserID);
 
                     LessonBL lessonBL = new LessonBL();
 
@@ -54,19 +56,20 @@ public partial class UserInterface_Lesson : System.Web.UI.Page
     /// <summary>
     /// Binds values to Topic navigation bar.
     /// </summary>
-    public void BindNavMenu(int ID)
+    public void BindNavMenu(int lessonID, int userID)
     {
         try
         {
             TopicBL topics = new TopicBL();
             DataTable lessonTopics = topics.GetTopicsByLessonID(LessonID);
+           
 
             foreach (DataRow row in lessonTopics.Rows)
             {
                 HtmlGenericControl listItemTitle = new HtmlGenericControl("li");
                 
                 LinkButton linkButton = new LinkButton();
-                linkButton.Text = row.Field<string>("Title").ToString();
+                linkButton.Text = "<img src=http://localhost:3787/image/c1.jpg>" + row.Field<string>("Title").ToString();
                 linkButton.Attributes.Add("runat", "server");
                 linkButton.Attributes.Add("onclick", "topicRedirect("+ row.Field<int>("ID").ToString() + ")");
                 listItemTitle.Controls.Add(linkButton);

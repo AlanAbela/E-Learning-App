@@ -79,8 +79,31 @@ public class TopicDL
 
             SqlDataReader reader = command.ExecuteReader();
             table.Load(reader);
-            connection.Dispose();
+
             return table;
+        }
+    }
+
+    /// <summary>
+    /// Retrieves records 
+    /// </summary>
+    /// <param name="lessonID"></param>
+    /// <returns></returns>
+    public DataTable GetUserTopicDesc(int lessonID)
+    {
+        using (connection)
+        {
+            SqlCommand command = new SqlCommand("GetUserTopicDesc", connection);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@lessonID", lessonID);
+
+            connection.Open();
+
+            SqlDataReader reader = command.ExecuteReader();
+            table.Load(reader);
+
+            return table;
+
         }
     }
 }
