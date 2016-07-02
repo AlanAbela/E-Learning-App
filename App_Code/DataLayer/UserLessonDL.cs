@@ -32,7 +32,7 @@ public class UserLessonDL
     {
         using (connection)
         {
-            SqlCommand command = new SqlCommand("InserUserLesson", connection);
+            SqlCommand command = new SqlCommand("InsertUserLesson", connection);
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@userID", userID);
             command.Parameters.AddWithValue("@lessonID", lessonID);

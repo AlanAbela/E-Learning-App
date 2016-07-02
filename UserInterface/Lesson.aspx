@@ -20,6 +20,12 @@
             window.open("Default.aspx");
         }
 
+        function quizClick()
+        {
+            window.opener = self;
+            window.close();
+            window.open("Quiz.aspx");
+        }
 
         $(document).ready(function () {
             //$("ul li").click(function (e) {
@@ -32,12 +38,14 @@
 
         <div id="page-lesson">
             <!-- Page Header -->
-            <div style="float:left;"><asp:Button ID="btnBack" CssClass="btn btn-default" runat="server" Text="Back" OnClientClick="backClick()"/></div>
-            <div class="page-header" style="width: 50%; margin-left:auto; margin-right:auto; text-align: center;">
+            
+            <div class="page-header" style="width: 100%; margin-left:auto; margin-right:auto; text-align: center;">
+                <div style="float:left;"><asp:Button ID="btnBack" CssClass="btn btn-default" runat="server" Text="Back" OnClientClick="backClick()"/></div>
                 <h1>
                     <asp:Label ID="lblLessonTitle" runat="server"></asp:Label>
                 </h1>
             </div>
+            
             <!-- Page navigation -->
             <div id="lesson-nav">
                 <h3 style="margin: 0px; height: 50px;">
@@ -47,11 +55,14 @@
                 </ul>
             </div>
             <!-- Lesson Content -->
-            <div id="lesson-content">
+            <div id="lesson-content" style="float:left;">
                 <asp:Label ID="lblLessonContent" runat="server" Text=" testing"></asp:Label>
                 <div class="error-message">
                     <asp:Label ID="lblError" runat="server"></asp:Label>
                 </div>
+            </div>
+            <div id="lesson-quiz-bar">
+             <asp:Button ID="btnQuiz" CssClass="btn btn-info" runat="server" Text="Quiz" OnClientClick="quizClick()"/>
             </div>
         </div>
  </asp:Content>

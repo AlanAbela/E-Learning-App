@@ -76,7 +76,6 @@ public partial class UserInterface_Topic : System.Web.UI.Page
 
             // Process the user input on the table.
             DataTable resultTable = queryBL.ProcessQuery(query);
-
             // If the query is an UPDATE or DELETE
             if (resultTable == null)
             {
@@ -224,6 +223,7 @@ public partial class UserInterface_Topic : System.Web.UI.Page
 
             lblLessonTitle.Text = table.Rows[0].Field<string>("Title");
             lblTopicText.Text = table.Rows[0].Field<string>("Text");
+            lblTopicText2.Text = table.Rows[0].Field<string>("Text2");
         }
         catch(Exception ex)
         {
@@ -234,7 +234,7 @@ public partial class UserInterface_Topic : System.Web.UI.Page
     private void BindExampleTable()
     {
         TopicBL topicBL = new TopicBL();
-        DataTable table = topicBL.GetExampleTabel();
+        DataTable table = topicBL.GetExampleTabel(TopicID);
         gvTableExample.DataSource = table;
         gvTableExample.DataBind();
     }

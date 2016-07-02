@@ -43,9 +43,9 @@ public class TopicBL
     /// Retrieve all records from the example table.
     /// </summary>
     /// <returns></returns>
-    public DataTable GetExampleTabel()
+    public DataTable GetExampleTabel(int topicID)
     {
-        return topicDL.GetExampleTable();
+        return topicDL.GetExampleTable(topicID);
     }
 
     /// <summary>

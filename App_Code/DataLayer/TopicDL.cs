@@ -70,18 +70,31 @@ public class TopicDL
     /// Retrieves all recrods from table Employee.
     /// </summary>
     /// <returns></returns>
-    public DataTable GetExampleTable()
+    public DataTable GetExampleTable(int topicID)
     {
         using (SqlConnection connection = new SqlConnection(connectionString1))
         {
-            SqlCommand command = new SqlCommand("SEDB_GetAllEmployees", connection);
+            // Get the example query
+            SqlCommand command = new SqlCommand("GetExampleQuery", connection);
+            command.Parameters.AddWithValue("@topicID", topicID);
             command.CommandType = CommandType.StoredProcedure;
 
             connection.Open();
-
             SqlDataReader reader = command.ExecuteReader();
             table = new DataTable();
             table.Load(reader);
+
+            // Get the result table of the example query.
+            string query = table.Rows[0].Field<string>("query");
+            command = new SqlCommand(query, connection);
+            reader = command.ExecuteReader();
+            table.Reset();
+            table.Load(reader);
+
+            // Reset the table in case the query changes the fields of the table
+            command = new SqlCommand("CreateTableEmp", connection);
+            command.CommandType = CommandType.StoredProcedure;
+            command.ExecuteNonQuery();
 
             return table;
         }
