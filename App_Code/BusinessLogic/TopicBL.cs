@@ -46,4 +46,9 @@ public class TopicBL
     {
         return topicDL.GetExampleTable();
     }
+
+    public DataTable GetTopicsAndUserID(int lessonID)
+    {
+        return topicDL.GetTopicsAndUserID(lessonID);
+    }
 }

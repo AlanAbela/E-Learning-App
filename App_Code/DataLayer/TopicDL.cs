@@ -85,17 +85,17 @@ public class TopicDL
     }
 
     /// <summary>
-    /// Retrieves records 
+    /// Retrives all records by lesson ID including users that have completed the topic.
     /// </summary>
     /// <param name="lessonID"></param>
     /// <returns></returns>
-    public DataTable GetUserTopicDesc(int lessonID)
+    public DataTable GetTopicsAndUserID(int lessonID)
     {
         using (connection)
         {
-            SqlCommand command = new SqlCommand("GetUserTopicDesc", connection);
-            command.CommandType = CommandType.StoredProcedure;
+            SqlCommand command = new SqlCommand("GetCompleteTopics", connection);
             command.Parameters.AddWithValue("@lessonID", lessonID);
+            command.CommandType = CommandType.StoredProcedure;
 
             connection.Open();
 
@@ -103,7 +103,6 @@ public class TopicDL
             table.Load(reader);
 
             return table;
-
         }
     }
 }

@@ -45,7 +45,6 @@ public class QueryDL
             reader = command.ExecuteReader();
             table = new DataTable();
             table.Load(reader);
-            connection.Dispose();
             return table;
         }
     }
@@ -55,7 +54,7 @@ public class QueryDL
     /// </summary>
     /// <param name="query"></param>
     /// <returns></returns>
-    public void ProcessQuery(string query)
+    public DataTable ProcessQuery(string query)
     {
         using (connection2)
         {
@@ -63,6 +62,9 @@ public class QueryDL
             connection2.Open();
 
             SqlDataReader reader = command.ExecuteReader();
+            table = new DataTable();
+            table.Load(reader);
+            return table;
         }
     }
 }

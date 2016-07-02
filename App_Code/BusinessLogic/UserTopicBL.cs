@@ -26,6 +26,12 @@ public class UserTopicBL
         userTopicDL.InsertRecord(userID, topicID);
     }
 
+
+    /// <summary>
+    /// Retrieves all records by user ID.
+    /// </summary>
+    /// <param name="userID"></param>
+    /// <returns></returns>
     public DataTable GetCompleteTopics(int userID)
     {
         return userTopicDL.GetCompleteTopics(userID);

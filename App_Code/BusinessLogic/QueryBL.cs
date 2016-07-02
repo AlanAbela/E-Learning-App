@@ -32,9 +32,9 @@ public class QueryBL
     /// </summary>
     /// <param name="query"></param>
     /// <returns></returns>
-    public void ProcessQuery(string query)
+    public DataTable ProcessQuery(string query)
     {
         QueryDL queryDL = new QueryDL();
-        queryDL.ProcessQuery(query);
+       return queryDL.ProcessQuery(query);
     }
 }

@@ -61,7 +61,8 @@ public partial class UserInterface_Lesson : System.Web.UI.Page
         try
         {
             TopicBL topics = new TopicBL();
-            DataTable lessonTopics = topics.GetTopicsByLessonID(LessonID);
+            DataTable lessonTopics = topics.GetTopicsAndUserID(lessonID);
+            UserTopicBL userTopicBL = new UserTopicBL();
            
 
             foreach (DataRow row in lessonTopics.Rows)
@@ -69,7 +70,14 @@ public partial class UserInterface_Lesson : System.Web.UI.Page
                 HtmlGenericControl listItemTitle = new HtmlGenericControl("li");
                 
                 LinkButton linkButton = new LinkButton();
-                linkButton.Text = "<img src=http://localhost:3787/image/c1.jpg>" + row.Field<string>("Title").ToString();
+                if (row.Field<int?>("UserID") == null)
+                {
+                    linkButton.Text = "<img src=http://localhost:3787/image/c1.jpg>" + row.Field<string>("Title").ToString();
+                }
+                else
+                {
+                    linkButton.Text = "<img src=http://localhost:3787/image/c2.jpg>" + row.Field<string>("Title").ToString();
+                }
                 linkButton.Attributes.Add("runat", "server");
                 linkButton.Attributes.Add("onclick", "topicRedirect("+ row.Field<int>("ID").ToString() + ")");
                 listItemTitle.Controls.Add(linkButton);

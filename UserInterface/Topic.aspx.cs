@@ -74,8 +74,13 @@ public partial class UserInterface_Topic : System.Web.UI.Page
             string query = txtTryItOut.Text.Trim();
 
             // Process the user input on the table.
-            queryBL.ProcessQuery(query);
-            DataTable resultTable = employeeBL.GetAllEmployee();
+            DataTable resultTable = queryBL.ProcessQuery(query);
+
+            // If the query is an UPDATE or DELETE
+            if (resultTable == null)
+            {
+                resultTable = employeeBL.GetAllEmployee();
+            }
 
             bool correct = true;
 
