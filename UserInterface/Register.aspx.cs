@@ -27,7 +27,10 @@ public partial class UserInterface_Register : System.Web.UI.Page
             {
                 RegisterBL register = new RegisterBL();
                 register.RegisterUser(txtUsername.Text, txtPassword.Text);
-          
+                
+                    Response.Redirect("Login.aspx");
+                
+
             }
                 catch(SqlException ex)
             {
@@ -78,10 +81,7 @@ public partial class UserInterface_Register : System.Web.UI.Page
             valForm.ErrorMessage = valForm.ErrorMessage + "Passwords do not match. ";
         }
 
-        if(args.IsValid)
-        {
-            Response.Redirect("Login.aspx");
-        }
+       
  
     }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
@@ -25,7 +26,7 @@ public class TopicBL
     /// <returns></returns>
     public DataTable GetTopicsByLessonID(int ID)
     {
-        return topicDL.GetTopicsDLsByLessonID(ID);
+        return topicDL.GetAllTopicsByLessonID(ID);
     }
 
     /// <summary>
@@ -47,8 +48,48 @@ public class TopicBL
         return topicDL.GetExampleTable();
     }
 
+    /// <summary>
+    /// Get topics related to user.
+    /// </summary>
+    /// <param name="lessonID"></param>
+    /// <returns></returns>
     public DataTable GetTopicsAndUserID(int lessonID)
     {
         return topicDL.GetTopicsAndUserID(lessonID);
+    }
+
+    /// <summary>
+    /// Get the count o all topics uder a defined lesson
+    /// </summary>
+    /// <param name="lessonID"></param>
+    /// <returns></returns>
+    public int GetCountTopicsByLessonID(int lessonID)
+    {
+        try
+        {
+            return topicDL.GetCountTopicsByLessonID(lessonID);
+        }
+        catch (SqlException ex)
+        {
+            throw new Exception();
+        }
+    }
+
+    /// <summary>
+    /// Get the count of all compete topics under a defined lesson by a defined user.
+    /// </summary>
+    /// <param name="lessonID"></param>
+    /// <param name="userID"></param>
+    /// <returns></returns>
+    public int GetCountCompletedTopics(int lessonID, int userID)
+    {
+        try
+        { 
+        return topicDL.GetCountCompletedTopics(lessonID, userID);
+    }
+        catch (SqlException ex)
+        {
+            throw new Exception();
+}
     }
 }

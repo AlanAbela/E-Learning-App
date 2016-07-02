@@ -66,6 +66,7 @@ public partial class UserInterface_Topic : System.Web.UI.Page
 
             QueryBL queryBL = new QueryBL();
             EmployeeBL employeeBL = new EmployeeBL();
+            bool correct = true;
 
             // Get table to be compared with.
             DataTable compareTable = queryBL.GetQueryResult(TopicID);
@@ -80,9 +81,7 @@ public partial class UserInterface_Topic : System.Web.UI.Page
             if (resultTable == null)
             {
                 resultTable = employeeBL.GetAllEmployee();
-            }
-
-            bool correct = true;
+            }   
 
             // If table was not deleted.
             if (employeeBL.IsEmployee() == 1)
@@ -126,8 +125,20 @@ public partial class UserInterface_Topic : System.Web.UI.Page
                 lblResult.Text = "Correct!";
 
                 // Add record in table User_Topic
-                UserTopicBL userTopicBl = new UserTopicBL();
-                userTopicBl.InsertRecord(UserID, TopicID);
+                UserTopicBL userTopicBL = new UserTopicBL();
+                userTopicBL.InsertRecord(UserID, TopicID);
+
+                // Check if lesson is complete
+                TopicBL topicBL = new TopicBL();
+                int countTopicsUnderLesson = topicBL.GetCountTopicsByLessonID(LessonID);
+                int countTopicsCompletedByUser = topicBL.GetCountCompletedTopics(LessonID, UserID);
+
+                // If all lessons are complete add the record in table User_Lesson
+                if(countTopicsCompletedByUser == countTopicsUnderLesson)
+                {
+                    UserLessonBL userLessonBL = new UserLessonBL();
+                    userLessonBL.InserNewRecord(UserID, LessonID);
+                }
             }
             else
             {

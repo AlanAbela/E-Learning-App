@@ -61,22 +61,32 @@ public partial class UserInterface_Lesson : System.Web.UI.Page
         try
         {
             TopicBL topics = new TopicBL();
-            DataTable lessonTopics = topics.GetTopicsAndUserID(lessonID);
-            UserTopicBL userTopicBL = new UserTopicBL();
            
+            // Get all topics of this lesson.
+            DataTable lessonTopics = topics.GetTopicsByLessonID(lessonID);
+
+            // Filter for completed topics by the user.
+            UserTopicBL userTopicBL = new UserTopicBL();
+            DataTable userTopicRecord = null;
 
             foreach (DataRow row in lessonTopics.Rows)
             {
                 HtmlGenericControl listItemTitle = new HtmlGenericControl("li");
-                
+
+                int topicID = row.Field<int>("ID");
+                userTopicRecord = userTopicBL.GetRecord(UserID, topicID);
+
                 LinkButton linkButton = new LinkButton();
-                if (row.Field<int?>("UserID") == null)
+
+                // If topic was not complete show white very good sign.
+                if (userTopicRecord.Rows.Count == 0)
                 {
-                    linkButton.Text = "<img src=http://localhost:3787/image/c1.jpg>" + row.Field<string>("Title").ToString();
+                    linkButton.Text = "<img src=http://localhost:3787/image/c1.jpg> " + row.Field<string>("Title").ToString();
                 }
+                // else show green very good sign.
                 else
                 {
-                    linkButton.Text = "<img src=http://localhost:3787/image/c2.jpg>" + row.Field<string>("Title").ToString();
+                    linkButton.Text = "<img src=http://localhost:3787/image/c2.jpg> " + row.Field<string>("Title").ToString();
                 }
                 linkButton.Attributes.Add("runat", "server");
                 linkButton.Attributes.Add("onclick", "topicRedirect("+ row.Field<int>("ID").ToString() + ")");

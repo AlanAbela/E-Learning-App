@@ -36,4 +36,15 @@ public class UserTopicBL
     {
         return userTopicDL.GetCompleteTopics(userID);
     }
+
+    /// <summary>
+    /// Retrieves a record by user ID and topic ID.
+    /// </summary>
+    /// <param name="userID"></param>
+    /// <param name="topicID"></param>
+    /// <returns></returns>
+    public DataTable GetRecord(int userID, int topicID)
+    {
+        return userTopicDL.GetRecord(userID, topicID);
+    }
 }

@@ -11,8 +11,8 @@ using System.Web;
 public class TopicDL
 {
     #region Global variables
-    SqlConnection connection = new SqlConnection(Connection.ConnectionString(Connection.ConType.One));
-    DataTable table = new DataTable();
+    string connectionString1 = Connection.ConnectionString(Connection.ConType.One);
+    DataTable table;
     #endregion
 
     public TopicDL()
@@ -25,9 +25,9 @@ public class TopicDL
     /// </summary>
     /// <param name="ID"></param>
     /// <returns></returns>
-    public DataTable GetTopicsDLsByLessonID(int lessonID)
+    public DataTable GetAllTopicsByLessonID(int lessonID)
     {
-        using (connection)
+        using (SqlConnection connection = new SqlConnection(connectionString1))
         {
             SqlCommand command = new SqlCommand("GetAllTopicsByLessonID", connection);
             command.CommandType = CommandType.StoredProcedure;
@@ -36,8 +36,9 @@ public class TopicDL
             connection.Open();
 
           SqlDataReader reader =  command.ExecuteReader();
+            table = new DataTable();
             table.Load(reader);
-            connection.Dispose();
+
             return table;
         }
     }
@@ -49,7 +50,7 @@ public class TopicDL
     /// <returns></returns>
     public DataTable GetTopicByID(int topicID)
     {
-        using (connection)
+        using (SqlConnection connection = new SqlConnection(connectionString1))
         {
             SqlCommand command= new SqlCommand("GetTopicByID", connection);
             command.CommandType = CommandType.StoredProcedure;
@@ -58,8 +59,9 @@ public class TopicDL
             connection.Open();
 
             SqlDataReader reader = command.ExecuteReader();
+            table = new DataTable();
             table.Load(reader);
-            connection.Dispose();
+            
             return table;
         }
     }
@@ -70,7 +72,7 @@ public class TopicDL
     /// <returns></returns>
     public DataTable GetExampleTable()
     {
-        using (connection)
+        using (SqlConnection connection = new SqlConnection(connectionString1))
         {
             SqlCommand command = new SqlCommand("SEDB_GetAllEmployees", connection);
             command.CommandType = CommandType.StoredProcedure;
@@ -78,6 +80,7 @@ public class TopicDL
             connection.Open();
 
             SqlDataReader reader = command.ExecuteReader();
+            table = new DataTable();
             table.Load(reader);
 
             return table;
@@ -91,18 +94,58 @@ public class TopicDL
     /// <returns></returns>
     public DataTable GetTopicsAndUserID(int lessonID)
     {
-        using (connection)
+        using (SqlConnection connection = new SqlConnection(connectionString1))
         {
-            SqlCommand command = new SqlCommand("GetCompleteTopics", connection);
+            SqlCommand command = new SqlCommand("GetTopicsRelatedToLessonAndUser", connection);
             command.Parameters.AddWithValue("@lessonID", lessonID);
             command.CommandType = CommandType.StoredProcedure;
 
             connection.Open();
 
             SqlDataReader reader = command.ExecuteReader();
+            table = new DataTable();
             table.Load(reader);
 
             return table;
+        }
+    }
+
+    /// <summary>
+    /// Retrieves the count of all topics by lesson id.
+    /// </summary>
+    /// <param name="lessonID"></param>
+    /// <returns></returns>
+    public int GetCountTopicsByLessonID(int lessonID)
+    {
+        using (SqlConnection connection = new SqlConnection(connectionString1))
+        {
+            SqlCommand command = new SqlCommand("CountTopicsByLessonID", connection);
+            command.Parameters.AddWithValue("@lessonID", lessonID);
+            command.CommandType = CommandType.StoredProcedure;
+
+            connection.Open();
+
+            return Convert.ToInt32(command.ExecuteScalar());
+        }
+    }
+
+    /// <summary>
+    /// Retrieves the number of topics that are complete by for a defined lesson by a defined user.
+    /// </summary>
+    /// <param name="lessonID"></param>
+    /// <returns></returns>
+    public int GetCountCompletedTopics(int lessonID, int userID)
+    {
+        using (SqlConnection connection = new SqlConnection(connectionString1))
+        {
+            SqlCommand command = new SqlCommand("CountCompleteTopics", connection);
+            command.Parameters.AddWithValue("@lessonID", lessonID);
+            command.Parameters.AddWithValue("@userID", userID);
+            command.CommandType = CommandType.StoredProcedure;
+
+            connection.Open();
+
+            return Convert.ToInt32(command.ExecuteScalar());
         }
     }
 }

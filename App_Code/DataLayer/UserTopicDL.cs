@@ -12,6 +12,7 @@ public class UserTopicDL
 {
     #region Properties
     string ConnectionString1 = Connection.ConnectionString(Connection.ConType.One);
+    DataTable table;
     #endregion
 
     public UserTopicDL()
@@ -19,6 +20,8 @@ public class UserTopicDL
       
     }
 
+
+    #region public Methods
     /// <summary>
     /// Inserts a record if it does not exist.
     /// </summary>
@@ -45,6 +48,54 @@ public class UserTopicDL
         }
     }
 
+    /// <summary>
+    /// Get records by user ID.
+    /// </summary>
+    /// <param name="userID"></param>
+    /// <returns></returns>
+    public DataTable GetCompleteTopics(int userID)
+    {
+        using (SqlConnection connection = new SqlConnection(ConnectionString1))
+        {
+            SqlCommand command = new SqlCommand("GetTopicsByUserID", connection);
+            command.Parameters.AddWithValue("@userID", connection);
+            command.CommandType = CommandType.StoredProcedure;
+            connection.Open();
+
+            SqlDataReader reader = command.ExecuteReader();
+            table = new DataTable();
+            table.Load(reader);
+
+            return table;
+        }
+    }
+
+    /// <summary>
+    /// Retrieves a record by user ID and Topic ID.
+    /// </summary>
+    /// <param name="userID"></param>
+    /// <param name="topicID"></param>
+    /// <returns></returns>
+    public DataTable GetRecord(int userID, int topicID)
+    {
+        using (SqlConnection connection = new SqlConnection(ConnectionString1))
+        {
+            SqlCommand command = new SqlCommand("GetUserTopic", connection);
+            command.Parameters.AddWithValue("@userID", userID);
+            command.Parameters.AddWithValue("@topicID", topicID);
+            command.CommandType = CommandType.StoredProcedure;
+            connection.Open();
+
+            SqlDataReader reader = command.ExecuteReader();
+            table = new DataTable();
+            table.Load(reader);
+
+            return table;
+        }
+    }
+    #endregion
+
+
     #region Private Methods
     /// <summary>
     /// Checks if a record with the defined user id and topic id exists.
@@ -64,26 +115,6 @@ public class UserTopicDL
     }
     #endregion
 
-    /// <summary>
-    /// Get records by user ID.
-    /// </summary>
-    /// <param name="userID"></param>
-    /// <returns></returns>
-    public DataTable GetCompleteTopics(int userID)
-    {
-        using (SqlConnection connection = new SqlConnection())
-        {
-            SqlCommand command = new SqlCommand("GetTopicsByUserID", connection);
-            command.Parameters.AddWithValue("@userID", connection);
-            command.CommandType = CommandType.StoredProcedure;
-            connection.Open();
-
-            SqlDataReader reader = command.ExecuteReader();
-            DataTable table = new DataTable();
-            table.Load(reader);
-
-            return table;
-        }
-    }
+ 
 }
 

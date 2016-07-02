@@ -10,6 +10,11 @@ using System.Web.UI.WebControls;
 
 public partial class UserInterface_Default : System.Web.UI.Page
 {
+
+    #region Properties
+    int UserID { get; set; }
+    #endregion
+
     protected void Page_Load(object sender, EventArgs e)
     {
 
@@ -20,38 +25,14 @@ public partial class UserInterface_Default : System.Web.UI.Page
         else
         {
                 lblTitle.Text = "Welcome to SQL Learning Platform";
+                UserID = Convert.ToInt32(Session["UserID"]);
+
         if (!IsPostBack)
             
-                BindSideMenu();
-                     
+                BindSideMenu();        
         }
     }
 
-    //private void MenuItemSelect(string selection)
-    //{
-    //    foreach (Control control in navSideMenu.Controls)
-
-    //    {
-    //        if (control is HtmlGenericControl)
-    //        {
-    //            HtmlGenericControl genericControl = (HtmlGenericControl)control;
-
-    //            genericControl.Attributes.Remove("class");
-
-    //            StringWriter stringWriter = new StringWriter();
-    //            HtmlTextWriter textWriter = new HtmlTextWriter(stringWriter);
-
-    //            genericControl.RenderControl(textWriter);
-
-    //            string value = stringWriter.GetStringBuilder().ToString();
-
-    //            if (value == selection)
-    //            {
-    //                genericControl.Attributes.Add("class", "active");
-    //            }
-    //        }
-    //    }
-    //}
 
     private void BindSideMenu()
     {
@@ -60,18 +41,31 @@ public partial class UserInterface_Default : System.Web.UI.Page
             LessonBL lesson = new LessonBL();
             DataTable table = lesson.GetLessons();
 
+            UserLessonBL userLesson = new UserLessonBL();
+            DataTable userLessonTable = null;
+
             if (table.Rows.Count > 0)
             {
                 foreach (DataRow dr in table.Rows)
                 {
                     HtmlGenericControl listItem = new HtmlGenericControl("li");
-                    //  listItem.Attributes.Add("id", dr["ID"].ToString());
-                    string ID = dr["ID"].ToString();
+                 
+                    int lessonID = Convert.ToInt32(dr["ID"]);
+
+                    userLessonTable = userLesson.GetRecord(UserID, lessonID);
+
 
                     LinkButton linkB = new LinkButton();
-                    linkB.Text = dr[1].ToString();
+                    if (userLessonTable.Rows.Count == 0)
+                    {
+                        linkB.Text = "<img src=http://localhost:3787/image/c1.jpg> " + dr[1].ToString();
+                    }
+                    else
+                    {
+                        linkB.Text = "<img src=http://localhost:3787/image/c2.jpg> " + dr[1].ToString();
+                    }
                     linkB.Attributes.Add("runat", "server");
-                    linkB.Attributes.Add("onclick", "lessonRedirect("+ ID + ")");
+                    linkB.Attributes.Add("onclick", "lessonRedirect("+ lessonID + ")");
                     listItem.Controls.Add(linkB);
 
                     navSideMenu.Controls.Add(listItem);
