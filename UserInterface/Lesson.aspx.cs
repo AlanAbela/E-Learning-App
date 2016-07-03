@@ -126,5 +126,10 @@ public partial class UserInterface_Lesson : System.Web.UI.Page
             throw new CustomException(ErrorMessage.GetErrorDesc(1));
         }
     }
-    
+
+
+    protected void btnQuiz_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("Quiz.aspx?ID="+LessonID);
+    }
 }

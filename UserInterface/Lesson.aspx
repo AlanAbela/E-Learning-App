@@ -20,11 +20,11 @@
             window.open("Default.aspx");
         }
 
-        function quizClick()
+        function quizClick(id)
         {
             window.opener = self;
             window.close();
-            window.open("Quiz.aspx");
+            window.open("Quiz.aspx?ID="+id);
         }
 
         $(document).ready(function () {
@@ -62,7 +62,7 @@
                 </div>
             </div>
             <div id="lesson-quiz-bar">
-             <asp:Button ID="btnQuiz" CssClass="btn btn-info" runat="server" Text="Quiz" OnClientClick="quizClick()"/>
+             <asp:Button ID="btnQuiz" CssClass="btn btn-info" runat="server" Text="Quiz" OnClick="btnQuiz_Click"/>
             </div>
         </div>
  </asp:Content>

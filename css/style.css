@@ -166,12 +166,61 @@ html
     width:100%;
 }
 
+#page-quiz
+{
+     position:relative;
+    margin-left:10px;
+    margin-right:10px;
+    height:1000px;
+    width:100%;
+}
+
 #topic-body
 {
     position:relative;
     width:inherit;
     height:auto;
     margin-top:20px;
+}
+
+.btn-submit
+{
+    position:absolute;
+    width:auto;
+    right:250px;
+}
+
+#quiz-body
+{
+    position:relative;
+    width:inherit;
+    height:inherit;
+    margin-top:20px;
+    margin-left:auto;
+    margin-right:auto;
+    text-align:center;
+}
+
+#question-container
+{
+
+    width:75%;
+    height:500px;
+    margin-left:auto;
+    margin-right:auto;
+    border:solid;
+    border-color:black;
+    border-width:1px;
+}
+
+.check-list-container
+{
+    position:relative;
+    left:50%;
+    width:auto;
+    height:auto;
+    text-align:center;
+    align-self:center;
 }
 
 .topic-info

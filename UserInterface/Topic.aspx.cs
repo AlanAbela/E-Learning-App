@@ -216,19 +216,15 @@ public partial class UserInterface_Topic : System.Web.UI.Page
     /// <param name="topicID"></param>
     private void BindData(int topicID)
     {
-        try
-        {
+     
             TopicBL topicBL = new TopicBL();
             DataTable table = topicBL.GetTopicByID(topicID);
 
             lblLessonTitle.Text = table.Rows[0].Field<string>("Title");
             lblTopicText.Text = table.Rows[0].Field<string>("Text");
             lblTopicText2.Text = table.Rows[0].Field<string>("Text2");
-        }
-        catch(Exception ex)
-        {
-
-        }
+        
+      
     }
 
     private void BindExampleTable()
