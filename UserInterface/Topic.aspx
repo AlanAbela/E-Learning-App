@@ -109,7 +109,7 @@
                 </div>
                 <asp:Button ID="btnClose" runat="server" CssClass="btn btn-default" Text="close" OnClick="btnClose_Click"></asp:Button>
                 <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-primary" Text="Go" ClientIDMode="Static" OnClick="btnSubmit_Click"></asp:Button>
-                <h3 style="text-align:left;">Result</h3>
+                <h3 style="text-align:left; clear:left;">Result</h3>
                 <div class="table-holder" style="width: 100%;">
                     <asp:UpdatePanel ID="upModalTable" runat="server" ChildrenAsTriggers="false" UpdateMode="Conditional">
                         <ContentTemplate>

@@ -41,7 +41,8 @@ public class ErrorMessage
 
                 if (Convert.ToInt32(id) == ID)
                 {
-                    value = (node as XmlElement).GetAttribute("desc");
+                    //value = (node as XmlElement).GetAttribute("desc");
+                    value = (node as XmlElement).ChildNodes[0].Value;
                 }
             }
 

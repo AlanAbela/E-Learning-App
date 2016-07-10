@@ -24,7 +24,7 @@ public partial class UserInterface_MasterPage : System.Web.UI.MasterPage
 
             if(table.Rows.Count > 0)
             {
-                lblLogged.Text = "Loggen in as " + table.Rows[0].Field<string>("Username");
+                lblLogged.Text = "Logged in as " + table.Rows[0].Field<string>("Username");
             }
         }
     }

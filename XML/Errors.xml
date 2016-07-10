@@ -1,8 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Content>
-<Error id="1" desc="Invalid Lesson ID."> </Error>
-  <Error id="2" desc="Invalid Lesson ID."></Error>
-  <Error id="3" desc="There is something wrong with the syntax."></Error>
-  <Error id="4" desc="Not the expected query"></Error>
-  <Error id="5" desc="Correct"></Error>
+  <Error id="1">Invalid Lesson ID.
+  </Error>
+  <Error id="2">Invalid Lesson ID.
+  </Error>
+  <Error id="3">Sorry but there is something 
+  |wrong in the syntax.
+  </Error>
+  <Error id="4">Sorry wrong query, remeber that
+  |you need to get the data as shown in the
+  |example table.</Error>
+  <Error id="5">
+    Correct
+  </Error>
+  <Error id="6">Sorry wrong query, remember that
+  |you need to SELECT the data and not alter it.
+  </Error>
+  <Error id="7" >
+    Sorry wrong query, remember that the aim of
+    |this topic is to SELECT data from a table 
+    |and not creating one.
+  </Error>
+  <Error id="8" >
+    Sorry wrong query, remember that the aim of
+    |this topic is to SELECT data from a table
+    |and not deleting it.
+  </Error>
+  <Error id="9">
+    Please enter a query.
+  </Error>
+
 </Content>

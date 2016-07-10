@@ -17,13 +17,20 @@
       chks[i].checked = false;
   }--%>
 
-<%--  $(document).ready(function () {
+        <%--  $(document).ready(function () {
      
       var validatorID = '<%= hdnField.Value %>';
       var validator = document.getElementById('reqField');
       validator.ControlToValidate = validatorID;
       
   });--%>
+
+         function topicRedirect(id)
+        {
+            window.opener = self;
+            window.close();
+            window.open("topic.aspx?ID="+id+"&lessonid="+ <%= LessonID.ToString() %>);
+        }
 
     </script>
 
@@ -39,6 +46,7 @@
         <div id="quiz-body">
             <div id="question-container">
                 <asp:MultiView ID="mvQuestions" runat="server" ActiveViewIndex="0">
+                     
                     <asp:View runat="server">
                         <h2>
                             <asp:Label ID="lblView0" runat="server" Text="Question 1 of 5"></asp:Label></h2>
@@ -101,18 +109,21 @@
                      </asp:View>
                     <asp:View runat="server">
                         <div style="position:relative; width:75%; height:75%; margin-left:auto; margin-right:auto; top:50px;">
-                        <asp:GridView ID="gvResult" runat="server" AutoGenerateColumns="false" ShowHeader="true" CssClass="table table-striped">
-                            <Columns>
-                                <asp:BoundField DataField="Text" HeaderText="Your Selection" ItemStyle-HorizontalAlign="Left" />
-                                <asp:BoundField DataField="Value" HeaderText="Correct?" ItemStyle-HorizontalAlign="Left" />
-                            </Columns>
+                        <asp:GridView ID="gvResult" runat="server" AutoGenerateColumns="true" ShowHeader="true" CssClass="table table-striped" OnRowDataBound="gvResult_RowDataBound">
+                           <Columns>
+                              
+                            <%--    <asp:BoundField DataField="Text" HeaderText="Your Selection" ItemStyle-HorizontalAlign="Left" />
+                                <asp:BoundField DataField="Value" HeaderText="Correct?" ItemStyle-HorizontalAlign="Left" />--%>
+                           </Columns>
                         </asp:GridView>
+                            </div>
                     </asp:View>
                 </asp:MultiView>
-               <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-default btn-submit" Text="Submit" OnClick="btnSubmit_Click" OnClientClick="redirect()"/>
+               <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-default btn-submit" Text="Submit" OnClick="btnSubmit_Click"/>
                 <br />
                 <br />
-                <h3><asp:RequiredFieldValidator ID="reqField0" runat="server" ControlToValidate= "chkQuizList0" ErrorMessage="Please make a selection" CssClass="label label-warning" ClientIDMode="Static"></asp:RequiredFieldValidator></h3>
+              <h3><asp:RequiredFieldValidator ID="reqField" runat="server" ControlToValidate= "chkQuizList0"  ErrorMessage="Please make a selection" CssClass="label label-warning"></asp:RequiredFieldValidator></h3>
+             
             </div>
         </div>
     </div>

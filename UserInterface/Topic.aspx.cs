@@ -31,15 +31,21 @@ public partial class UserInterface_Topic : System.Web.UI.Page
             {
                 UserID = Convert.ToInt32(Session["UserID"]);
 
-                // Validate Query string value.
+                // Validate Query strings.
                 Validation();
 
+                // Reference values stored in query strings.
                 TopicID = Convert.ToInt32(Request.QueryString["ID"]);
                 LessonID = Convert.ToInt32(Request.QueryString["lessonid"]);
 
+                // Bind table, table according to topic ID.
                 BindExampleTable();
 
-                videoSource.Src = "http://www.youtube.com/embed/bijF5_18O6I?autoplay=0";
+                TopicBL topicBL = new TopicBL();
+                DataTable dataTable = topicBL.GetTopicByID(TopicID);
+
+                videoSource.Src = dataTable.Rows[0].Field<string>("VideoLink");
+            
 
                 BindData(TopicID);
 
@@ -58,21 +64,35 @@ public partial class UserInterface_Topic : System.Web.UI.Page
     /// <param name="e"></param>
     protected void btnSubmit_Click(object sender, EventArgs e)
     {
+        string errorMessage = string.Empty;
+
         try
         {
             gvResultTable.DataSource = null;
             gvResultTable.DataBind();
             lblResult.Visible = false;
-
+        
             QueryBL queryBL = new QueryBL();
             EmployeeBL employeeBL = new EmployeeBL();
             bool correct = true;
 
             // Get table to be compared with.
             DataTable compareTable = queryBL.GetQueryResult(TopicID);
-            
+
+            string query = txtTryItOut.Text;
             // Remove excessive white spaces
-            string query = txtTryItOut.Text.Trim();
+            if (!string.IsNullOrEmpty(txtTryItOut.Text))
+            {
+                query = txtTryItOut.Text.Trim();
+            }
+            else
+            {
+                lblResult.Attributes.Add("class", "label label-warning");
+                lblResult.Visible = true;
+                lblResult.Text = ErrorMessage.GetErrorDesc(9).Replace("|","<br/>");
+                return;
+            }
+            
 
             // Process the user input on the table.
             DataTable resultTable = queryBL.ProcessQuery(query);
@@ -93,8 +113,9 @@ public partial class UserInterface_Topic : System.Web.UI.Page
                 if (compareTable.Rows.Count != resultTable.Rows.Count || compareTable.Columns.Count != resultTable.Columns.Count)
                 {
                     correct = false;
+                    errorMessage = ErrorMessage.GetErrorDesc(4).Replace("|","<br/>");
                 }
-                // If rows and columns numbers match compare their content.
+                // If rows and columns numbers match, compare their content.
                 else
                 {   
                     for(int i = 0; i < compareTable.Rows.Count; i++)
@@ -103,6 +124,7 @@ public partial class UserInterface_Topic : System.Web.UI.Page
                         {
                             if(!(compareTable.Rows[i][j].Equals(resultTable.Rows[i][j])))
                             {
+                                errorMessage = ErrorMessage.GetErrorDesc(6).Replace("|", "<br/>"); ;
                                 correct = false;
                                 break;
                             }
@@ -113,15 +135,18 @@ public partial class UserInterface_Topic : System.Web.UI.Page
             else
             {
                 correct = false;
+                // Table was deleted so bind an empty datatable to the gridview.
                 gvResultTable.DataSource = new DataTable();
-                gvResultTable.DataBind();              
+                gvResultTable.DataBind();
+                errorMessage = ErrorMessage.GetErrorDesc(8).Replace("|", "<br/>"); ;         
             }
 
             if(correct)
             {
+                errorMessage = ErrorMessage.GetErrorDesc(5);
                 lblResult.Visible = true;
                 lblResult.Attributes.Add("class", "label label-success");
-                lblResult.Text = "Correct!";
+                lblResult.Text = errorMessage;
 
                 // Add record in table User_Topic
                 UserTopicBL userTopicBL = new UserTopicBL();
@@ -143,7 +168,7 @@ public partial class UserInterface_Topic : System.Web.UI.Page
             {
                 lblResult.Attributes.Add("class", "label label-warning");
                 lblResult.Visible = true;
-                lblResult.Text = ErrorMessage.GetErrorDesc(4);
+                lblResult.Text = errorMessage;
             }
 
             // Drop table and recreate it.
@@ -152,9 +177,18 @@ public partial class UserInterface_Topic : System.Web.UI.Page
         }
         catch (SqlException ex)
         {
+           if(ex.Number == 102)
+            {
+                errorMessage = ErrorMessage.GetErrorDesc(3).Replace("|","<br/>");
+            }
+           else if(ex.Number == 262)
+            {
+                errorMessage = ErrorMessage.GetErrorDesc(7).Replace("|", "<br/>");
+            }
             lblResult.Attributes.Add("class", "label label-warning");
             lblResult.Visible = true;
-            lblResult.Text = ErrorMessage.GetErrorDesc(3);
+            
+            lblResult.Text = errorMessage;
         }
 
         catch (Exception ex)
