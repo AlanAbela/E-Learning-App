@@ -185,6 +185,15 @@ public partial class UserInterface_Topic : System.Web.UI.Page
             {
                 errorMessage = ErrorMessage.GetErrorDesc(7).Replace("|", "<br/>");
             }
+           else if(ex.Number == 207)
+            {
+                errorMessage = ErrorMessage.GetErrorDesc(10).Replace("|", "<br/>");
+            }
+
+            else
+            {
+                errorMessage = ex.Message;
+            }
             lblResult.Attributes.Add("class", "label label-warning");
             lblResult.Visible = true;
             

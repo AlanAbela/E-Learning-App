@@ -8,13 +8,14 @@
   |wrong in the syntax.
   </Error>
   <Error id="4">Sorry wrong query, remeber that
-  |you need to get the data as shown in the
-  |example table.</Error>
+  |you need to get the data as mentioned in the
+  |text.</Error>
   <Error id="5">
     Correct
   </Error>
   <Error id="6">Sorry wrong query, remember that
-  |you need to SELECT the data and not alter it.
+  |you need to SELECT the data in the specified|
+  order.
   </Error>
   <Error id="7" >
     Sorry wrong query, remember that the aim of
@@ -28,6 +29,9 @@
   </Error>
   <Error id="9">
     Please enter a query.
+  </Error>
+  <Error id="10">
+    Invalid Field name.
   </Error>
 
 </Content>

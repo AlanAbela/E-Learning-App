@@ -80,7 +80,7 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
             table.Columns.Add("Your Answer", typeof(string));
             table.Columns.Add("Correct?", typeof(string));
             table.Columns.Add("QuestionID", typeof(int));
-            table.Columns.Add("link");
+            table.Columns.Add("Recomended topic review");
             
            
 
@@ -247,35 +247,35 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
                 lblViewQ0.Text = questions.Rows[0].Field<string>("Question");
                 ViewState["Q0"] = questions.Rows[0].Field<int>("TopicID");
                 // Get the question answer and distractors.
-                chkQuizList0.DataSource = answerBL.GetAnswersByQuestionID(questions.Rows[0].Field<int>("ID"));
+                chkQuizList0.DataSource = answerBL.GetAnswersByQuestionID(questions.Rows[0].Field<int>("QuestionID"));
                 chkQuizList0.DataTextField = "Text";
                 chkQuizList0.DataValueField = "Correct";
                 chkQuizList0.DataBind();
 
                 lblViewQ1.Text = questions.Rows[1].Field<string>("Question");
                 ViewState["Q1"] = questions.Rows[1].Field<int>("TopicID");
-                chkQuizList1.DataSource = answerBL.GetAnswersByQuestionID(questions.Rows[1].Field<int>("ID"));
+                chkQuizList1.DataSource = answerBL.GetAnswersByQuestionID(questions.Rows[1].Field<int>("QuestionID"));
                 chkQuizList1.DataTextField = "Text";
                 chkQuizList1.DataValueField = "Correct";
                 chkQuizList1.DataBind();
 
                 lblViewQ2.Text = questions.Rows[2].Field<string>("Question");
                 ViewState["Q2"] = questions.Rows[2].Field<int>("TopicID");
-                chkQuizList2.DataSource = answerBL.GetAnswersByQuestionID(questions.Rows[2].Field<int>("ID"));
+                chkQuizList2.DataSource = answerBL.GetAnswersByQuestionID(questions.Rows[2].Field<int>("QuestionID"));
                 chkQuizList2.DataTextField = "Text";
                 chkQuizList2.DataValueField = "Correct";
                 chkQuizList2.DataBind();
 
                 lblViewQ3.Text = questions.Rows[3].Field<string>("Question");
                 ViewState["Q3"] = questions.Rows[3].Field<int>("TopicID");
-                chkQuizList3.DataSource = answerBL.GetAnswersByQuestionID(questions.Rows[3].Field<int>("ID"));
+                chkQuizList3.DataSource = answerBL.GetAnswersByQuestionID(questions.Rows[3].Field<int>("QuestionID"));
                 chkQuizList3.DataTextField = "Text";
                 chkQuizList3.DataValueField = "Correct";
                 chkQuizList3.DataBind();
 
                 lblViewQ4.Text = questions.Rows[4].Field<string>("Question");
                 ViewState["Q4"] = questions.Rows[4].Field<int>("TopicID");
-                chkQuizList4.DataSource = answerBL.GetAnswersByQuestionID(questions.Rows[4].Field<int>("ID"));
+                chkQuizList4.DataSource = answerBL.GetAnswersByQuestionID(questions.Rows[4].Field<int>("QuestionID"));
                 chkQuizList4.DataTextField = "Text";
                 chkQuizList4.DataValueField = "Correct";
                 chkQuizList4.DataBind();
