@@ -8,14 +8,15 @@
   |wrong in the syntax.
   </Error>
   <Error id="4">Sorry wrong query, remeber that
-  |you need to get the data as mentioned in the
-  |text.</Error>
+  |you need to get or alter the data as mentioned
+  |in the text.</Error>
   <Error id="5">
     Correct
   </Error>
-  <Error id="6">Sorry wrong query, remember that
-  |you need to SELECT the data in the specified|
-  order.
+  <Error id="6">
+   Sorry wrong query, remember that you need to
+  |SELECT or UPDATE the records exactly as 
+  |desribed in the specified order.
   </Error>
   <Error id="7" >
     Sorry wrong query, remember that the aim of

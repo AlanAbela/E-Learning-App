@@ -14,7 +14,7 @@ public class QueryDL
     SqlConnection connection = new SqlConnection(Connection.ConnectionString(Connection.ConType.One));
     SqlConnection connection2 = new SqlConnection(Connection.ConnectionString(Connection.ConType.Two));
 
-    DataTable table = new DataTable();
+    DataTable table;
     #endregion
 
     public QueryDL()
@@ -38,6 +38,7 @@ public class QueryDL
             connection.Open();
             // Get records from table.
             SqlDataReader reader = command.ExecuteReader();
+            table = new DataTable();
             table.Load(reader);
 
             // Use value from table to retrive the records to match with. 

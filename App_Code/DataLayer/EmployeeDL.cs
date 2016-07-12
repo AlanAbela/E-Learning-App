@@ -12,7 +12,7 @@ public class EmployeeDL
 {
     #region Global variables
    private static string connectionString1 = Connection.ConnectionString(Connection.ConType.One);
-    DataTable table = new DataTable();
+    DataTable table;
     #endregion
 
     #region Constructors
@@ -70,6 +70,7 @@ public class EmployeeDL
             connection.Open();
 
             SqlDataReader reader = command.ExecuteReader();
+            table = new DataTable();
             table.Load(reader);
             return table;
         }

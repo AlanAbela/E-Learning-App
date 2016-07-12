@@ -68,16 +68,23 @@ public partial class UserInterface_Topic : System.Web.UI.Page
 
         try
         {
+            // Declare variables
             gvResultTable.DataSource = null;
             gvResultTable.DataBind();
             lblResult.Visible = false;
-        
             QueryBL queryBL = new QueryBL();
             EmployeeBL employeeBL = new EmployeeBL();
             bool correct = true;
 
             // Get table to be compared with.
             DataTable compareTable = queryBL.GetQueryResult(TopicID);
+
+            // If the query is an UPDATE, INSERT or DELETE query
+            if(compareTable.Rows.Count == 0)
+            {
+                compareTable = new DataTable();
+                compareTable = employeeBL.GetAllEmployee();
+            }
 
             string query = txtTryItOut.Text;
             // Remove excessive white spaces
@@ -92,17 +99,21 @@ public partial class UserInterface_Topic : System.Web.UI.Page
                 lblResult.Text = ErrorMessage.GetErrorDesc(9).Replace("|","<br/>");
                 return;
             }
-            
+
+            // Reset table befor running user query.
+            employeeBL.RecreateTable();
 
             // Process the user input on the table.
             DataTable resultTable = queryBL.ProcessQuery(query);
-            // If the query is an UPDATE or DELETE
-            if (resultTable == null)
+
+            // If the query is an UPDATE, INSERT or DELETE
+            if (resultTable == null || resultTable.Rows.Count == 0)
             {
+                resultTable = new DataTable();
                 resultTable = employeeBL.GetAllEmployee();
             }   
 
-            // If table was not deleted.
+            // If table was not dropped.
             if (employeeBL.IsEmployee() == 1)
             {
                 // Bind to grid view.
