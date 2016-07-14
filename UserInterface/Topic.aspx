@@ -55,6 +55,7 @@
                 </div>
                 <div class="table-holder">
                     <asp:GridView ID="gvTableExample" runat="server" CssClass="table table-striped"></asp:GridView>
+                    <asp:GridView ID="gvTableExample2" runat="server" CssClass="table table-striped" OnRowDataBound="gvTableExample2_RowDataBound"></asp:GridView>
                 </div>
                 <div style="text-align: center;">
                     <asp:Button ID="btnShowVideo" ClientIDMode="Static" runat="server" CssClass="btn-default btn-info" Width="200px" Height="50px" Text="Show Video Demo" Font-Bold="true" OnClientClick="showVideo(); return false;" />

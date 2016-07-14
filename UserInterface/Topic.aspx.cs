@@ -200,11 +200,12 @@ public partial class UserInterface_Topic : System.Web.UI.Page
             {
                 errorMessage = ErrorMessage.GetErrorDesc(10).Replace("|", "<br/>");
             }
-
-            else
+           else
             {
-                errorMessage = ex.Message;
+                errorMessage = ErrorMessage.GetErrorDesc(3).Replace("|", "</br>");
             }
+
+         
             lblResult.Attributes.Add("class", "label label-warning");
             lblResult.Visible = true;
             
@@ -284,12 +285,29 @@ public partial class UserInterface_Topic : System.Web.UI.Page
     private void BindExampleTable()
     {
         TopicBL topicBL = new TopicBL();
-        DataTable table = topicBL.GetExampleTabel(TopicID);
+        DataTable table = topicBL.GetExampleTable(TopicID);
         gvTableExample.DataSource = table;
         gvTableExample.DataBind();
+
+        DataTable topic = topicBL.GetTopicByID(TopicID);
+        if(topic.Rows[0].Field<string>("ExampleQuery2") != null)
+        {
+            DataTable table2 = topicBL.GetExampleTable2(TopicID);
+            gvTableExample2.DataSource = table2;
+            gvTableExample2.DataBind();
+            int i = gvTableExample2.Columns.Count;
+        }
+
     }
+
+
 
 
     #endregion
 
+
+    protected void gvTableExample2_RowDataBound(object sender, GridViewRowEventArgs e)
+    {
+        e.Row.Cells[0].Visible = false;
+    }
 }

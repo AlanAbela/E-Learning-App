@@ -67,7 +67,7 @@ public class TopicDL
     }
 
     /// <summary>
-    /// Retrieves all recrods from table Employee.
+    /// Retrieves records according to the query stored in table topic.
     /// </summary>
     /// <returns></returns>
     public DataTable GetExampleTable(int topicID)
@@ -103,6 +103,36 @@ public class TopicDL
             command = new SqlCommand("CreateTableEmp", connection);
             command.CommandType = CommandType.StoredProcedure;
             command.ExecuteNonQuery();
+
+            return table;
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="topicID"></param>
+    /// <returns></returns>
+    public DataTable GetExampleTable2(int topicID)
+    {
+        using (SqlConnection connection = new SqlConnection(connectionString1))
+        {
+            // Get second example query
+            SqlCommand command = new SqlCommand("GetExampleQuery2", connection);
+            command.Parameters.AddWithValue("@topicID", topicID);
+            command.CommandType = CommandType.StoredProcedure;
+
+            connection.Open();
+            SqlDataReader reader = command.ExecuteReader();
+            table = new DataTable();
+            table.Load(reader);
+
+            // Get the result table of the example query.
+            string query = table.Rows[0].Field<string>("query");
+            command = new SqlCommand(query, connection);
+            reader = command.ExecuteReader();
+            table.Reset();
+            table.Load(reader);
 
             return table;
         }
