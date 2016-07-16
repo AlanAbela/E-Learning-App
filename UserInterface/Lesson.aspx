@@ -61,7 +61,9 @@
                     <asp:Label ID="lblError" runat="server"></asp:Label>
                 </div>
             </div>
+            <!-- Quiz side menu --> 
             <div id="lesson-quiz-bar">
+                <asp:Label ID="lblMark" runat="server"></asp:Label>
              <asp:Button ID="btnQuiz" CssClass="btn btn-info" runat="server" Text="Quiz" OnClick="btnQuiz_Click"/>
             </div>
         </div>

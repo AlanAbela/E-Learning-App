@@ -56,6 +56,7 @@
                 <div class="table-holder">
                     <asp:GridView ID="gvTableExample" runat="server" CssClass="table table-striped"></asp:GridView>
                     <asp:GridView ID="gvTableExample2" runat="server" CssClass="table table-striped" OnRowDataBound="gvTableExample2_RowDataBound"></asp:GridView>
+                    <asp:GridView ID="gvTableExample3" runat="server" CssClass="table table-striped"></asp:GridView>
                 </div>
                 <div style="text-align: center;">
                     <asp:Button ID="btnShowVideo" ClientIDMode="Static" runat="server" CssClass="btn-default btn-info" Width="200px" Height="50px" Text="Show Video Demo" Font-Bold="true" OnClientClick="showVideo(); return false;" />
@@ -68,10 +69,11 @@
                 </asp:Panel>
             </div>
             <!-- Modal window code (source w3school.com) -->
-            <div class="spacer" ></div>
+            <div class="spacer"></div>
             <div class="topic-info">
-                    <asp:Label ID="lblTopicText2" runat="server"></asp:Label>
-                </div>
+                <asp:Label ID="lblTopicText2" runat="server"></asp:Label>
+               
+            </div>
 
             <!-- button to open modal window -->
             <div style="text-align: center; text-align:center">

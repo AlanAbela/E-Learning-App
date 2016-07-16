@@ -43,6 +43,23 @@ public partial class UserInterface_Lesson : System.Web.UI.Page
                         lblLessonTitle.Text = table.Rows[0].Field<string>("Title");
                         lblLessonContent.Text = table.Rows[0].Field<string>("Description");
                     }
+
+                UserLessonBL userLessonBL = new UserLessonBL();
+                DataTable record = userLessonBL.GetRecord(UserID, LessonID);
+                int? correctAnswer = record.Rows[0].Field<int?>("Correct_Answer");
+                int? incorrectAnswer = record.Rows[0].Field<int?>("Incorrect_Answer");
+         
+
+                if (correctAnswer != null && incorrectAnswer != null)
+                {
+                    int totalQuestions = (int)(correctAnswer) + (int)(incorrectAnswer);
+                   int  correctAnswerToInt = (int)(correctAnswer);
+
+                    int percentComplete = (int)Math.Round((double)(100 * correctAnswerToInt) / totalQuestions);
+
+                    lblMark.Text = percentComplete.ToString();
+                }
+
             }
 
         }
@@ -78,8 +95,11 @@ public partial class UserInterface_Lesson : System.Web.UI.Page
 
                 LinkButton linkButton = new LinkButton();
 
+                // Get completion date value.
+                DateTime? date = userTopicRecord.Rows[0].Field<DateTime?>("DateCompleted");
+
                 // If topic was not complete show white very good sign.
-                if (userTopicRecord.Rows.Count == 0)
+                if (date == null)
                 {
                     linkButton.Text = "<img src=http://localhost:3787/image/c1.jpg> " + row.Field<string>("Title").ToString();
                 }

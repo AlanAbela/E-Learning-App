@@ -109,7 +109,7 @@ public class TopicDL
     }
 
     /// <summary>
-    /// 
+    /// Retrieves records according to the query stored in table topic.
     /// </summary>
     /// <param name="topicID"></param>
     /// <returns></returns>
@@ -119,6 +119,36 @@ public class TopicDL
         {
             // Get second example query
             SqlCommand command = new SqlCommand("GetExampleQuery2", connection);
+            command.Parameters.AddWithValue("@topicID", topicID);
+            command.CommandType = CommandType.StoredProcedure;
+
+            connection.Open();
+            SqlDataReader reader = command.ExecuteReader();
+            table = new DataTable();
+            table.Load(reader);
+
+            // Get the result table of the example query.
+            string query = table.Rows[0].Field<string>("query");
+            command = new SqlCommand(query, connection);
+            reader = command.ExecuteReader();
+            table.Reset();
+            table.Load(reader);
+
+            return table;
+        }
+    }
+
+    /// <summary>
+    /// Retrieves records according to the query stored in table topic.
+    /// </summary>
+    /// <param name="topicID"></param>
+    /// <returns></returns>
+    public DataTable GetExampleTable3(int topicID)
+    {
+        using (SqlConnection connection = new SqlConnection(connectionString1))
+        {
+            // Get second example query
+            SqlCommand command = new SqlCommand("GetExampleQuery3", connection);
             command.Parameters.AddWithValue("@topicID", topicID);
             command.CommandType = CommandType.StoredProcedure;
 

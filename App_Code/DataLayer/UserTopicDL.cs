@@ -35,7 +35,6 @@ public class UserTopicDL
             SqlCommand command = new SqlCommand("InsertUserTopic", connection);
             command.Parameters.AddWithValue("@userID", userID);
             command.Parameters.AddWithValue("@topicID", topicID);
-            command.Parameters.AddWithValue("@date", DateTime.Now);
             command.CommandType = CommandType.StoredProcedure;
             connection.Open();
 
@@ -49,11 +48,34 @@ public class UserTopicDL
     }
 
     /// <summary>
-    /// Get records by user ID.
+    /// Inserts the completion date.
     /// </summary>
     /// <param name="userID"></param>
-    /// <returns></returns>
-    public DataTable GetCompleteTopics(int userID)
+    /// <param name="topicID"></param>
+    public void SetCompleteDate(int userID, int topicID)
+    {
+        using (SqlConnection connection = new SqlConnection(ConnectionString1))
+        {
+            SqlCommand command = new SqlCommand("InsertUserTopicCompleteDate", connection);
+            command.Parameters.AddWithValue("@userID", userID);
+            command.Parameters.AddWithValue("@topicID", topicID);
+            command.Parameters.AddWithValue("@date", DateTime.Now);
+            command.CommandType = CommandType.StoredProcedure;
+
+            connection.Open();
+
+            command.ExecuteNonQuery();
+        }
+
+    }
+
+
+/// <summary>
+/// Get records by user ID.
+/// </summary>
+/// <param name="userID"></param>
+/// <returns></returns>
+public DataTable GetCompleteTopics(int userID)
     {
         using (SqlConnection connection = new SqlConnection(ConnectionString1))
         {

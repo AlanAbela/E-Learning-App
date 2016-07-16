@@ -15,6 +15,8 @@ public partial class UserInterface_Topic : System.Web.UI.Page
     public int LessonID { get; set; }
 
     public int UserID { get; set; }
+
+    public UserTopicBL userTopicBL {get; set;}
     #endregion
 
     #region Events
@@ -48,6 +50,12 @@ public partial class UserInterface_Topic : System.Web.UI.Page
             
 
                 BindData(TopicID);
+
+                if(!IsPostBack)
+                {
+                    // Insert record if it doesn't exist
+                    userTopicBL.InsertRecord(UserID, TopicID);
+                }
 
             }
             catch(Exception ex)
@@ -159,20 +167,21 @@ public partial class UserInterface_Topic : System.Web.UI.Page
                 lblResult.Attributes.Add("class", "label label-success");
                 lblResult.Text = errorMessage;
 
-                // Add record in table User_Topic
-                UserTopicBL userTopicBL = new UserTopicBL();
-                userTopicBL.InsertRecord(UserID, TopicID);
+                userTopicBL = new UserTopicBL();
+
+                // Set completion date
+                userTopicBL.SetCompleteDate(UserID, TopicID);
 
                 // Check if lesson is complete
                 TopicBL topicBL = new TopicBL();
                 int countTopicsUnderLesson = topicBL.GetCountTopicsByLessonID(LessonID);
                 int countTopicsCompletedByUser = topicBL.GetCountCompletedTopics(LessonID, UserID);
 
-                // If all lessons are complete add the record in table User_Lesson
+                // If all lessons are complete add the lesson competion date.
                 if(countTopicsCompletedByUser == countTopicsUnderLesson)
                 {
                     UserLessonBL userLessonBL = new UserLessonBL();
-                    userLessonBL.InserNewRecord(UserID, LessonID);
+                    userLessonBL.SetCompletionDate(UserID, LessonID);
                 }
             }
             else
@@ -282,6 +291,9 @@ public partial class UserInterface_Topic : System.Web.UI.Page
       
     }
 
+    /// <summary>
+    /// Bind example tables to gridviews.
+    /// </summary>
     private void BindExampleTable()
     {
         TopicBL topicBL = new TopicBL();
@@ -295,13 +307,16 @@ public partial class UserInterface_Topic : System.Web.UI.Page
             DataTable table2 = topicBL.GetExampleTable2(TopicID);
             gvTableExample2.DataSource = table2;
             gvTableExample2.DataBind();
-            int i = gvTableExample2.Columns.Count;
+        }
+
+        if(topic.Rows[0].Field<string>("ExampleQuery3") != null)
+        {
+            DataTable table3 = topicBL.GetExampleTable3(TopicID);
+            gvTableExample3.DataSource = table3;
+            gvTableExample3.DataBind();
         }
 
     }
-
-
-
 
     #endregion
 

@@ -38,6 +38,16 @@ public class UserTopicBL
     }
 
     /// <summary>
+    /// Set date when the topic is completed.
+    /// </summary>
+    /// <param name="userID"></param>
+    /// <param name="topicID"></param>
+    public void SetCompleteDate(int userID, int topicID)
+    {
+        userTopicDL.SetCompleteDate(userID, topicID);
+    }
+
+    /// <summary>
     /// Retrieves a record by user ID and topic ID.
     /// </summary>
     /// <param name="userID"></param>

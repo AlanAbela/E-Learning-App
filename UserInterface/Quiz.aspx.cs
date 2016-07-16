@@ -32,6 +32,7 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
 
                 LessonID = Convert.ToInt32(Request.QueryString["ID"]);
                 ViewState["lessonID"] = LessonID;
+
                 UserID = Convert.ToInt32(Session["UserID"]);
 
                 // Get the questions realted to this lesson.
@@ -45,6 +46,9 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
             }
             else
             {
+                LessonID = Convert.ToInt32(ViewState["lessonID"]);
+                UserID = Convert.ToInt32(Session["UserID"]);
+
                 // Store selections made.
                 StoreSelections();
             }
@@ -65,6 +69,7 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
     {
 
         reqField.IsValid = false;
+
             // If viewing the pre last question.
             if (mvQuestions.ActiveViewIndex == mvQuestions.Views.Count - 2)
             {
@@ -85,6 +90,8 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
            
 
             string value = string.Empty;
+            int correct = 0;
+            int incorrect = 0;
 
                 for (int i = 0; i < mvQuestions.Views.Count-1; i++)
                 {
@@ -94,24 +101,26 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
                     if (((string)(ViewState[value])).Equals("True"))
                     {
                         ViewState[value] = "Yes";
+                        correct = correct + 1;
                     }
                     else
                     {
                         ViewState[value] = "No";
+                    incorrect = incorrect + 1;
                     }
 
                // Get the question
                Label label = (Label)(mvQuestions.Views[i].FindControl("lblViewQ"+i));
 
                     table.Rows.Add(label.Text, ViewState["chkQuizList" + i + "Text"].ToString(), ViewState["chkQuizList" + i + "Value"].ToString(), ViewState["Q"+i].ToString());
-            
             }
 
                 gvResult.DataSource = table;
-            
-            //gvResult.Columns[4].Visible = false;
                 gvResult.DataBind();
-            int k = gvResult.Columns.Count;
+
+            // Store scores.
+            UserLessonBL userLessonBL = new UserLessonBL();
+            userLessonBL.InsertMark(UserID, LessonID, correct, incorrect);
 
         }
 

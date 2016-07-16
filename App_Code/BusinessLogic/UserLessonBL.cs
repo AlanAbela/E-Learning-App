@@ -30,6 +30,17 @@ public class UserLessonBL
     }
 
     /// <summary>
+    /// Udates record's completion date.
+    /// </summary>
+    /// <param name="userID"></param>
+    /// <param name="lessonID"></param>
+    public void SetCompletionDate(int userID, int lessonID)
+    {
+        userLessonDL = new UserLessonDL();
+        userLessonDL.InsertDateCompleted(userID, lessonID);
+    }
+
+    /// <summary>
     /// Retrieves a record by userID and lessonID.
     /// </summary>
     /// <param name="userID"></param>
@@ -40,4 +51,17 @@ public class UserLessonBL
         userLessonDL = new UserLessonDL();
         return userLessonDL.GetRecord(userID, lessonID);
     }
-}
+
+    /// <summary>
+    /// Inserts user mark.
+    /// </summary>
+    /// <param name="userID"></param>
+    /// <param name="lessonID"></param>
+    /// <param name="mark"></param>
+    public void InsertMark(int userID, int lessonID, int correct, int incorrect)
+    {
+        userLessonDL = new UserLessonDL();
+        userLessonDL.InsertMark(userID, lessonID, correct, incorrect);
+    }
+
+    }

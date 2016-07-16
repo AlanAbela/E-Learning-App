@@ -63,7 +63,7 @@ public partial class UserInterface_Default : System.Web.UI.Page
 
                     LinkButton linkB = new LinkButton();
                     // If a record is present in User_lesson table mark the lesson as complete.
-                    if (userLessonTable.Rows.Count == 0)
+                    if (userLessonTable.Rows[0].Field<DateTime?>("DateCompleted") == null)
                     {
                         linkB.Text = "<img src=http://localhost:3787/image/c1.jpg> " + dr[1].ToString();
                     }

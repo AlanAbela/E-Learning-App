@@ -54,6 +54,12 @@ public class TopicBL
         return topicDL.GetExampleTable2(topicID);
     }
 
+    ///  Retrieve all records from the example table.
+    public DataTable GetExampleTable3(int topicID)
+    {
+        return topicDL.GetExampleTable3(topicID);
+    }
+
     /// <summary>
     /// Get topics related to user.
     /// </summary>

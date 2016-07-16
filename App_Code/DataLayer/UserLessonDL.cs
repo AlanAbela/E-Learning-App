@@ -36,7 +36,6 @@ public class UserLessonDL
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@userID", userID);
             command.Parameters.AddWithValue("@lessonID", lessonID);
-            command.Parameters.AddWithValue("@date", DateTime.Now);
 
             connection.Open();
 
@@ -46,6 +45,50 @@ public class UserLessonDL
             {
                 command.ExecuteNonQuery();
             }
+        }
+    }
+
+    /// <summary>
+    /// Inserts completion date.
+    /// </summary>
+    /// <param name="userID"></param>
+    /// <param name="lessonID"></param>
+    public void InsertDateCompleted(int userID, int lessonID)
+    {
+        using (connection)
+        {
+            SqlCommand command = new SqlCommand("InsertUserLessonCompleteDate", connection);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@userID", userID);
+            command.Parameters.AddWithValue("@lessonID", lessonID);
+            command.Parameters.AddWithValue("@date", DateTime.Now);
+
+            connection.Open();
+
+            command.ExecuteNonQuery();
+        }
+    }
+
+/// <summary>
+/// Insert Mark.
+/// </summary>
+/// <param name="userID"></param>
+/// <param name="lessonID"></param>
+/// <param name="mark"></param>
+    public void InsertMark(int userID, int lessonID, int correct, int incorrect)
+    {
+        using (connection)
+        {
+            SqlCommand command = new SqlCommand("UpdateUserLessonMark", connection);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@userID", userID);
+            command.Parameters.AddWithValue("@lessonID", lessonID);
+            command.Parameters.AddWithValue("@correct", correct);
+            command.Parameters.AddWithValue("@incorrect", incorrect);
+
+            connection.Open();
+
+            command.ExecuteNonQuery();
         }
     }
 
