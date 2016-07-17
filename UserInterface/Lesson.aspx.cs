@@ -43,25 +43,11 @@ public partial class UserInterface_Lesson : System.Web.UI.Page
                         lblLessonTitle.Text = table.Rows[0].Field<string>("Title");
                         lblLessonContent.Text = table.Rows[0].Field<string>("Description");
                     }
-
-                UserLessonBL userLessonBL = new UserLessonBL();
-                DataTable record = userLessonBL.GetRecord(UserID, LessonID);
-                int? correctAnswer = record.Rows[0].Field<int?>("Correct_Answer");
-                int? incorrectAnswer = record.Rows[0].Field<int?>("Incorrect_Answer");
-         
-
-                if (correctAnswer != null && incorrectAnswer != null)
-                {
-                    int totalQuestions = (int)(correctAnswer) + (int)(incorrectAnswer);
-                   int  correctAnswerToInt = (int)(correctAnswer);
-
-                    int percentComplete = (int)Math.Round((double)(100 * correctAnswerToInt) / totalQuestions);
-
-                    lblMark.Text = percentComplete.ToString();
-                }
-
+                
+               
+                CalculateScore();
+           
             }
-
         }
         catch(Exception ex)
         {
@@ -147,6 +133,24 @@ public partial class UserInterface_Lesson : System.Web.UI.Page
         }
     }
 
+    private void CalculateScore()
+    {
+        UserLessonBL userLessonBL = new UserLessonBL();
+        DataTable record = userLessonBL.GetRecord(UserID, LessonID);
+        int? correctAnswer = record.Rows[0].Field<int?>("Correct_Answer");
+        int? incorrectAnswer = record.Rows[0].Field<int?>("Incorrect_Answer");
+
+
+        if (correctAnswer != null && incorrectAnswer != null)
+        {
+            int totalQuestions = (int)(correctAnswer) + (int)(incorrectAnswer);
+            int correctAnswerToInt = (int)(correctAnswer);
+
+            int percentComplete = (int)Math.Round((double)(100 * correctAnswerToInt) / totalQuestions);
+
+            lblMark.Text = "Your previous Score was: " + percentComplete.ToString() + "%";
+        }
+    }
 
     protected void btnQuiz_Click(object sender, EventArgs e)
     {

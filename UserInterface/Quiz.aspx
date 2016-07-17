@@ -35,18 +35,29 @@
     </script>
 
     <div id="page-quiz">
-        <asp:HiddenField id="hdnField" runat="server" ClientIDMode="Static"/>
+        <asp:HiddenField ID="hdnField" runat="server" ClientIDMode="Static" />
         <!-- Title -->
         <div class="page-header" style="width: 100%; text-align: center;">
+        
             <h1>
                 <asp:Label ID="lblLessonTitle" runat="server" Text="Header test"></asp:Label>
             </h1>
         </div>
         <!-- Body -->
         <div id="quiz-body">
+                <asp:UpdatePanel ID="upTimer" runat="server" ChildrenAsTriggers="false" UpdateMode="Conditional">
+                <ContentTemplate>
+                    <div style="position: relative; left: 0px; width: 200px; float: left;">
+                        <asp:Label ID="lblTime" runat="server"></asp:Label>
+                    </div>
+                </ContentTemplate>
+                <Triggers>
+                    <asp:AsyncPostBackTrigger ControlID="timer" EventName="Tick"/>
+                </Triggers>
+            </asp:UpdatePanel>
+            <asp:Timer ID="timer" runat="server" Interval="1000" OnTick="Timer_Tick" Enabled =" true"></asp:Timer>
             <div id="question-container">
-                <asp:MultiView ID="mvQuestions" runat="server" ActiveViewIndex="0">
-                     
+                <asp:MultiView ID="mvQuestions" runat="server" ActiveViewIndex="0" >
                     <asp:View runat="server">
                         <h2>
                             <asp:Label ID="lblView0" runat="server" Text="Question 1 of 5"></asp:Label></h2>

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -14,10 +15,21 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
 
     public int UserID { get; set; }
 
-    public DataTable questions { get; set; }
+    public DataTable Questions { get; set; }
+
+    public int Hour { get; set; }
+
+    public int Minute { get; set; }
+
+    public int Second { get; set; }
+
+    public bool IsTime { get; set; }
+
+    public static Stopwatch StopWatch { get; set; }
+
     protected void Page_Load(object sender, EventArgs e)
     {
-        // Check if user has a session.
+        // Check if user has a ViewState.
         if (Session["UserID"] == null)
         {
             Response.Redirect("Login.aspx");
@@ -27,6 +39,7 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
         {
             if (!IsPostBack)
             {
+
                 // Validate Query string value.
                 Validation();
 
@@ -35,22 +48,44 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
 
                 UserID = Convert.ToInt32(Session["UserID"]);
 
-                // Get the questions realted to this lesson.
+                StopWatch = new Stopwatch();
+                StopWatch.Start();
+
+                // Get the questions related to this lesson.
                 QuestionBL questionBL = new QuestionBL();
                 
                 // Get the list of questions.               
-                questions = questionBL.GetQuestionsByLessonID(LessonID);
+                Questions = questionBL.GetQuestionsByLessonID(LessonID);
 
                 // Bind questions to views.
                 BindQuestions();
+
+                // Declare starting time.
+                ViewState["hour"] = Hour;
+                ViewState["minute"] = Minute;
+                ViewState["second"] = Second;
+                IsTime = true;
+
+                ViewState["time"] = IsTime;
+     
+
             }
             else
             {
+
                 LessonID = Convert.ToInt32(ViewState["lessonID"]);
                 UserID = Convert.ToInt32(Session["UserID"]);
 
+                // Timer.
+                Hour = (int)ViewState["hour"];
+                Minute = (int)ViewState["minute"];
+                Second = (int)ViewState["second"];
+
+                IsTime = (bool)ViewState["time"];
+
                 // Store selections made.
                 StoreSelections();
+
             }
 
         }
@@ -86,8 +121,8 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
             table.Columns.Add("Correct?", typeof(string));
             table.Columns.Add("QuestionID", typeof(int));
             table.Columns.Add("Recomended topic review");
-            
-           
+
+            StopWatch.Stop();
 
             string value = string.Empty;
             int correct = 0;
@@ -118,9 +153,11 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
                 gvResult.DataSource = table;
                 gvResult.DataBind();
 
-            // Store scores.
+            // Store number of correct and incorrect questions.
             UserLessonBL userLessonBL = new UserLessonBL();
             userLessonBL.InsertMark(UserID, LessonID, correct, incorrect);
+
+            ViewState["time"] = false;
 
         }
 
@@ -244,47 +281,44 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
 
          //   QuestionBL questionBL = new QuestionBL();
             AnswerBL answerBL = new AnswerBL();
-
-            // Get the questions realted to this lesson.
-         //   DataTable questions = questionBL.GetQuestionsByLessonID(LessonID);
             
 
             // Check that the number of questions are 5 before binding to labels.
-            if (questions.Rows.Count == 5)
+            if (Questions.Rows.Count == 5)
             {
 
-                lblViewQ0.Text = questions.Rows[0].Field<string>("Question");
-                ViewState["Q0"] = questions.Rows[0].Field<int>("TopicID");
+                lblViewQ0.Text = Questions.Rows[0].Field<string>("Question");
+                ViewState["Q0"] = Questions.Rows[0].Field<int>("TopicID");
                 // Get the question answer and distractors.
-                chkQuizList0.DataSource = answerBL.GetAnswersByQuestionID(questions.Rows[0].Field<int>("QuestionID"));
+                chkQuizList0.DataSource = answerBL.GetAnswersByQuestionID(Questions.Rows[0].Field<int>("QuestionID"));
                 chkQuizList0.DataTextField = "Text";
                 chkQuizList0.DataValueField = "Correct";
                 chkQuizList0.DataBind();
 
-                lblViewQ1.Text = questions.Rows[1].Field<string>("Question");
-                ViewState["Q1"] = questions.Rows[1].Field<int>("TopicID");
-                chkQuizList1.DataSource = answerBL.GetAnswersByQuestionID(questions.Rows[1].Field<int>("QuestionID"));
+                lblViewQ1.Text = Questions.Rows[1].Field<string>("Question");
+                ViewState["Q1"] = Questions.Rows[1].Field<int>("TopicID");
+                chkQuizList1.DataSource = answerBL.GetAnswersByQuestionID(Questions.Rows[1].Field<int>("QuestionID"));
                 chkQuizList1.DataTextField = "Text";
                 chkQuizList1.DataValueField = "Correct";
                 chkQuizList1.DataBind();
 
-                lblViewQ2.Text = questions.Rows[2].Field<string>("Question");
-                ViewState["Q2"] = questions.Rows[2].Field<int>("TopicID");
-                chkQuizList2.DataSource = answerBL.GetAnswersByQuestionID(questions.Rows[2].Field<int>("QuestionID"));
+                lblViewQ2.Text = Questions.Rows[2].Field<string>("Question");
+                ViewState["Q2"] = Questions.Rows[2].Field<int>("TopicID");
+                chkQuizList2.DataSource = answerBL.GetAnswersByQuestionID(Questions.Rows[2].Field<int>("QuestionID"));
                 chkQuizList2.DataTextField = "Text";
                 chkQuizList2.DataValueField = "Correct";
                 chkQuizList2.DataBind();
 
-                lblViewQ3.Text = questions.Rows[3].Field<string>("Question");
-                ViewState["Q3"] = questions.Rows[3].Field<int>("TopicID");
-                chkQuizList3.DataSource = answerBL.GetAnswersByQuestionID(questions.Rows[3].Field<int>("QuestionID"));
+                lblViewQ3.Text = Questions.Rows[3].Field<string>("Question");
+                ViewState["Q3"] = Questions.Rows[3].Field<int>("TopicID");
+                chkQuizList3.DataSource = answerBL.GetAnswersByQuestionID(Questions.Rows[3].Field<int>("QuestionID"));
                 chkQuizList3.DataTextField = "Text";
                 chkQuizList3.DataValueField = "Correct";
                 chkQuizList3.DataBind();
 
-                lblViewQ4.Text = questions.Rows[4].Field<string>("Question");
-                ViewState["Q4"] = questions.Rows[4].Field<int>("TopicID");
-                chkQuizList4.DataSource = answerBL.GetAnswersByQuestionID(questions.Rows[4].Field<int>("QuestionID"));
+                lblViewQ4.Text = Questions.Rows[4].Field<string>("Question");
+                ViewState["Q4"] = Questions.Rows[4].Field<int>("TopicID");
+                chkQuizList4.DataSource = answerBL.GetAnswersByQuestionID(Questions.Rows[4].Field<int>("QuestionID"));
                 chkQuizList4.DataTextField = "Text";
                 chkQuizList4.DataValueField = "Correct";
                 chkQuizList4.DataBind();
@@ -295,13 +329,6 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
 
         }
 
-    }
-
-    class Selection
-    {
-        private string Result { get; set; }
-        private string Answer { get; set; }
-        private string Question { get; set; }
     }
 
     #endregion
@@ -327,12 +354,55 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
             e.Row.Cells[4].Controls.Add(the_url);
            }
         }
-
-        //if(e.Row.RowType == DataControlRowType.Header)
-        //{
-        //    Label label = new Label();
-        //    label.Text = "Recommended Review";
-        //    e.Row.Cells[3].Controls.Add(label);
-        //}
     }
+
+    /// <summary>
+    /// Called by timer to measure time.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void Timer_Tick(object sender, EventArgs e)
+    {
+
+        long sec = StopWatch.Elapsed.Seconds;
+        long min = StopWatch.Elapsed.Minutes;
+        long hour = StopWatch.Elapsed.Hours;
+
+        
+
+            if(hour < 10)
+        {
+            lblTime.Text = "0" + hour;
+        }
+            else
+        {
+            lblTime.Text = hour.ToString();
+        }
+        lblTime.Text += " : ";
+
+        if (min < 10)
+        {
+            lblTime.Text += "0" + min;
+        }
+        else
+        {
+            lblTime.Text += min.ToString();
+        }
+
+            lblTime.Text += " : ";
+
+        if (sec < 10)
+        {
+            lblTime.Text += "0" + sec;
+        }
+        else
+        {
+            lblTime.Text += sec.ToString();
+        } 
+      
+    }
+
+  
+    
+
 }
