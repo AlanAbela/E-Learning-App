@@ -64,4 +64,10 @@ public class UserLessonBL
         userLessonDL.InsertMark(userID, lessonID, correct, incorrect);
     }
 
+    public void InsertQuizTime(int userID, int lessonID, TimeSpan time)
+    {
+        userLessonDL = new UserLessonDL();
+        userLessonDL.InsertQuizTime(userID, lessonID, time);
+    }
+
     }

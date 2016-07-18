@@ -58,16 +58,7 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
                 Questions = questionBL.GetQuestionsByLessonID(LessonID);
 
                 // Bind questions to views.
-                BindQuestions();
-
-                // Declare starting time.
-                ViewState["hour"] = Hour;
-                ViewState["minute"] = Minute;
-                ViewState["second"] = Second;
-                IsTime = true;
-
-                ViewState["time"] = IsTime;
-     
+                BindQuestions();    
 
             }
             else
@@ -75,13 +66,6 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
 
                 LessonID = Convert.ToInt32(ViewState["lessonID"]);
                 UserID = Convert.ToInt32(Session["UserID"]);
-
-                // Timer.
-                Hour = (int)ViewState["hour"];
-                Minute = (int)ViewState["minute"];
-                Second = (int)ViewState["second"];
-
-                IsTime = (bool)ViewState["time"];
 
                 // Store selections made.
                 StoreSelections();
@@ -105,63 +89,133 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
 
         reqField.IsValid = false;
 
-            // If viewing the pre last question.
-            if (mvQuestions.ActiveViewIndex == mvQuestions.Views.Count - 2)
-            {
-                // Move to last view.
-                mvQuestions.ActiveViewIndex = mvQuestions.ActiveViewIndex + 1;
-                reqField.IsValid = true;
-                btnSubmit.Visible = false;
+        // If viewing the pre last question.
+        if (mvQuestions.ActiveViewIndex == mvQuestions.Views.Count - 2)
+        {
+            // Move to last view.
+            mvQuestions.ActiveViewIndex = mvQuestions.ActiveViewIndex + 1;
+            reqField.IsValid = true;
+            btnSubmit.Visible = false;
 
             // Declare a datatable to bind to the result grid view.
             DataTable table = new DataTable();
-            
+
             table.Columns.Add("Question", typeof(string));
             table.Columns.Add("Your Answer", typeof(string));
             table.Columns.Add("Correct?", typeof(string));
             table.Columns.Add("QuestionID", typeof(int));
             table.Columns.Add("Recomended topic review");
 
+            // Stop time.
             StopWatch.Stop();
 
             string value = string.Empty;
             int correct = 0;
             int incorrect = 0;
 
-                for (int i = 0; i < mvQuestions.Views.Count-1; i++)
+            // Translate boolean to values.
+            for (int i = 0; i < mvQuestions.Views.Count - 1; i++)
+            {
+                value = "chkQuizList" + i + "Value";              
+                if (((string)(ViewState[value])).Equals("True"))
                 {
-                    value = "chkQuizList" + i + "Value";
+                    ViewState[value] = "Yes";
+                    correct = correct + 1;
+                }
+                else
+                {
+                    ViewState[value] = "No";
+                    incorrect = incorrect + 1;
+                }
 
-                    // Translate boolean to values.
-                    if (((string)(ViewState[value])).Equals("True"))
+                // Get the question.
+                Label label = (Label)(mvQuestions.Views[i].FindControl("lblViewQ" + i));
+
+                table.Rows.Add(label.Text, ViewState["chkQuizList" + i + "Text"].ToString(), ViewState["chkQuizList" + i + "Value"].ToString(), ViewState["Q" + i].ToString());
+            }
+
+            // Bind to gridview.
+            gvResult.DataSource = table;
+            gvResult.DataBind();
+
+            
+            UserLessonBL userLessonBL = new UserLessonBL();
+            DataTable record = userLessonBL.GetRecord(UserID, LessonID);
+            bool betterScore = false;
+
+            // Store number of correct and incorrect questions.
+            int? previousCorrect = record.Rows[0].Field<int?>("Correct_answer");
+            if (previousCorrect != null && previousCorrect < correct)
+            {
+                lblNotification.Text += "Congratulations you obtained a better score";
+                userLessonBL.InsertMark(UserID, LessonID, correct, incorrect);
+                betterScore = true;
+            }
+            else if(previousCorrect == null)
+            {
+                userLessonBL.InsertMark(UserID, LessonID, correct, incorrect);
+                betterScore = true;
+            }
+
+            // Show score.
+            int percentCorrect = (int)Math.Round((double)(100 * correct) / (correct + incorrect));
+            lblScore.Text = percentCorrect + "% Correct";
+
+            // If time is null or better and score is better, record it.
+            TimeSpan? quizTime = record.Rows[0].Field<TimeSpan?>("Quiz_Time");
+            if (quizTime != null)
+            {
+                int hr = ((TimeSpan)(quizTime)).Hours;
+                int min = ((TimeSpan)(quizTime)).Minutes;
+                int sec = ((TimeSpan)(quizTime)).Seconds;
+
+                bool isBetterTime = false;
+
+                if (StopWatch.Elapsed.Hours < hr)
+                {
+                    if (betterScore)
                     {
-                        ViewState[value] = "Yes";
-                        correct = correct + 1;
+                        userLessonBL.InsertQuizTime(UserID, LessonID, StopWatch.Elapsed);
+                    }
+                    isBetterTime = true;
+                }
+                else if (StopWatch.Elapsed.Hours == hr && StopWatch.Elapsed.Minutes < min)
+                {
+                    if (betterScore)
+                    {
+                        userLessonBL.InsertQuizTime(UserID, LessonID, StopWatch.Elapsed);
+                    }
+                    isBetterTime = true;
+                }
+                else if (StopWatch.Elapsed.Hours == hr && StopWatch.Elapsed.Minutes == min && StopWatch.Elapsed.Seconds < sec)
+                {
+                    if (betterScore)
+                    {
+                        userLessonBL.InsertQuizTime(UserID, LessonID, StopWatch.Elapsed);
+                    }
+                    isBetterTime = true;
+                }
+
+                if (isBetterTime)
+                {
+                    if (lblNotification.Text == "")
+                    {
+                        lblNotification.Text += "You achieved a better time.";
                     }
                     else
                     {
-                        ViewState[value] = "No";
-                    incorrect = incorrect + 1;
+                        lblNotification.Text += ". and achieved a better time.";
                     }
-
-               // Get the question
-               Label label = (Label)(mvQuestions.Views[i].FindControl("lblViewQ"+i));
-
-                    table.Rows.Add(label.Text, ViewState["chkQuizList" + i + "Text"].ToString(), ViewState["chkQuizList" + i + "Value"].ToString(), ViewState["Q"+i].ToString());
+                }
             }
-
-                gvResult.DataSource = table;
-                gvResult.DataBind();
-
-            // Store number of correct and incorrect questions.
-            UserLessonBL userLessonBL = new UserLessonBL();
-            userLessonBL.InsertMark(UserID, LessonID, correct, incorrect);
-
-            ViewState["time"] = false;
-
+            // If null time is present, record the time.
+            else
+            {
+                userLessonBL.InsertQuizTime(UserID, LessonID, StopWatch.Elapsed);
+            }
         }
 
-            if (mvQuestions.ActiveViewIndex < 4)
+        if (mvQuestions.ActiveViewIndex < 4)
             {
 
                 mvQuestions.ActiveViewIndex = mvQuestions.ActiveViewIndex + 1;
@@ -192,11 +246,8 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
                         reqField.ControlToValidate = "chkQuizList4";
                         reqField.IsValid = true;
                     }
-
                 }
-
             }
-        
     }
 
     #region Privare methods
@@ -225,7 +276,7 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
     }
 
     /// <summary>
-    /// Store user selections in viewstates
+    /// Store user selections in viewstates.
     /// </summary>
     private void StoreSelections()
     {   
@@ -368,17 +419,15 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
         long min = StopWatch.Elapsed.Minutes;
         long hour = StopWatch.Elapsed.Hours;
 
-        
-
             if(hour < 10)
         {
-            lblTime.Text = "0" + hour;
+            lblTime.Text = "Time: 0" + hour;
         }
             else
         {
-            lblTime.Text = hour.ToString();
+            lblTime.Text = "Time: " + hour.ToString();
         }
-        lblTime.Text += " : ";
+        lblTime.Text += ":";
 
         if (min < 10)
         {
@@ -389,7 +438,7 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
             lblTime.Text += min.ToString();
         }
 
-            lblTime.Text += " : ";
+            lblTime.Text += ":";
 
         if (sec < 10)
         {
@@ -401,8 +450,5 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
         } 
       
     }
-
-  
-    
 
 }

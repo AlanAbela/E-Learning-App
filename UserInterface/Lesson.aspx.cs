@@ -31,7 +31,8 @@ public partial class UserInterface_Lesson : System.Web.UI.Page
               
                     Validation();
 
-                    LessonID = Convert.ToInt32(Request.QueryString["ID"]);
+                    LessonID = Convert.ToInt32(Request.QueryString["ID"]);         
+                    
                     BindNavMenu(LessonID, UserID);
 
                     LessonBL lessonBL = new LessonBL();
@@ -70,6 +71,8 @@ public partial class UserInterface_Lesson : System.Web.UI.Page
 
             // Filter for completed topics by the user.
             UserTopicBL userTopicBL = new UserTopicBL();
+
+
             DataTable userTopicRecord = null;
 
             foreach (DataRow row in lessonTopics.Rows)
@@ -78,6 +81,13 @@ public partial class UserInterface_Lesson : System.Web.UI.Page
 
                 int topicID = row.Field<int>("ID");
                 userTopicRecord = userTopicBL.GetRecord(UserID, topicID);
+
+                // If record not present insert a new one.
+                if(userTopicRecord.Rows.Count < 1)
+                {
+                    userTopicBL.InsertRecord(UserID, topicID);
+                    userTopicRecord = userTopicBL.GetRecord(UserID, topicID);
+                }
 
                 LinkButton linkButton = new LinkButton();
 
@@ -147,8 +157,20 @@ public partial class UserInterface_Lesson : System.Web.UI.Page
             int correctAnswerToInt = (int)(correctAnswer);
 
             int percentComplete = (int)Math.Round((double)(100 * correctAnswerToInt) / totalQuestions);
+            TimeSpan timeTaken = record.Rows[0].Field<TimeSpan>("Quiz_Time");
+            int hr = timeTaken.Hours;
+            int min = timeTaken.Minutes;
+            int sec = timeTaken.Seconds;
 
-            lblMark.Text = "Your previous Score was: " + percentComplete.ToString() + "%";
+           string MarkColor = "color:blue;";
+
+            if(percentComplete < 50)
+            {
+                MarkColor = "color:red;";
+            }
+            
+
+             lblMark.Text = "Best Score was: <span style = "+ MarkColor+">" +  percentComplete.ToString() + "%" +"</span>" + "</br>Time taken: "+hr + ":" + min + ":" + sec;
         }
     }
 

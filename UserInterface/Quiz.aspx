@@ -47,9 +47,12 @@
         <div id="quiz-body">
                 <asp:UpdatePanel ID="upTimer" runat="server" ChildrenAsTriggers="false" UpdateMode="Conditional">
                 <ContentTemplate>
-                    <div style="position: relative; left: 0px; width: 200px; float: left;">
-                        <asp:Label ID="lblTime" runat="server"></asp:Label>
+                    <div style="position: relative; left: 0px; width: 200px; text-align:left;">
+                        <asp:Label ID="lblTime" runat="server"></asp:Label>        
                     </div>
+                    <div style="position: relative; left: 0px; width: 100px; text-align:left; float:left;">
+                        <asp:Label ID="lblScore" runat="server"></asp:Label>
+                    </div>            
                 </ContentTemplate>
                 <Triggers>
                     <asp:AsyncPostBackTrigger ControlID="timer" EventName="Tick"/>
@@ -133,8 +136,11 @@
                <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-default btn-submit" Text="Submit" OnClick="btnSubmit_Click"/>
                 <br />
                 <br />
-              <h3><asp:RequiredFieldValidator ID="reqField" runat="server" ControlToValidate= "chkQuizList0"  ErrorMessage="Please make a selection" CssClass="label label-warning"></asp:RequiredFieldValidator></h3>
-             
+                <h3>
+                    <asp:RequiredFieldValidator ID="reqField" runat="server" ControlToValidate="chkQuizList0" ErrorMessage="Please make a selection" CssClass="label label-warning"></asp:RequiredFieldValidator></h3>
+            </div>
+            <div style="width:auto;">
+                <h3> <asp:Label ID="lblNotification" CssClass="label label-success" runat="server"></asp:Label></h3>
             </div>
         </div>
     </div>

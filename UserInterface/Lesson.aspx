@@ -51,7 +51,7 @@
                 <h3 style="margin: 0px; height: 50px;">
                     <asp:Label ID="lblSideMenuTitle" runat="server" CssClass="page-header no-margin" Text="Topics"></asp:Label>
                 </h3>
-                <ul class="nav nav-pills nav-stacked" id="navSideMenu" runat="server" style="width: 100%">
+                <ul class="nav nav-pills nav-stacked" id="navSideMenu" runat="server" style="width: 100%; text-align:left;">
                 </ul>
             </div>
             <!-- Lesson Content -->
@@ -65,6 +65,6 @@
             <div id="lesson-quiz-bar">
                 <div class="jumbotron"><asp:Label ID="lblMark" runat="server"></asp:Label></div>
              <asp:Button ID="btnQuiz" CssClass="btn btn-info" runat="server" Text="Quiz" OnClick="btnQuiz_Click"/>
-            </div>
+            </div>           
         </div>
  </asp:Content>

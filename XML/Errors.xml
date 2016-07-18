@@ -16,7 +16,7 @@
   <Error id="6">
    Sorry wrong query, remember that you need to
   |SELECT or UPDATE the records exactly as 
-  |desribed in the specified order.
+  |described in the specified order.
   </Error>
   <Error id="7" >
     Sorry wrong query, remember that the aim of

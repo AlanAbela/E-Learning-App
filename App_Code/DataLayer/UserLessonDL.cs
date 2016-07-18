@@ -118,6 +118,29 @@ public class UserLessonDL
 
         }
     }
+
+    /// <summary>
+    /// Inserts time taken to complete quiz.
+    /// </summary>
+    /// <param name="userID"></param>
+    /// <param name="lessonID"></param>
+    /// <param name="dateTime"></param>
+    public void InsertQuizTime(int userID, int lessonID, TimeSpan time)
+    {
+        using (connection)
+        {
+            SqlCommand command = new SqlCommand("InsertUserLessonQuizTime", connection);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@quizTime", time);
+            command.Parameters.AddWithValue("@userID", userID);
+            command.Parameters.AddWithValue("@lessonID", lessonID);
+
+            connection.Open();
+
+            command.ExecuteNonQuery();
+        }
+    }
+
     #endregion
 
     #region Private methods
