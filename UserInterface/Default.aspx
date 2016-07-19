@@ -31,7 +31,14 @@
             </div>
           <!-- Description -->
           <div id="page-default">
-          <asp:Label ID="lblDesc" runat="server" Text="Welcome to the my SQL learning platfrom."></asp:Label>
+              <div>
+          <asp:Label ID="lblDesc" runat="server" ><b>Welcome to The SQL learning platform.</b> </br></br> With the help of this 
+              web site you will gain SQL knowledge for the most used SQL statements. </br></br> In the video tutorials presented in this web site,
+              I am using Microsoft SQL server and Microsoft SQL Server Management Studio. You are not required to use the same or similar tools for your learning
+              practices, because an SQL Editor is included for your practices. However to practice more advanced SQL queries that are not listed in this website, 
+              you will need to install a Database server as well as an SQL management tool that supports the selected database server.
+          </asp:Label>
+                  </div>
           </div>
   </div>
 

@@ -134,6 +134,19 @@ public class TopicDL
             table.Reset();
             table.Load(reader);
 
+            // If example is an UPDATE or INSERT
+            if (table.Rows.Count == 0)
+            {
+                command = new SqlCommand("GetAllEmployee", connection);
+                reader = command.ExecuteReader();
+                table.Load(reader);
+            }
+
+            // Reset the table in case the query changes the fields of the table
+            command = new SqlCommand("CreateTableEmp", connection);
+            command.CommandType = CommandType.StoredProcedure;
+            command.ExecuteNonQuery();
+
             return table;
         }
     }
@@ -163,6 +176,19 @@ public class TopicDL
             reader = command.ExecuteReader();
             table.Reset();
             table.Load(reader);
+
+            // If example is an UPDATE or INSERT
+            if (table.Rows.Count == 0)
+            {
+                command = new SqlCommand("GetAllEmployee", connection);
+                reader = command.ExecuteReader();
+                table.Load(reader);
+            }
+
+            // Reset the table in case the query changes the fields of the table
+            command = new SqlCommand("CreateTableEmp", connection);
+            command.CommandType = CommandType.StoredProcedure;
+            command.ExecuteNonQuery();
 
             return table;
         }

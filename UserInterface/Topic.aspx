@@ -4,10 +4,10 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 
-    <script type="text/javascript">
+    <script type="text/javascript" >
 
         // At load hide video panel.
-        $(document).ready(function () {
+        $(document).ready(function () {       
 
             $("#pnlShowVideo").hide();
 
@@ -23,16 +23,24 @@
         // If video panel is hidden slide down. If it is visible slide up.
         function showVideo()
         {
+            var videoURL = $('#videoSource').attr('src');
+            var dataplay = $('#videoSource').attr('data-play');
   
             if($("#pnlShowVideo").is(":hidden"))
             {
                 $("#pnlShowVideo").slideDown("slow");
                 $('#btnShowVideo').val("Hide Video Demo");
+                $('#videoSource').attr('src',videoURL+'?autoplay=1');
+                $('#videoSource').attr('data-play',1);
             }
             else
             {
+                $('#videoSource').attr('src',videoURL+'?autoplay=0');
+                $('#videoSource').attr('data-play',0);
+
                 $("#pnlShowVideo").slideUp("slow");
                 $('#btnShowVideo').val("Show Video Demo");
+                
             }
 
             return false;
@@ -64,7 +72,7 @@
                 <asp:Panel ID="pnlShowVideo" runat="server" ClientIDMode="Static">
                     <div class="video-holder">
                         <div class="spacer"></div>
-                        <iframe id="videoSource" runat="server" class="video"></iframe>
+                        <iframe id="videoSource" runat="server" class="video" ClientIDMode ="Static"></iframe>
                     </div>
                 </asp:Panel>
             </div>

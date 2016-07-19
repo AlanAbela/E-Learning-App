@@ -323,9 +323,9 @@ public partial class UserInterface_Topic : System.Web.UI.Page
 
     protected void gvTableExample2_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        if (e.Row.Cells.Count > 1)
-        {
-            e.Row.Cells[0].Visible = false;
-        }
+        //if (e.Row.Cells.Count > 1)
+        //{
+        //    e.Row.Cells[0].Visible = false;
+        //}
     }
 }
