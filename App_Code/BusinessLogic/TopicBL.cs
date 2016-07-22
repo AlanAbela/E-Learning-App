@@ -26,7 +26,9 @@ public class TopicBL
     /// <returns></returns>
     public DataTable GetTopicsByLessonID(int ID)
     {
-        return topicDL.GetAllTopicsByLessonID(ID);
+        return  topicDL.GetAllTopicsByLessonID(ID);
+
+        
     }
 
     /// <summary>

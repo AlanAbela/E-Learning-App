@@ -131,6 +131,17 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
                 // Get the question.
                 Label label = (Label)(mvQuestions.Views[i].FindControl("lblViewQ" + i));
 
+                // If question text contains these html characters, remove them
+                if(label.Text.Contains("</br></br>"))
+                {
+                    label.Text = label.Text.Replace("</br></br>"," ");
+                }
+
+                if(label.Text.Contains("</br>"))
+                {
+                    label.Text = label.Text.Replace("</br>", " ");
+                }
+
                 table.Rows.Add(label.Text, ViewState["chkQuizList" + i + "Text"].ToString(), ViewState["chkQuizList" + i + "Value"].ToString(), ViewState["Q" + i].ToString());
             }
 

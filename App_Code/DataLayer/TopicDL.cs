@@ -39,6 +39,10 @@ public class TopicDL
             table = new DataTable();
             table.Load(reader);
 
+            // Sort topics.
+            table.DefaultView.Sort = "OrderNo ASC";
+            table = table.DefaultView.ToTable();
+
             return table;
         }
     }
