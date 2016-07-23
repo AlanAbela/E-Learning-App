@@ -142,7 +142,7 @@ public class UserDL
     /// </summary>
     /// <param name="ID"></param>
     /// <returns></returns>
-    public DataTable GetUSerByID(int ID)
+    public DataTable GetUserByID(int ID)
     {
         using (SqlConnection conn = new SqlConnection(Connection.ConnectionString(Connection.ConType.One)))
         {
@@ -159,6 +159,72 @@ public class UserDL
             return table;
         }
 
+    }
+
+    /// <summary>
+    /// Insert final test number of correct answers.
+    /// </summary>
+    /// <param name="ID"></param>
+    /// <param name="correctAnswers"></param>
+    public void InsertCorrectAnswers(int ID, int? correctAnswers)
+    {
+        using (SqlConnection conn = new SqlConnection(Connection.ConnectionString(Connection.ConType.One)))
+        {
+            SqlCommand command = new SqlCommand("InsertUserCorrectAnswers", conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@userID", ID);
+            command.Parameters.AddWithValue("@correctAnswers", correctAnswers);
+
+            conn.Open();
+
+            command.ExecuteNonQuery();
+
+            conn.Dispose();
+        }
+    }
+
+    /// <summary>
+    /// Insert time taken to complete test.
+    /// </summary>
+    /// <param name="ID"></param>
+    /// <param name="time"></param>
+    public void InsertTimeTaken (int ID, TimeSpan? time)
+    {
+        using (SqlConnection conn = new SqlConnection(Connection.ConnectionString(Connection.ConType.One)))
+        {
+            SqlCommand command = new SqlCommand("InsertUserTestTime", conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@userID", ID);
+            command.Parameters.AddWithValue("@time", time);
+
+            conn.Open();
+
+            command.ExecuteNonQuery();
+
+            conn.Dispose();
+        }
+    }
+
+    /// <summary>
+    /// Insert time when test is completed.
+    /// </summary>
+    /// <param name="ID"></param>
+    /// <param name="time"></param>
+    public void InsertTestCompleteDate(int ID)
+    {
+        using (SqlConnection conn = new SqlConnection(Connection.ConnectionString(Connection.ConType.One)))
+        {
+            SqlCommand command = new SqlCommand("InsertUserFinalTestCompleteDate", conn);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("@userID", ID);
+            command.Parameters.AddWithValue("@dateCompleted", DateTime.Now);
+
+            conn.Open();
+
+            command.ExecuteNonQuery();
+
+            conn.Dispose();
+        }
     }
 
     /// <summary>

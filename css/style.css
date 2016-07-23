@@ -96,10 +96,15 @@ html
 
 #defaultContent
 {
-    width:80%;
+    /*width:100%;
     height:100%;
     position:absolute;
-    left:10px;  
+    left:10px;*/  
+
+    margin-left:10px;
+    margin-right:10px;
+    height:1000px;
+    width:100%;
 }
 
 #lesson-content
@@ -136,6 +141,18 @@ html
    text-align:center;
 }
 
+#exam-result{
+
+     width:14%;
+    height:100%;
+    position:absolute;
+    right:0px;
+    border-left:solid;
+   border-bottom-color:black;
+   border-width:2px;
+   text-align:center;
+}
+
 .error-message
 {
     width:80%;
@@ -157,7 +174,7 @@ html
     width:100%;
 }
 
-#page-topic
+.page-topic
 {
     position:relative;
     margin-left:10px;
@@ -167,6 +184,15 @@ html
 }
 
 #page-quiz
+{
+     position:relative;
+    margin-left:10px;
+    margin-right:10px;
+    height:1000px;
+    width:100%;
+}
+
+#page-test
 {
      position:relative;
     margin-left:10px;
@@ -201,7 +227,18 @@ html
     text-align:center;
 }
 
-#question-container
+#test-body
+{
+    position:relative;
+    width:inherit;
+    height:inherit;
+    margin-top:20px;
+    margin-left:auto;
+    margin-right:auto;
+    text-align:center;
+}
+
+.question-container
 {
 
     width:75%;
@@ -255,24 +292,60 @@ html
 
 #masterSideMenu
 {
-   width:14%;
+   /*width:14%;
    float:left;
    height:100%;
    border-right:solid;
    border-bottom-color:black;
    border-width:2px;
    text-align:center;
-   position:relative;
+   position:relative;*/
+
+     width:14%;
+    height:100%;
+    position:absolute;
+    left:0px;
+    border-right:solid;
+   border-bottom-color:black;
+   border-width:2px;
+   text-align:center;
+}
+
+#masterRightSideMenu
+{
+     /*width:14%;
+    height:100%;
+    position:relative;
+    right:0px;
+    border-left:solid;
+   border-bottom-color:black;
+   border-width:2px;
+   text-align:center*/
+        width:14%;
+    height:100%;
+    position:absolute;
+    right:0px;
+    border-left:solid;
+   border-bottom-color:black;
+   border-width:2px;
+   text-align:center;
 }
 
 #page-default
 {
-    position:absolute;
+    /*position:relative;
     margin-left : 20px;
     margin-right : 20px;
     width:80%;
     height:inherit;
-    right:0px;
+    right:0px;*/
+
+      position:absolute;
+    margin-left:10px;
+    margin-right:10px;
+    height:1000px;
+    width:1000px;
+    left:300px;
     
 }
 

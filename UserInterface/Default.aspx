@@ -13,13 +13,17 @@
             window.open("lesson.aspx?ID=" + id);
         }
 
+        $(document).ready(function () {
+
+            $("#home").parent().children().removeClass("active");
+            $("#home").addClass("active");
+        });
+
     </script>
-     
-  <div id="defaultContent">
-    <div class ="page-header" style="width:100%; text-align:center; margin-right:auto; margin-left:auto;">
+     <div class ="page-header" style="width:100%; text-align:center; margin-right:auto; margin-left:auto;">
      <h1><asp:Label ID="lblTitle" runat="server"></asp:Label></h1>
     </div>
-      
+  <div id="defaultContent">  
                <!-- Side menu -->
             <div id="masterSideMenu">
                 <h3 style="margin:0px; height:50px;">
@@ -29,17 +33,21 @@
                    
                 </ul>               
             </div>
+
           <!-- Description -->
-          <div id="page-default">
-              <div>
+          <div id="page-default" style="float:right">
           <asp:Label ID="lblDesc" runat="server" ><b>Welcome to The SQL learning platform.</b> </br></br> With the help of this 
               web site you will gain SQL knowledge for the most used SQL statements. </br></br> In the video tutorials presented in this web site,
               I am using Microsoft SQL server and Microsoft SQL Server Management Studio. You are not required to use the same or similar tools for your learning
               practices, because an SQL Editor is included for your practices. However to practice more advanced SQL queries that are not listed in this website, 
               you will need to install a Database server as well as an SQL management tool that supports the selected database server.
           </asp:Label>
-                  </div>
           </div>
+      <!-- Right side menu -->
+      <div id="masterRightSideMenu">             
+                 <asp:Panel runat="server" ID="rightPanel" CssClass="jumbotron"> <asp:Label ID="lblMark" runat="server"></asp:Label></asp:Panel>
+          </div>
+
   </div>
 
 </asp:Content>

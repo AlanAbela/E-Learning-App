@@ -9,10 +9,11 @@ using System.Web;
 /// </summary>
 public class UserBL
 {
+    public UserDL UserDL {get; set;}
 
-    public UserBL()
+public UserBL()
     {
-       
+        UserDL = new UserDL();
     }
 
     #region Public methods
@@ -21,12 +22,43 @@ public class UserBL
     /// </summary>
     /// <param name="userID"></param>
     /// <returns>A userBL object or null</returns>
-    public DataTable GetUserBL(int userID)
+    public DataTable GetUser(int userID)
     {
-        UserDL userDL = new UserDL();
-        return userDL.GetUSerByID(userID);
+        return UserDL.GetUserByID(userID);
 
     }
-    #endregion
 
-}
+
+    /// <summary>
+    /// Insert final test's number of correct answers.
+    /// </summary>
+    /// <param name="ID"></param>
+    /// <param name="correctAnswers"></param>
+    public void InsertCorrectAnswers(int ID, int? correctAnswers)
+    {
+        UserDL.InsertCorrectAnswers(ID, correctAnswers);
+    }
+
+    /// <summary>
+    /// Insert time taken to complete test.
+    /// </summary>
+    /// <param name="ID"></param>
+    /// <param name="time"></param>
+    public void InsertTimeTaken(int ID, TimeSpan? time)
+    {
+        UserDL.InsertTimeTaken(ID, time);
+    }
+
+    /// <summary>
+    /// Insert time when test is completed.
+    /// </summary>
+    /// <param name="ID"></param>
+    /// <param name="time"></param>
+    public void InsertTestCompleteDate(int ID)
+    {
+        UserDL.InsertTestCompleteDate(ID);
+    }
+
+        #endregion
+
+    }

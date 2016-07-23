@@ -103,7 +103,7 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
             table.Columns.Add("Question", typeof(string));
             table.Columns.Add("Your Answer", typeof(string));
             table.Columns.Add("Correct?", typeof(string));
-            table.Columns.Add("QuestionID", typeof(int));
+            table.Columns.Add("TopicID", typeof(int));
             table.Columns.Add("Recomended topic review");
 
             // Stop time.

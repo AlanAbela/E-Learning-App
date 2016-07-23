@@ -11,17 +11,36 @@
 
     <link href="../css/bootstrap.min.css" rel="stylesheet" />
     <link href="../css/style.css" rel="stylesheet" />
+    <script src="../js/jquery-3.1.0.min.js"></script>
     <script src="../js/jquery.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
-    <script type="text/javascript">
 
-       
-        function homeRedirect()
-        {
-            window.open("Default.aspx", "_self");
-        }
+
+    <script type="text/javascript">   
+        //function homeRedirect()
+        //{
+        //    window.open("Default.aspx", "_self");
+
+        //}
+        
 
         $(document).ready(function () {
+
+            //$("#home").parent().children().removeClass("active");
+            //$("#home").addClass("active");
+            //});
+
+            //$("#test").click(function (e) {
+            //    $(this).parent().children().removeClass("active");
+            //    $(this).addClass("active");
+            //    e.preventDefault();
+            //});
+
+            //$("#test").click(function (e) {
+            //    $("#home").removeClass("active");
+            //    $("#test").removeClass("active");
+            //    $("#test").addClass("active");
+          //  });
             // Highlights selected menu item.
           //  $("ul li").click(function (e) {
           //     $(this).parent().children().removeClass("active");
@@ -80,7 +99,8 @@
                         <a class="navbar-brand" href="#">The SQL Learning Platform</a>
                     </div>
                     <ul class="nav navbar-nav">
-                            <li class="active"><a href="#" onclick="homeRedirect()">Home</a></li>
+                            <li id="home"><asp:LinkButton ID="homeLink" runat="server" Text="Home" OnClick="homeLink_Click" ></asp:LinkButton></li>
+                            <li id="test"><asp:LinkButton ID="btnTest" runat="server" Text ="Take Exam" Visible="false" OnClick="btnTest_Click"></asp:LinkButton></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li>

@@ -43,6 +43,7 @@
                 <asp:Label ID="lblLessonTitle" runat="server" Text="Header test"></asp:Label>
             </h1>
         </div>
+
         <!-- Body -->
         <div id="quiz-body">
                 <asp:UpdatePanel ID="upTimer" runat="server" ChildrenAsTriggers="false" UpdateMode="Conditional">

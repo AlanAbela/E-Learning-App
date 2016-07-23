@@ -37,8 +37,7 @@
     </script>
 
         <div id="page-lesson">
-            <!-- Page Header -->
-            
+            <!-- Page Header -->         
             <div class="page-header" style="width: 100%; margin-left:auto; margin-right:auto; text-align: center;">
                 <div style="float:left;"><asp:Button ID="btnBack" CssClass="btn btn-default" runat="server" Text="Back" OnClientClick="backClick()"/></div>
                 <h1>
