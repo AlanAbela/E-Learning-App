@@ -15,6 +15,7 @@ public partial class UserInterface_Default : System.Web.UI.Page
     int UserID { get; set; }
     #endregion
 
+    static List<int> LessonIDs { get; set; }
     protected void Page_Load(object sender, EventArgs e)
     {
        
@@ -27,10 +28,12 @@ public partial class UserInterface_Default : System.Web.UI.Page
                 lblTitle.Text = "Welcome to SQL Learning Platform";
                 UserID = Convert.ToInt32(Session["UserID"]);
 
-        if (!IsPostBack)
-            
-                BindSideMenu();
-            CalculateScore(UserID);     
+              BindSideMenu();
+
+            if (!IsPostBack)
+            {
+                CalculateScore(UserID);
+            }     
         }
     }
 
@@ -78,9 +81,12 @@ public partial class UserInterface_Default : System.Web.UI.Page
                         linkB.Text = "<img src=http://localhost:3787/image/c2.jpg> " + dr[1].ToString();
                     }
 
-                    // Add the list item to the unsorlted list.
+                    // Add the list item to the unsorted list.
                     linkB.Attributes.Add("runat", "server");
-                    linkB.Attributes.Add("onclick", "lessonRedirect("+ lessonID + ")");
+                    linkB.CommandArgument = lessonID.ToString();
+                    //  linkB.Attributes.Add("onclick", "lessonRedirect("+ lessonID + ")");
+
+                    linkB.Click += new EventHandler(Redirect);
                     listItem.Controls.Add(linkB);
 
                     // Add the list item to the unsorted list.
@@ -91,39 +97,65 @@ public partial class UserInterface_Default : System.Web.UI.Page
         }
         catch (SqlException ex)
         {
-
+            Response.Redirect("ErrorPage.aspx?Error ="+ex.Message);
         }
     }
 
+    protected void Redirect(object sender, EventArgs e)
+    {
+        Response.Redirect("lesson.aspx?ID=" + ((LinkButton)(sender)).CommandArgument);
+    }
+
+    /// <summary>
+    /// Calculates the score obtained in the final exam.
+    /// </summary>
+    /// <param name="userID"></param>
     private void CalculateScore(int userID)
     {
-        UserBL userBL = new UserBL();
-
-        DataTable user = userBL.GetUser(userID);
-
-        if(user.Rows[0].Field<int?>("Correct_Answers") != null)
+        try
         {
-            int? correctAnswer = user.Rows[0].Field<int?>("Correct_Answers");
+            UserBL userBL = new UserBL();
+            DataTable user = userBL.GetUser(userID);
 
-            QuestionBL questionBL = new QuestionBL();
-            int totalQuestions = questionBL.GetAllQuestions().Rows.Count;
-
-            int percentComplete = (int)Math.Round((double)(100 * correctAnswer) / totalQuestions);
-
-            TimeSpan timeTaken = (TimeSpan)(user.Rows[0].Field<TimeSpan?>("Test_Time"));
-            int hr = timeTaken.Hours;
-            int min = timeTaken.Minutes;
-            int sec = timeTaken.Seconds;
-
-            string MarkColor = "color:blue;";
-
-            if (percentComplete < 50)
+            // If user has taken the exam there will be a number of correct answers.
+            if (user.Rows[0].Field<int?>("Correct_Answers") != null)
             {
-                MarkColor = "color:red;";
-            }
+                // Get the number of correct answers for this user.
+                int? correctAnswer = user.Rows[0].Field<int?>("Correct_Answers");
 
-            lblMark.Text = "Best Course Exam Score was: <span style = " + MarkColor + ">" + percentComplete.ToString() + "%" + "</span>"
-                            + "</br> Completed in: " + hr + " hours " + min + " mins " +  sec  + "sec";
+                // Get the total number of questions
+                QuestionBL questionBL = new QuestionBL();
+                int totalQuestions = questionBL.GetAllQuestions().Rows.Count;
+
+                // Calcultate the percentage of correct answers.
+                int percentComplete = (int)Math.Round((double)(100 * correctAnswer) / totalQuestions);
+
+                // Get the time taken to complete the exam.
+                TimeSpan timeTaken = (TimeSpan)(user.Rows[0].Field<TimeSpan?>("Test_Time"));
+
+                // Get the completion date.
+                DateTime date = (DateTime)(user.Rows[0].Field<DateTime?>("Test_Completion_Date"));
+
+                // Update the label with the information
+                int hr = timeTaken.Hours;
+                int min = timeTaken.Minutes;
+                int sec = timeTaken.Seconds;
+
+                string MarkColor = "color:blue;";
+
+                if (percentComplete < 50)
+                {
+                    MarkColor = "color:red;";
+                }
+
+                lblMark.Text = "Best Course Exam Score was: <span style = " + MarkColor + ">" + percentComplete.ToString() + "%" + "</span>"
+                                + "</br></br> Completed in: " + hr + " hours " + min + " mins " + sec + "sec." +
+                                "</br></br> Completed on: " + date.Date.ToString("D");
+            }
+        }
+        catch (Exception ex)
+        {
+            Response.Redirect("ErrorPage.aspx?Error =" + ex.Message);
+        }
         }
     }
-}

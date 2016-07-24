@@ -32,7 +32,6 @@ public partial class UserInterface_OnlineTest : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
        
-
         if (!IsPostBack)
         {
             StopWatch = new Stopwatch();
@@ -130,9 +129,9 @@ public partial class UserInterface_OnlineTest : System.Web.UI.Page
         QuestionBL questionBL = new QuestionBL();
         return questionBL.GetAllQuestions();
         }
-        catch(SqlException ex)
+        catch (Exception ex)
         {
-            Response.Redirect("ErrorPage.aspx?error="+ex.Message);
+            Response.Redirect("ErrorPage.aspx?Error =" + ex.Message);
             return null;
         }
     }
@@ -149,9 +148,9 @@ public partial class UserInterface_OnlineTest : System.Web.UI.Page
             AnswerBL answerBL = new AnswerBL();
             return answerBL.GetAnswersByQuestionID(questionID);
         }
-        catch(SqlException ex)
+        catch (Exception ex)
         {
-            Response.Redirect("ErrorPage.aspx?error=" + ex.Message);
+            Response.Redirect("ErrorPage.aspx?Error=" + HttpUtility.UrlEncode(ex.Message));
             return null;
         }
     }
@@ -162,66 +161,74 @@ public partial class UserInterface_OnlineTest : System.Web.UI.Page
     /// </summary>
     private void CreateViews()
     {
-        DataTable questions = GetQuestions();
-        List<View> views = new List<View>();
-        int totalQuestions = 0;
 
-        foreach(DataRow row in questions.Rows )
+        try
         {
-            totalQuestions++;
+            DataTable questions = GetQuestions();
+            List<View> views = new List<View>();
+            int totalQuestions = 0;
 
-            //Create a Hidden Field to store the Lesson ID
-            HiddenField hiddenField = new HiddenField();
-            hiddenField.Value = row.Field<int>("LessonID").ToString();
-            hiddenField.ID = "hiddenField" + totalQuestions;
+            foreach (DataRow row in questions.Rows)
+            {
+                totalQuestions++;
 
-            //Create a Hidden Field to store the Topic ID
-            HiddenField hiddenFieldTID = new HiddenField();
-            hiddenFieldTID.Value = row.Field<int>("TopicID").ToString();
-            hiddenFieldTID.ID = "hiddenFieldTID" + totalQuestions;
+                //Create a Hidden Field to store the Lesson ID
+                HiddenField hiddenField = new HiddenField();
+                hiddenField.Value = row.Field<int>("LessonID").ToString();
+                hiddenField.ID = "hiddenField" + totalQuestions;
 
-            // Create label for question number reference.
-            Label lblQuestionNo = new Label();
-            lblQuestionNo.Text = "Question " + totalQuestions + " of " + questions.Rows.Count;
-            lblQuestionNo.ID = "lblQuestionNo" + totalQuestions;
+                //Create a Hidden Field to store the Topic ID
+                HiddenField hiddenFieldTID = new HiddenField();
+                hiddenFieldTID.Value = row.Field<int>("TopicID").ToString();
+                hiddenFieldTID.ID = "hiddenFieldTID" + totalQuestions;
 
-            // Create label to store question.
-            Label lblQuestion = new Label();
-            lblQuestion.Text = row.Field<string>("Question");
-            lblQuestion.ID = "lblQuestion" + totalQuestions;
+                // Create label for question number reference.
+                Label lblQuestionNo = new Label();
+                lblQuestionNo.Text = "Question " + totalQuestions + " of " + questions.Rows.Count;
+                lblQuestionNo.ID = "lblQuestionNo" + totalQuestions;
 
-            // Create the list of answers.
-            RadioButtonList radioButtonList = new RadioButtonList();
-            radioButtonList.ID = "radioButtonList" + totalQuestions;
-            radioButtonList.DataSource = GetAnswers(row.Field<int>("ID"));
-            radioButtonList.DataTextField = "Text";
-            radioButtonList.DataValueField = "Correct";
-            radioButtonList.DataBind();
+                // Create label to store question.
+                Label lblQuestion = new Label();
+                lblQuestion.Text = row.Field<string>("Question");
+                lblQuestion.ID = "lblQuestion" + totalQuestions;
 
-            // Create a View to store the above components.
-            View view = new View();
-            view.Controls.Add(hiddenField);
-            view.Controls.Add(hiddenFieldTID);
-            view.Controls.Add(new LiteralControl("<h2>"));
-            view.Controls.Add(lblQuestionNo);
-            view.Controls.Add(new LiteralControl("</h2>"));
-            view.Controls.Add(new LiteralControl("</br>"));
+                // Create the list of answers.
+                RadioButtonList radioButtonList = new RadioButtonList();
+                radioButtonList.ID = "radioButtonList" + totalQuestions;
+                radioButtonList.DataSource = GetAnswers(row.Field<int>("ID"));
+                radioButtonList.DataTextField = "Text";
+                radioButtonList.DataValueField = "Correct";
+                radioButtonList.DataBind();
 
-            view.Controls.Add(new LiteralControl("<h3>"));
-            view.Controls.Add(lblQuestion);
-            view.Controls.Add(new LiteralControl("</h3>"));
-            view.Controls.Add(new LiteralControl("</br>"));
+                // Create a View to store the above components.
+                View view = new View();
+                view.Controls.Add(hiddenField);
+                view.Controls.Add(hiddenFieldTID);
+                view.Controls.Add(new LiteralControl("<h2>"));
+                view.Controls.Add(lblQuestionNo);
+                view.Controls.Add(new LiteralControl("</h2>"));
+                view.Controls.Add(new LiteralControl("</br>"));
 
-            view.Controls.Add(new LiteralControl("<div class='check-list-container'>"));
-            view.Controls.Add(radioButtonList);
-            view.Controls.Add(new LiteralControl("</div>"));
+                view.Controls.Add(new LiteralControl("<h3>"));
+                view.Controls.Add(lblQuestion);
+                view.Controls.Add(new LiteralControl("</h3>"));
+                view.Controls.Add(new LiteralControl("</br>"));
 
-            // Store view in list of views.
-            views.Add(view);
-          
+                view.Controls.Add(new LiteralControl("<div class='check-list-container'>"));
+                view.Controls.Add(radioButtonList);
+                view.Controls.Add(new LiteralControl("</div>"));
+
+                // Store view in list of views.
+                views.Add(view);
+
+            }
+
+            Views = views;
         }
-        
-        Views = views;  
+        catch (Exception ex)
+        {
+            Response.Redirect("ErrorPage.aspx?Error =" + ex.Message);
+        }
 
     }
 

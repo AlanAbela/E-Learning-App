@@ -14,23 +14,30 @@ public partial class UserInterface_MasterPage : System.Web.UI.MasterPage
 
     #region Events
     protected void Page_Load(object sender, EventArgs e)
-    { 
+    {
 
-        if(Session["UserID"] != null)
+        try
         {
-            int userID = Convert.ToInt32(Session["UserID"]);
-            UserBL userBL = new UserBL();
-            DataTable table = userBL.GetUser(userID);
-
-            if(table.Rows.Count > 0)
+            if (Session["UserID"] != null)
             {
-                lblLogged.Text = "Logged in as " + table.Rows[0].Field<string>("Username");
-                // If the course is complete enable link to course page.
-                if (table.Rows[0].Field<bool>("Course_Complete"))
+                int userID = Convert.ToInt32(Session["UserID"]);
+                UserBL userBL = new UserBL();
+                DataTable table = userBL.GetUser(userID);
+
+                if (table.Rows.Count > 0)
                 {
-                    btnTest.Visible = true;
+                    lblLogged.Text = "Logged in as " + table.Rows[0].Field<string>("Username");
+                    // If the course is complete enable link to course page.
+                    if (table.Rows[0].Field<bool>("Course_Complete"))
+                    {
+                        btnTest.Visible = true;
+                    }
                 }
             }
+        }
+        catch (Exception ex)
+        {
+            Response.Redirect("ErrorPage.aspx?Error =" + ex.Message);
         }
     }
 

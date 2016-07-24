@@ -6,19 +6,19 @@
 
     <script type="text/javascript">
 
-        function topicRedirect(id)
+      <%--  function topicRedirect(id)
         {
             window.opener = self;
             window.close();
             window.open("topic.aspx?ID="+id+"&lessonid="+ <%= LessonID.ToString() %>);
-        }
+        }--%>
 
-        function backClick()
-        {
-            window.opener = self;
-            window.close();
-            window.open("Default.aspx");
-        }
+        //function backClick()
+        //{
+        //    window.opener = self;
+        //    window.close();
+        //    window.open("Default.aspx");
+        //}
 
         function quizClick(id)
         {
@@ -39,7 +39,7 @@
         <div id="page-lesson">
             <!-- Page Header -->         
             <div class="page-header" style="width: 100%; margin-left:auto; margin-right:auto; text-align: center;">
-                <div style="float:left;"><asp:Button ID="btnBack" CssClass="btn btn-default" runat="server" Text="Back" OnClientClick="backClick()"/></div>
+                <div style="float:left;"><asp:Button ID="btnBack" CssClass="btn btn-default" runat="server" Text="Back" OnClick="btnBack_Click"/></div>
                 <h1>
                     <asp:Label ID="lblLessonTitle" runat="server"></asp:Label>
                 </h1>

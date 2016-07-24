@@ -16,11 +16,18 @@ public partial class UserInterface_Login : System.Web.UI.Page
     {
         if(valForm.IsValid)
         {
-            LoginBL loginBL = new LoginBL();
+            try
+            {
+                LoginBL loginBL = new LoginBL();
 
-            // Store the user ID in session.
-            Session["UserID"] = loginBL.GetUserID(txtUsername.Text, txtPassword.Text); 
-            Response.Redirect("Default.aspx");
+                // Store the user ID in session.
+                Session["UserID"] = loginBL.GetUserID(txtUsername.Text, txtPassword.Text);
+                Response.Redirect("Default.aspx");
+            }
+            catch (Exception ex)
+            {
+                Response.Redirect("ErrorPage.aspx?Error =" + ex.Message);
+            }
         }
  
     }

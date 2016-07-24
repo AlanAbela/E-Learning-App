@@ -13,12 +13,12 @@
 
         });
 
-        function backClick(id)
+<%--        function backClick(id)
         {
             window.opener = self;
             window.close();
             window.open("lesson.aspx?ID=" + <%= LessonID.ToString() %>);
-        }
+        }--%>
 
         // If video panel is hidden slide down. If it is visible slide up.
         function showVideo()
@@ -50,7 +50,7 @@
 
         <div id="page-topic">
             <!-- Page Header -->
-            <div style="float:left;"><asp:Button ID="btnBack" CssClass="btn btn-default" runat="server" Text="Back" OnClientClick="backClick(); return false;"/></div>
+            <div style="float:left;"><asp:Button ID="btnBack" CssClass="btn btn-default" runat="server" Text="Back" OnClick="btnBack_Click" /></div>
             <div class="page-header" style="width: 100%; text-align: center;">
                 <h1>
                     <asp:Label ID="lblLessonTitle" runat="server" Text="Header test"></asp:Label>

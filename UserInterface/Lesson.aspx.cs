@@ -33,16 +33,14 @@ public partial class UserInterface_Lesson : System.Web.UI.Page
 
                     LessonID = Convert.ToInt32(Request.QueryString["ID"]);         
                     
-                    BindNavMenu(LessonID, UserID);
+                    BindNavMenu(LessonID, UserID);                
 
-                    LessonBL lessonBL = new LessonBL();
+                DataTable lesson = GetLesson(LessonID);
 
-                    DataTable table = lessonBL.GetLesson(LessonID);
-
-                    if (table.Rows.Count > 0)
+                    if (lesson.Rows.Count > 0)
                     {
-                        lblLessonTitle.Text = table.Rows[0].Field<string>("Title");
-                        lblLessonContent.Text = table.Rows[0].Field<string>("Description");
+                        lblLessonTitle.Text = lesson.Rows[0].Field<string>("Title");
+                        lblLessonContent.Text = lesson.Rows[0].Field<string>("Description");
                     }
                 
                
@@ -105,7 +103,9 @@ public partial class UserInterface_Lesson : System.Web.UI.Page
                     linkButton.Text = "<img src=http://localhost:3787/image/c2.jpg> " + row.Field<string>("Title").ToString();
                 }
                 linkButton.Attributes.Add("runat", "server");
-                linkButton.Attributes.Add("onclick", "topicRedirect("+ row.Field<int>("ID").ToString() + ")");
+                linkButton.CommandArgument = topicID.ToString();
+                //linkButton.Attributes.Add("onclick", "topicRedirect("+ row.Field<int>("ID").ToString() + ")");
+                linkButton.Click += new EventHandler(Redirect);
                 listItemTitle.Controls.Add(linkButton);
 
                 navSideMenu.Controls.Add(listItemTitle);
@@ -115,7 +115,7 @@ public partial class UserInterface_Lesson : System.Web.UI.Page
         }
         catch(SqlException ex)
         {
-
+            Response.Redirect("ErrorPage.aspx?Error =" + ex.Message);
         }
     }
 
@@ -145,37 +145,76 @@ public partial class UserInterface_Lesson : System.Web.UI.Page
 
     private void CalculateScore()
     {
-        UserLessonBL userLessonBL = new UserLessonBL();
-        DataTable record = userLessonBL.GetRecord(UserID, LessonID);
-        int? correctAnswer = record.Rows[0].Field<int?>("Correct_Answer");
-        int? incorrectAnswer = record.Rows[0].Field<int?>("Incorrect_Answer");
-
-
-        if (correctAnswer != null && incorrectAnswer != null)
+        try
         {
-            int totalQuestions = (int)(correctAnswer) + (int)(incorrectAnswer);
-            int correctAnswerToInt = (int)(correctAnswer);
+            UserLessonBL userLessonBL = new UserLessonBL();
+            DataTable record = userLessonBL.GetRecord(UserID, LessonID);
+            int? correctAnswer = record.Rows[0].Field<int?>("Correct_Answer");
+            int? incorrectAnswer = record.Rows[0].Field<int?>("Incorrect_Answer");
 
-            int percentComplete = (int)Math.Round((double)(100 * correctAnswerToInt) / totalQuestions);
-            TimeSpan timeTaken = record.Rows[0].Field<TimeSpan>("Quiz_Time");
-            int hr = timeTaken.Hours;
-            int min = timeTaken.Minutes;
-            int sec = timeTaken.Seconds;
 
-           string MarkColor = "color:blue;";
-
-            if(percentComplete < 50)
+            if (correctAnswer != null && incorrectAnswer != null)
             {
-                MarkColor = "color:red;";
-            }
-            
+                int totalQuestions = (int)(correctAnswer) + (int)(incorrectAnswer);
+                int correctAnswerToInt = (int)(correctAnswer);
 
-             lblMark.Text = "Best Score was: <span style = "+ MarkColor+">" +  percentComplete.ToString() + "%" +"</span>" + "</br>Time taken: "+hr + ":" + min + ":" + sec;
+                int percentComplete = (int)Math.Round((double)(100 * correctAnswerToInt) / totalQuestions);
+                TimeSpan timeTaken = record.Rows[0].Field<TimeSpan>("Quiz_Time");
+                int hr = timeTaken.Hours;
+                int min = timeTaken.Minutes;
+                int sec = timeTaken.Seconds;
+
+                string MarkColor = "color:blue;";
+
+                if (percentComplete < 50)
+                {
+                    MarkColor = "color:red;";
+                }
+
+                lblMark.Text = "Best Score was: <span style = " + MarkColor + ">" + percentComplete.ToString() + "%" + "</span>" + "</br>Time taken: " + hr + ":" + min + ":" + sec;
+            }
+        }
+        catch(Exception ex)
+        {
+            Response.Redirect("ErrorPage.aspx?Error =" + ex.Message);
+        }
+    }
+
+    private DataTable GetLesson(int ID)
+    {
+        try
+        {
+            LessonBL lessonBL = new LessonBL();
+            DataTable table = lessonBL.GetLesson(LessonID);
+            return table;
+        }
+        catch (Exception ex)
+        {
+            Response.Redirect("ErrorPage.aspx?Error =" + ex.Message);
+            return null;
         }
     }
 
     protected void btnQuiz_Click(object sender, EventArgs e)
     {
         Response.Redirect("Quiz.aspx?ID="+LessonID);
+    }
+
+    /// <summary>
+    /// Redirects to selected topic.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void Redirect(object sender, EventArgs e)
+    {
+        LinkButton linkButton = (LinkButton)(sender);
+        string topicID = linkButton.CommandArgument;
+
+        Response.Redirect("topic.aspx?ID="+ topicID + "&lessonid= " + LessonID);
+    }
+
+    protected void btnBack_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("Default.aspx");
     }
 }

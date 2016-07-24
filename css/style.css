@@ -1,13 +1,11 @@
-﻿.main
- {
-     width:730px;
-    height:550px;
+﻿.main {
+    width: 730px;
+    height: 550px;
 }
 
-.main-login
-{
-width:730px;
-    height:400px;
+.main-login {
+    width: 730px;
+    height: 400px;
 }
 
 .form-center {
@@ -20,361 +18,303 @@ width:730px;
     margin-left: -140px;
 }
 
-.message-center
-{
-    width:100%;
-    position:absolute;
-    left:50%;
-    right:50%;
+.message-center {
+    width: 100%;
+    position: absolute;
+    left: 50%;
+    right: 50%;
     margin-top: -250px;
     margin-left: -140px;
 }
 
-.medium
-{
-    width:275px;
-  height:500px;
+.medium {
+    width: 275px;
+    height: 500px;
 }
 
-.text-align{
-
-    vertical-align:middle;
+.text-align {
+    vertical-align: middle;
 }
 
-.underline
-{
-    
-  width: 100%; 
-  background-color: black; 
-  height: 1px; 
-  float: left; 
-
+.underline {
+    width: 100%;
+    background-color: black;
+    height: 1px;
+    float: left;
 }
 
-.right-align
-{
-    position:absolute;
-    right:0px;
+.right-align {
+    position: absolute;
+    right: 0px;
 }
 
-.login-dimension
-{
-    height:500px;
-    width:500px;
+.login-dimension {
+    height: 500px;
+    width: 500px;
 }
 
-#master-content
-{
-    margin-left:10px;
-    margin-right:10px;
-    height:1000px;
-    width:100%;
+#master-content {
+    margin-left: 10px;
+    margin-right: 10px;
+    height: 1000px;
+    width: 100%;
 }
 
 
-
-body
-{
-   height:100%;
+body {
+    height: 100%;
 }
 
-html
-{
-    height:100%;
+html {
+    height: 100%;
 }
 
-.no-margin{
-    margin:0px;
+.no-margin {
+    margin: 0px;
 }
 
-#masterPageContent
-{
-    width:800px;
+#masterPageContent {
+    width: 800px;
 }
 
 
-
-#defaultContent
-{
+#defaultContent {
     /*width:100%;
     height:100%;
     position:absolute;
-    left:10px;*/  
-
-    margin-left:10px;
-    margin-right:10px;
-    height:1000px;
-    width:100%;
+    left:10px;*/
+    margin-left: 10px;
+    margin-right: 10px;
+    height: 1000px;
+    width: 100%;
 }
 
-#lesson-content
-{
-    position:absolute;
-    margin-left:10px;
-    margin-right:10px;
-    height:1000px;
-    width:1000px;
-    left:300px;
-    
+#lesson-content {
+    position: absolute;
+    margin-left: 10px;
+    margin-right: 10px;
+    height: 1000px;
+    width: 1000px;
+    left: 300px;
 }
 
-#lesson-nav
-{
-    width:14%;
-    height:100%;
-    position:absolute;
-    left:0px;
-    border-right:solid;
-   border-bottom-color:black;
-   border-width:2px;
-   text-align:center;
+#lesson-nav {
+    width: 14%;
+    height: 100%;
+    position: absolute;
+    left: 0px;
+    border-right: solid;
+    border-bottom-color: black;
+    border-width: 2px;
+    text-align: center;
 }
 
-#lesson-quiz-bar{
-   width:14%;
-    height:100%;
-    position:absolute;
-    right:0px;
-    border-left:solid;
-   border-bottom-color:black;
-   border-width:2px;
-   text-align:center;
+#lesson-quiz-bar {
+    width: 14%;
+    height: 100%;
+    position: absolute;
+    right: 0px;
+    border-left: solid;
+    border-bottom-color: black;
+    border-width: 2px;
+    text-align: center;
 }
 
-#exam-result{
-
-     width:14%;
-    height:100%;
-    position:absolute;
-    right:0px;
-    border-left:solid;
-   border-bottom-color:black;
-   border-width:2px;
-   text-align:center;
+#exam-result {
+    width: 14%;
+    height: 100%;
+    position: absolute;
+    right: 0px;
+    border-left: solid;
+    border-bottom-color: black;
+    border-width: 2px;
+    text-align: center;
 }
 
-.error-message
-{
-    width:80%;
+.error-message {
+    width: 80%;
     height: 50px;
+    position: absolute;
+    top: 50%;
+    color: red;
+    font-family: Arial;
+    text-align: center;
+    font-size: x-large;
+}
+
+#page-lesson {
+    margin-left: 10px;
+    margin-right: 10px;
+    height: 1000px;
+    width: 100%;
+}
+
+.page-topic {
+    position: relative;
+    margin-left: 10px;
+    margin-right: 10px;
+    height: 1000px;
+    width: 100%;
+}
+
+#page-quiz {
+    position: relative;
+    margin-left: 10px;
+    margin-right: 10px;
+    height: 1000px;
+    width: 100%;
+}
+
+#page-test {
+    position: relative;
+    margin-left: 10px;
+    margin-right: 10px;
+    height: 1000px;
+    width: 100%;
+}
+
+#topic-body {
+    position: relative;
+    width: inherit;
+    height: auto;
+    margin-top: 20px;
+}
+
+.btn-submit {
+    position: absolute;
+    width: auto;
+    right: 250px;
+}
+
+#quiz-body {
+    position: relative;
+    width: inherit;
+    height: inherit;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+#test-body {
+    position: relative;
+    width: inherit;
+    height: inherit;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.question-container {
+    width: 75%;
+    height: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    border: solid;
+    border-color: black;
+    border-width: 1px;
+}
+
+.check-list-container {
+    position: relative;
+    left: 50%;
+    width: auto;
+    height: auto;
+    text-align: center;
+    align-self: center;
+}
+
+.topic-info {
+    display: block;
+    width: 696px;
+    height: auto;
+    text-align: left;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.video-holder {
+    display: block;
+    width: inherit;
+    height: 500px;
+}
+
+.video {
+    display: block;
+    width: 700px;
+    height: 450px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#masterSideMenu {
+    width: 14%;
+    height: 100%;
+    position: absolute;
+    left: 0px;
+    border-right: solid;
+    border-bottom-color: black;
+    border-width: 2px;
+    text-align: center;
+}
+
+#masterRightSideMenu {
+    width: 14%;
+    height: 100%;
+    position: absolute;
+    right: 0px;
+    border-left: solid;
+    border-bottom-color: black;
+    border-width: 2px;
+    text-align: center;
+}
+
+#page-default {
+    position: absolute;
+    margin-left: 10px;
+    margin-right: 10px;
+    height: 1000px;
+    width: 1000px;
+    left: 300px;
+}
+
+.table-holder {
+    width: 696px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.spacer {
+    height: 20px;
+    width: auto;
+}
+
+#myModal {
+    position: fixed;
+    top: 25%;
+}
+
+.left-align {
+    text-align: right;
+}
+
+.label-no-top-margin {
+    margin-top: 0px;
+}
+
+.lblResult {
+    position: relative;
+    width: 100%;
+    height: auto;
+    text-align:center;
+    margin-top:2%;
+}
+
+#resultPage{
     position:absolute;
-    top:50%;
-    color:red;
-    font-family:Arial;
-    text-align:center;
-    font-size:x-large;
-}
-
-#page-lesson
-{
-    
-    margin-left:10px;
-    margin-right:10px;
-    height:1000px;
     width:100%;
-}
-
-.page-topic
-{
-    position:relative;
-    margin-left:10px;
-    margin-right:10px;
-    height:1000px;
-    width:100%;
-}
-
-#page-quiz
-{
-     position:relative;
-    margin-left:10px;
-    margin-right:10px;
-    height:1000px;
-    width:100%;
-}
-
-#page-test
-{
-     position:relative;
-    margin-left:10px;
-    margin-right:10px;
-    height:1000px;
-    width:100%;
-}
-
-#topic-body
-{
-    position:relative;
-    width:inherit;
-    height:auto;
-    margin-top:20px;
-}
-
-.btn-submit
-{
-    position:absolute;
-    width:auto;
-    right:250px;
-}
-
-#quiz-body
-{
-    position:relative;
-    width:inherit;
-    height:inherit;
-    margin-top:20px;
-    margin-left:auto;
-    margin-right:auto;
-    text-align:center;
-}
-
-#test-body
-{
-    position:relative;
-    width:inherit;
-    height:inherit;
-    margin-top:20px;
-    margin-left:auto;
-    margin-right:auto;
-    text-align:center;
-}
-
-.question-container
-{
-
-    width:75%;
-    height:500px;
-    margin-left:auto;
-    margin-right:auto;
-    border:solid;
-    border-color:black;
-    border-width:1px;
-}
-
-.check-list-container
-{
-    position:relative;
-    left:50%;
-    width:auto;
-    height:auto;
-    text-align:center;
-    align-self:center;
-}
-
-.topic-info
-{
-    display:block;
-    width:696px;
-    height:auto;
-    text-align:left;
-    margin-top:20px;
-    margin-bottom:20px;
-    margin-left:auto;
-    margin-right:auto;
-   
-}
-
-.video-holder
-{
-    display:block;
-    width:inherit;
-    height:500px;
-
-}
-
-.video
-{ 
-    display:block;
-    width:700px;
-    height:450px;  
-    margin-left:auto;
-    margin-right:auto; 
-}
-
-#masterSideMenu
-{
-   /*width:14%;
-   float:left;
-   height:100%;
-   border-right:solid;
-   border-bottom-color:black;
-   border-width:2px;
-   text-align:center;
-   position:relative;*/
-
-     width:14%;
     height:100%;
-    position:absolute;
-    left:0px;
-    border-right:solid;
-   border-bottom-color:black;
-   border-width:2px;
-   text-align:center;
-}
-
-#masterRightSideMenu
-{
-     /*width:14%;
-    height:100%;
-    position:relative;
-    right:0px;
-    border-left:solid;
-   border-bottom-color:black;
-   border-width:2px;
-   text-align:center*/
-        width:14%;
-    height:100%;
-    position:absolute;
-    right:0px;
-    border-left:solid;
-   border-bottom-color:black;
-   border-width:2px;
-   text-align:center;
-}
-
-#page-default
-{
-    /*position:relative;
-    margin-left : 20px;
-    margin-right : 20px;
-    width:80%;
-    height:inherit;
-    right:0px;*/
-
-      position:absolute;
-    margin-left:10px;
-    margin-right:10px;
-    height:1000px;
-    width:1000px;
-    left:300px;
-    
-}
-
-.table-holder
-{
-    width:696px;
-    margin-left:auto;
-    margin-right:auto;
-}
-
-.spacer
-{
-    height:20px;
-    width:auto;
-    
-}
-
-#myModal
-{
-    position:fixed;
-  top:25%;
-}
-
-.left-align
-{
-    text-align:right;
-}
-
-.label-no-top-margin
-{
-    margin-top:0px;
 }

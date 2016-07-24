@@ -32,9 +32,9 @@ public partial class UserInterface_Register : System.Web.UI.Page
                 
 
             }
-                catch(SqlException ex)
+            catch (Exception ex)
             {
-
+                Response.Redirect("ErrorPage.aspx?Error=" + HttpUtility.UrlEncode(ex.Message));
             }
         }
     }

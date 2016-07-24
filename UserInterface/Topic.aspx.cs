@@ -58,9 +58,9 @@ public partial class UserInterface_Topic : System.Web.UI.Page
                 }
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-
+                Response.Redirect("ErrorPage.aspx?Error=" + HttpUtility.UrlEncode(ex.Message));
             }
         }     
     }
@@ -223,7 +223,7 @@ public partial class UserInterface_Topic : System.Web.UI.Page
 
         catch (Exception ex)
         {
-            Response.Redirect("ErrorPage.aspx");
+            Response.Redirect("ErrorPage.aspx?Error=" + HttpUtility.UrlEncode(ex.Message));
         }
     }
 
@@ -327,5 +327,10 @@ public partial class UserInterface_Topic : System.Web.UI.Page
         //{
         //    e.Row.Cells[0].Visible = false;
         //}
+    }
+
+    protected void btnBack_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("lesson.aspx?ID=" + LessonID.ToString());
     }
 }

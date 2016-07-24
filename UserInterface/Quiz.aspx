@@ -134,11 +134,11 @@
                             </div>
                     </asp:View>
                 </asp:MultiView>
-               <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-default btn-submit" Text="Submit" OnClick="btnSubmit_Click"/>
+               <asp:Button ID="btnSubmit" runat="server" CssClass="btn btn-default btn-submit" Text="Submit" OnClick="btnSubmit_Click" ValidationGroup="valGroup"/>
                 <br />
                 <br />
                 <h3>
-                    <asp:RequiredFieldValidator ID="reqField" runat="server" ControlToValidate="chkQuizList0" ErrorMessage="Please make a selection" CssClass="label label-warning"></asp:RequiredFieldValidator></h3>
+                    <asp:RequiredFieldValidator ID="reqField" runat="server" ControlToValidate="chkQuizList0" ErrorMessage="Please make a selection" CssClass="label label-warning" ValidationGroup="valGroup"></asp:RequiredFieldValidator></h3>
             </div>
             <div style="width:auto;">
                 <h3> <asp:Label ID="lblNotification" CssClass="label label-success" runat="server"></asp:Label></h3>
