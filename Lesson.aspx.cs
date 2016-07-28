@@ -8,7 +8,7 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
-public partial class UserInterface_Lesson : System.Web.UI.Page
+public partial class Lesson : System.Web.UI.Page
 {
 
     #region Properties
@@ -19,15 +19,13 @@ public partial class UserInterface_Lesson : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
 
-        try
-        {
-            if (Session["UserID"] == null)
+            if (!Context.User.Identity.IsAuthenticated && Context.Session["UserID"] != null)
             {
                 Response.Redirect("Login.aspx");
             }
             else
             {
-                UserID = Convert.ToInt32(Session["UserID"]);
+                UserID = Convert.ToInt32(Context.Session["UserID"]);
               
                     Validation();
 
@@ -46,12 +44,9 @@ public partial class UserInterface_Lesson : System.Web.UI.Page
                
                 CalculateScore();
            
-            }
+            
         }
-        catch(Exception ex)
-        {
-            lblError.Text = ex.Message;
-        }
+    
         
     }
 
@@ -60,8 +55,6 @@ public partial class UserInterface_Lesson : System.Web.UI.Page
     /// </summary>
     public void BindNavMenu(int lessonID, int userID)
     {
-        try
-        {
             TopicBL topics = new TopicBL();
            
             // Get all topics of this lesson.
@@ -105,18 +98,11 @@ public partial class UserInterface_Lesson : System.Web.UI.Page
                 linkButton.Attributes.Add("runat", "server");
                 linkButton.CommandArgument = topicID.ToString();
                 //linkButton.Attributes.Add("onclick", "topicRedirect("+ row.Field<int>("ID").ToString() + ")");
-                linkButton.Click += new EventHandler(Redirect);
+                linkButton.Click += new EventHandler(TopicRedirect);
                 listItemTitle.Controls.Add(linkButton);
 
                 navSideMenu.Controls.Add(listItemTitle);
             }
-
-
-        }
-        catch(SqlException ex)
-        {
-            Response.Redirect("ErrorPage.aspx?Error =" + ex.Message);
-        }
     }
 
     /// <summary>
@@ -139,14 +125,13 @@ public partial class UserInterface_Lesson : System.Web.UI.Page
 
         if(!valid)
         {
-            throw new CustomException(ErrorMessage.GetErrorDesc(1));
+            Response.Redirect("Error.aspx");
         }
     }
 
     private void CalculateScore()
     {
-        try
-        {
+     
             UserLessonBL userLessonBL = new UserLessonBL();
             DataTable record = userLessonBL.GetRecord(UserID, LessonID);
             int? correctAnswer = record.Rows[0].Field<int?>("Correct_Answer");
@@ -173,26 +158,16 @@ public partial class UserInterface_Lesson : System.Web.UI.Page
 
                 lblMark.Text = "Best Score was: <span style = " + MarkColor + ">" + percentComplete.ToString() + "%" + "</span>" + "</br>Time taken: " + hr + ":" + min + ":" + sec;
             }
-        }
-        catch(Exception ex)
-        {
-            Response.Redirect("ErrorPage.aspx?Error =" + ex.Message);
-        }
+      
     }
 
     private DataTable GetLesson(int ID)
     {
-        try
-        {
+     
             LessonBL lessonBL = new LessonBL();
             DataTable table = lessonBL.GetLesson(LessonID);
             return table;
-        }
-        catch (Exception ex)
-        {
-            Response.Redirect("ErrorPage.aspx?Error =" + ex.Message);
-            return null;
-        }
+      
     }
 
     protected void btnQuiz_Click(object sender, EventArgs e)
@@ -205,12 +180,17 @@ public partial class UserInterface_Lesson : System.Web.UI.Page
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
-    protected void Redirect(object sender, EventArgs e)
+    protected void TopicRedirect(object sender, EventArgs e)
     {
-        LinkButton linkButton = (LinkButton)(sender);
-        string topicID = linkButton.CommandArgument;
+       
+            LinkButton linkButton = (LinkButton)(sender);
+            string topicID = linkButton.CommandArgument;
 
-        Response.Redirect("topic.aspx?ID="+ topicID + "&lessonid= " + LessonID);
+        Response.Redirect("Topic.aspx?ID=" + topicID + "&lessonid= " + LessonID);
+       
+     
+
+
     }
 
     protected void btnBack_Click(object sender, EventArgs e)

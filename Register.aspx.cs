@@ -23,19 +23,12 @@ public partial class UserInterface_Register : System.Web.UI.Page
     {
         if(valForm.IsValid)
         { 
-            try
-            {
+
                 RegisterBL register = new RegisterBL();
                 register.RegisterUser(txtUsername.Text, txtPassword.Text);
                 
-                    Response.Redirect("Login.aspx");
+                    Response.Redirect("Login.aspx", false);
                 
-
-            }
-            catch (Exception ex)
-            {
-                Response.Redirect("ErrorPage.aspx?Error=" + HttpUtility.UrlEncode(ex.Message));
-            }
         }
     }
     /// <summary>

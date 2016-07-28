@@ -16,14 +16,24 @@
 
     void Application_Error(object sender, EventArgs e)
     {
-        // Code that runs when an unhandled error occurs
+       // Code that runs when an unhandled error occurs
+        if (HttpContext.Current.Server.GetLastError() != null)
+        {
+            Exception exception = HttpContext.Current.Server.GetLastError().GetBaseException();
+            string page = Request.Url.ToString();
+            string message = exception.Message;
+            string stackTrace = exception.StackTrace;
+            string query = Request.QueryString.ToString();
+
+           ErrorMessage.LogExceptions(page, message, stackTrace, query);
+        }
 
     }
 
     void Session_Start(object sender, EventArgs e)
     {
         // Code that runs when a new session is started
-        if(Session["UserID"] != null)
+        if(Context.Session["UserID"] != null)
         {
             Response.Redirect("Default.aspx");
         }
@@ -37,7 +47,7 @@
     void Session_End(object sender, EventArgs e)
     {
 
-      
+
         // Code that runs when a session ends. 
         // Note: The Session_End event is raised only when the sessionstate mode
         // is set to InProc in the Web.config file. If session mode is set to StateServer 

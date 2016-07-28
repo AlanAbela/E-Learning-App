@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Login.aspx.cs" Inherits="UserInterface_Login" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="Login2.aspx.cs" Inherits="UserInterface_Login2" %>
 
 <!DOCTYPE html>
 
@@ -12,7 +12,7 @@
        <script type="text/javascript">
 
         // Check if username is valid.
-        function ValidateForm(source, args)
+       <%-- function ValidateForm(source, args)
         {
             args.IsValid = true;
 
@@ -44,36 +44,22 @@
         function hasWhiteSpace(val)
         {
             return val.indexOf(' ') != -1;
-        }
+        }--%>
     </script>
 </head>
 <body>
   <form id="form1" runat="server">
    <div id="form" class="main-login">
     <div class="form-center medium">
-        <div>
-            <asp:Label ID="lblTitle" runat="server" Text="User Login" Font-Size="XX-Large" Font-Bold="true" Width="174px" Height="46px"></asp:Label>
-        </div>
-        <br />
-        <div>
-            <asp:TextBox ID="txtUsername" runat="server" placeholder="User name" CssClass="form-control"></asp:TextBox>
-        </div>
-        <br />
-        <div>
-            <asp:TextBox ID="txtPassword" runat="server" placeholder="Password" TextMode="Password" CssClass="form-control"></asp:TextBox>
-        </div>
-        <br />
-        <div class="left-align" style="float:left;">
-            <asp:Button ID="btnLogin" runat="server" Text="Login" OnClick="btnLogin_Click" CssClass="btn btn-primary"/>
-        </div>
-        <div style="text-align:right;">
-        <asp:Label runat="server" Text="create account?" Font-Size="Small"><a href="Register.aspx">create account?</a></asp:Label>
-        </div>
+        <asp:Login ID="Login" TextBoxStyle-CssClass="form-control" TitleTextStyle-Font-Bold="true" TitleTextStyle-Font-Size="XX-Large" LoginButtonStyle-CssClass="btn btn-primary" LabelStyle-Font-Size="Medium" LabelStyle-VerticalAlign="NotSet" CreateUserText ="Sign Up" CreateUserUrl="Register2.aspx" runat="server">
+        </asp:Login>
+        <asp:LoginStatus ID="LoginStatus" runat="server" />
         </div>
      </div>
-         <div style="width:100%; text-align:center; display:inline-block;">
+        <%-- <div style="width:100%; text-align:center; display:inline-block;">
             <asp:CustomValidator ID="valForm" runat="server" OnServerValidate="valForm_ServerValidate" ClientValidationFunction="ValidateForm" CssClass="alert alert-danger" Display="Dynamic"></asp:CustomValidator>
-    </div>
+    </div>--%>
     </form>
 </body>
 </html>
+

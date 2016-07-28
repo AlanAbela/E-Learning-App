@@ -8,7 +8,7 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
-public partial class UserInterface_Default : System.Web.UI.Page
+public partial class Default : System.Web.UI.Page
 {
 
     #region Properties
@@ -19,14 +19,14 @@ public partial class UserInterface_Default : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
        
-        if(Session["UserID"] == null)
+        if(!Context.User.Identity.IsAuthenticated && Context.Session["UserID"] == null)
         {
             Response.Redirect("Login.aspx");  
         }
         else
         {
                 lblTitle.Text = "Welcome to SQL Learning Platform";
-                UserID = Convert.ToInt32(Session["UserID"]);
+                UserID = Convert.ToInt32(Context.Session["UserID"]);
 
               BindSideMenu();
 
@@ -40,8 +40,6 @@ public partial class UserInterface_Default : System.Web.UI.Page
 
     private void BindSideMenu()
     {
-        try
-        {
             LessonBL lesson = new LessonBL();
 
             // Get all lessons available in table "Lesson"
@@ -93,12 +91,6 @@ public partial class UserInterface_Default : System.Web.UI.Page
                     navSideMenu.Controls.Add(listItem);
                 }
             }
-
-        }
-        catch (SqlException ex)
-        {
-            Response.Redirect("ErrorPage.aspx?Error ="+ex.Message);
-        }
     }
 
     protected void Redirect(object sender, EventArgs e)
@@ -112,8 +104,6 @@ public partial class UserInterface_Default : System.Web.UI.Page
     /// <param name="userID"></param>
     private void CalculateScore(int userID)
     {
-        try
-        {
             UserBL userBL = new UserBL();
             DataTable user = userBL.GetUser(userID);
 
@@ -152,10 +142,5 @@ public partial class UserInterface_Default : System.Web.UI.Page
                                 + "</br></br> Completed in: " + hr + " hours " + min + " mins " + sec + "sec." +
                                 "</br></br> Completed on: " + date.Date.ToString("D");
             }
-        }
-        catch (Exception ex)
-        {
-            Response.Redirect("ErrorPage.aspx?Error =" + ex.Message);
-        }
         }
     }

@@ -2,32 +2,32 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class UserInterface_Login : System.Web.UI.Page
+public partial class Login : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-
+        if (!String.IsNullOrEmpty(Request.Params["logout"]))
+        {
+            FormsAuthentication.SignOut();
+            Response.Redirect("./");
+        }
     }
 
     protected void btnLogin_Click(object sender, EventArgs e)
     {
         if(valForm.IsValid)
         {
-            try
-            {
                 LoginBL loginBL = new LoginBL();
 
                 // Store the user ID in session.
-                Session["UserID"] = loginBL.GetUserID(txtUsername.Text, txtPassword.Text);
-                Response.Redirect("Default.aspx");
-            }
-            catch (Exception ex)
-            {
-                Response.Redirect("ErrorPage.aspx?Error =" + ex.Message);
-            }
+            Context.Session["UserID"] = loginBL.GetUserID(txtUsername.Text, txtPassword.Text);
+
+            FormsAuthentication.RedirectFromLoginPage(txtUsername.Text, true);
+         
         }
  
     }

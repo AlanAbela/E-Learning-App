@@ -23,15 +23,14 @@ public partial class UserInterface_Topic : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         // Check if user has a session.
-        if (Session["UserID"] == null)
+        if (Context.Session["UserID"] == null)
         {
             Response.Redirect("Login.aspx");
         }
         else
         {
-            try
-            {
-                UserID = Convert.ToInt32(Session["UserID"]);
+
+                UserID = Convert.ToInt32(Context.Session["UserID"]);
 
                 // Validate Query strings.
                 Validation();
@@ -54,14 +53,10 @@ public partial class UserInterface_Topic : System.Web.UI.Page
                 if(!IsPostBack)
                 {
                     // Insert record if it doesn't exist
+                    userTopicBL = new UserTopicBL();
                     userTopicBL.InsertRecord(UserID, TopicID);
                 }
 
-            }
-            catch (Exception ex)
-            {
-                Response.Redirect("ErrorPage.aspx?Error=" + HttpUtility.UrlEncode(ex.Message));
-            }
         }     
     }
 
@@ -220,11 +215,6 @@ public partial class UserInterface_Topic : System.Web.UI.Page
             
             lblResult.Text = errorMessage;
         }
-
-        catch (Exception ex)
-        {
-            Response.Redirect("ErrorPage.aspx?Error=" + HttpUtility.UrlEncode(ex.Message));
-        }
     }
 
 
@@ -270,7 +260,7 @@ public partial class UserInterface_Topic : System.Web.UI.Page
 
         if (!valid)
         {
-            throw new CustomException(ErrorMessage.GetErrorDesc(2));
+            throw new Exception(ErrorMessage.GetErrorDesc(2));
         }
     }
 

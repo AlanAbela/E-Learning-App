@@ -30,13 +30,11 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
         // Check if user has a ViewState.
-        if (Session["UserID"] == null)
+        if (Context.Session["UserID"] == null)
         {
             Response.Redirect("Login.aspx");
         }
         
-        try
-        {
             if (!IsPostBack)
             {
 
@@ -46,7 +44,7 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
                 LessonID = Convert.ToInt32(Request.QueryString["ID"]);
                 ViewState["lessonID"] = LessonID;
 
-                UserID = Convert.ToInt32(Session["UserID"]);
+                UserID = Convert.ToInt32(Context.Session["UserID"]);
 
                 StopWatch = new Stopwatch();
                 StopWatch.Start();
@@ -65,18 +63,13 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
             {
 
                 LessonID = Convert.ToInt32(ViewState["lessonID"]);
-                UserID = Convert.ToInt32(Session["UserID"]);
+                UserID = Convert.ToInt32(Context.Session["UserID"]);
 
                 // Store selections made.
                 StoreSelections();
 
             }
 
-        }
-        catch (Exception ex)
-        {
-            Response.Redirect("ErrorPage.aspx?Error=" + HttpUtility.UrlEncode(ex.Message));
-        }
     }
 
     /// <summary>
@@ -86,8 +79,6 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
     /// <param name="e"></param>
     protected void btnSubmit_Click(object sender, EventArgs e)
     {
-        try
-        {
             reqField.IsValid = false;
 
             // If viewing the pre last question.
@@ -260,11 +251,6 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
                     }
                 }
             }
-        }
-        catch (Exception ex)
-        {
-            Response.Redirect("ErrorPage.aspx?Error=" + HttpUtility.UrlEncode(ex.Message));
-        }
     }
 
     #region Privare methods
@@ -288,7 +274,7 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
 
         if (!valid)
         {
-            throw new CustomException(ErrorMessage.GetErrorDesc(2));
+            throw new Exception(ErrorMessage.GetErrorDesc(2));
         }
     }
 
@@ -340,8 +326,6 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
     /// <param name="topicID"></param>
     private void BindQuestions()
     {
-        try
-        {
             LessonBL lessonBL = new LessonBL();
             DataTable table = lessonBL.GetLesson(LessonID);
 
@@ -390,12 +374,7 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
                 chkQuizList4.DataTextField = "Text";
                 chkQuizList4.DataValueField = "Correct";
                 chkQuizList4.DataBind();
-            }
-        }
-        catch (Exception ex)
-        {
-            Response.Redirect("ErrorPage.aspx?Error=" + HttpUtility.UrlEncode(ex.Message));
-        }
+            }    
 
     }
 
@@ -403,8 +382,7 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
 
     protected void gvResult_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-        try
-        {
+     
             e.Row.Cells[3].Visible = false;
 
             if (e.Row.RowType == DataControlRowType.DataRow)
@@ -424,11 +402,7 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
                     e.Row.Cells[4].Controls.Add(the_url);
                 }
             }
-        }
-        catch (Exception ex)
-        {
-            Response.Redirect("ErrorPage.aspx?Error=" + HttpUtility.UrlEncode(ex.Message));
-        }
+   
     }
 
     /// <summary>

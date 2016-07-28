@@ -16,11 +16,9 @@ public partial class UserInterface_MasterPage : System.Web.UI.MasterPage
     protected void Page_Load(object sender, EventArgs e)
     {
 
-        try
-        {
-            if (Session["UserID"] != null)
+            if (Context.Session["UserID"] != null)
             {
-                int userID = Convert.ToInt32(Session["UserID"]);
+                int userID = Convert.ToInt32(Context.Session["UserID"]);
                 UserBL userBL = new UserBL();
                 DataTable table = userBL.GetUser(userID);
 
@@ -34,11 +32,6 @@ public partial class UserInterface_MasterPage : System.Web.UI.MasterPage
                     }
                 }
             }
-        }
-        catch (Exception ex)
-        {
-            Response.Redirect("ErrorPage.aspx?Error =" + ex.Message);
-        }
     }
 
     /// <summary>
@@ -48,7 +41,7 @@ public partial class UserInterface_MasterPage : System.Web.UI.MasterPage
     /// <param name="e"></param>
     protected void btnSignOut_Click(object sender, EventArgs e)
     {
-        Session["UserID"] = null;
+        Context.Session["UserID"] = null;
         Response.Redirect("Login.aspx");
     }
 

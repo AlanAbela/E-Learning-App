@@ -124,16 +124,10 @@ public partial class UserInterface_OnlineTest : System.Web.UI.Page
     /// <returns></returns>
     private DataTable GetQuestions()
     {
-        try
-        { 
+      
         QuestionBL questionBL = new QuestionBL();
-        return questionBL.GetAllQuestions();
-        }
-        catch (Exception ex)
-        {
-            Response.Redirect("ErrorPage.aspx?Error =" + ex.Message);
-            return null;
-        }
+        return questionBL.GetAllQuestions();       
+   
     }
 
     /// <summary>
@@ -143,16 +137,10 @@ public partial class UserInterface_OnlineTest : System.Web.UI.Page
     /// <returns></returns>
     private DataTable GetAnswers(int questionID)
     {
-        try
-        {
+
             AnswerBL answerBL = new AnswerBL();
             return answerBL.GetAnswersByQuestionID(questionID);
-        }
-        catch (Exception ex)
-        {
-            Response.Redirect("ErrorPage.aspx?Error=" + HttpUtility.UrlEncode(ex.Message));
-            return null;
-        }
+
     }
 
 
@@ -162,8 +150,6 @@ public partial class UserInterface_OnlineTest : System.Web.UI.Page
     private void CreateViews()
     {
 
-        try
-        {
             DataTable questions = GetQuestions();
             List<View> views = new List<View>();
             int totalQuestions = 0;
@@ -224,11 +210,6 @@ public partial class UserInterface_OnlineTest : System.Web.UI.Page
             }
 
             Views = views;
-        }
-        catch (Exception ex)
-        {
-            Response.Redirect("ErrorPage.aspx?Error =" + ex.Message);
-        }
 
     }
 

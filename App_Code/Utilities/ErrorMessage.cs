@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Xml;
@@ -10,7 +12,8 @@ using System.Xml;
 public class ErrorMessage
 {
     #region Global variables
-    private static string XMLPath = "C:/Users/Alan/Documents/Visual Studio 2015/Projects/E-Learning App/E-Learning App/XML/Errors.xml";
+    private static string XMLPath = ConfigurationManager.AppSettings["XMLPath"].ToString();
+    private static string LogPath = ConfigurationManager.AppSettings["LogPath"].ToString();
     private static XmlDocument xml = new XmlDocument();
     #endregion
     public ErrorMessage()
@@ -48,5 +51,23 @@ public class ErrorMessage
 
         }
         return value;
+    }
+
+    public static void LogExceptions(string page, string message, string stackTrace, string query)
+    {
+        //    xml.Load(XMLExceptionErrorPath);
+        using (StreamWriter writer = new StreamWriter(LogPath, true))
+        {
+            writer.WriteLine("------------*------------");
+            writer.WriteLine(DateTime.Now.ToString());
+            writer.WriteLine("Page: " + page);
+            writer.WriteLine("Message: " + message);
+            writer.WriteLine("StackTrace: " + stackTrace);
+            writer.WriteLine("Query: " + query);
+            writer.Close();
+
+        }
+
+        //    if(xml.)
     }
 }

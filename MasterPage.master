@@ -8,9 +8,9 @@
      <meta http-equiv ="Page-Enter" content ="blendTrans(Duration=0)"/>
  
 <meta http-equiv="Page-Exit"content="blendTrans(Duration=0)"/>
-
-    <link href="../css/bootstrap.min.css" rel="stylesheet" />
     <link href="../css/style.css" rel="stylesheet" />
+    <link href="../css/bootstrap.min.css" rel="stylesheet" />
+    
     <script src="../js/jquery-3.1.0.min.js"></script>
     <script src="../js/jquery.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
