@@ -36,14 +36,20 @@ public class LessonDL
     /// <returns></returns>
     public DataTable GetAllLessons()
     {
+        // Using an SQL connection, which is instantiated on instance creation
         using (connection)
         {
+            // SQL command to represent an SQL statement or stored procedure
             SqlCommand command = new SqlCommand("GetAllLessons", connection);
+            // Specify that a stored procedure is used.
             command.CommandType = CommandType.StoredProcedure;
-
             connection.Open();
+
+            // Retrieve data 
             SqlDataReader reader = command.ExecuteReader();
+            // Load the data in a Datatable
             table.Load(reader);
+            // Release all connection resources.
             connection.Dispose();
 
             return table;

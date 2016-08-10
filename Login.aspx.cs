@@ -10,22 +10,30 @@ public partial class Login : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!String.IsNullOrEmpty(Request.Params["logout"]))
+        // If current user is already logged in redirect to Default page.
+        if(HttpContext.Current.User.Identity.IsAuthenticated)
         {
-            FormsAuthentication.SignOut();
-            Response.Redirect("./");
+            Response.Redirect("Default.aspx");
         }
     }
 
+    /// <summary>
+    /// Called on btn login click.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void btnLogin_Click(object sender, EventArgs e)
     {
-        if(valForm.IsValid)
+      // If login is valid
+        if (valForm.IsValid)
         {
                 LoginBL loginBL = new LoginBL();
 
-                // Store the user ID in session.
+            // Retrieve and store the user ID in session.        
             Context.Session["UserID"] = loginBL.GetUserID(txtUsername.Text, txtPassword.Text);
+            
 
+            // Redirect to requested page or default page.
             FormsAuthentication.RedirectFromLoginPage(txtUsername.Text, true);
          
         }
@@ -33,12 +41,18 @@ public partial class Login : System.Web.UI.Page
     }
 
     #region Events
+
+    /// <summary>
+    /// Called by the custom validator server control.
+    /// </summary>
+    /// <param name="source"></param>
+    /// <param name="args"></param>
     protected void valForm_ServerValidate(object source, ServerValidateEventArgs args)
     {
         args.IsValid = true;
         valForm.ErrorMessage = string.Empty;
-        CustomValidator validator = (CustomValidator)source;
 
+  
         if (txtUsername.Text.Length < 5)
         {
             args.IsValid = false;

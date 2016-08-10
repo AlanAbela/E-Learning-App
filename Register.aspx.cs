@@ -12,7 +12,14 @@ public partial class UserInterface_Register : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
 
-    }
+        // If current user is already logged in redirect to Default page.
+        if (HttpContext.Current.User.Identity.IsAuthenticated)
+        {
+            Response.Redirect("Default.aspx");
+        }
+    
+
+}
 
     /// <summary>
     /// If username and password are valid add record in table User.

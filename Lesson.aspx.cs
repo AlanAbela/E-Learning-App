@@ -29,9 +29,16 @@ public partial class Lesson : System.Web.UI.Page
               
                     Validation();
 
-                    LessonID = Convert.ToInt32(Request.QueryString["ID"]);         
-                    
-                    BindNavMenu(LessonID, UserID);                
+                    LessonID = Convert.ToInt32(Request.QueryString["ID"]);
+
+            if (!IsPostBack)
+            {
+                // Insert record if it doesn't exist
+                UserLessonBL userLessonBL  = new UserLessonBL();
+                userLessonBL.InserNewRecord(UserID, LessonID);
+            }
+
+            BindNavMenu(LessonID, UserID);                
 
                 DataTable lesson = GetLesson(LessonID);
 

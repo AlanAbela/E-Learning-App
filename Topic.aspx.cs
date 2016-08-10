@@ -172,7 +172,7 @@ public partial class UserInterface_Topic : System.Web.UI.Page
                 int countTopicsUnderLesson = topicBL.GetCountTopicsByLessonID(LessonID);
                 int countTopicsCompletedByUser = topicBL.GetCountCompletedTopics(LessonID, UserID);
 
-                // If all lessons are complete add the lesson competion date.
+                // If all lessons are complete add the lesson completion date.
                 if(countTopicsCompletedByUser == countTopicsUnderLesson)
                 {
                     UserLessonBL userLessonBL = new UserLessonBL();

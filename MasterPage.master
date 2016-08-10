@@ -93,18 +93,18 @@
                 
 
             <!-- Navigation bar using bootstrap style-->
-            <div class="navbar navbar-default">
+            <div class="navbar navbar-default" style="background-color:cornflowerblue">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="#">The SQL Learning Platform</a>
+                        <a class="navbar-brand" href="#" style="color:black">The SQL Learning Platform</a>
                     </div>
                     <ul class="nav navbar-nav">
-                            <li id="home"><asp:LinkButton ID="homeLink" runat="server" Text="Home" OnClick="homeLink_Click" ></asp:LinkButton></li>
-                            <li id="test"><asp:LinkButton ID="btnTest" runat="server" Text ="Take Exam" Visible="false" OnClick="btnTest_Click"></asp:LinkButton></li>
+                            <li id="home"><asp:LinkButton ID="homeLink" runat="server" Text="Home" OnClick="homeLink_Click" style="color:black"></asp:LinkButton></li>
+                            <li id="test"><asp:LinkButton ID="btnTest" runat="server" Text ="Take Exam" Visible="false" OnClick="btnTest_Click " style="color:black"></asp:LinkButton></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-                            <asp:Label ID="lblLogged" runat="server" CssClass="navbar-text"></asp:Label></li>
+                            <asp:Label ID="lblLogged" runat="server" CssClass="navbar-text" style="color:black"></asp:Label></li>
                         <li>
                             <asp:Button ID="btnSignOut" runat="server" CssClass="btn btn-default navbar-btn" Text="Sign out" OnClick="btnSignOut_Click"/></li>
                     </ul>

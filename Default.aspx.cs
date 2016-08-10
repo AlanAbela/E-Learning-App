@@ -15,18 +15,14 @@ public partial class Default : System.Web.UI.Page
     int UserID { get; set; }
     #endregion
 
+    #region Events
     static List<int> LessonIDs { get; set; }
     protected void Page_Load(object sender, EventArgs e)
     {
        
-        if(!Context.User.Identity.IsAuthenticated && Context.Session["UserID"] == null)
-        {
-            Response.Redirect("Login.aspx");  
-        }
-        else
-        {
-                lblTitle.Text = "Welcome to SQL Learning Platform";
-                UserID = Convert.ToInt32(Context.Session["UserID"]);
+       
+             lblTitle.Text = "Welcome to SQL Learning Platform";
+             UserID = Convert.ToInt32(Context.Session["UserID"]);
 
               BindSideMenu();
 
@@ -34,68 +30,71 @@ public partial class Default : System.Web.UI.Page
             {
                 CalculateScore(UserID);
             }     
-        }
     }
 
 
-    private void BindSideMenu()
-    {
-            LessonBL lesson = new LessonBL();
-
-            // Get all lessons available in table "Lesson"
-            DataTable table = lesson.GetLessons();
-
-            UserLessonBL userLesson = new UserLessonBL();
-            DataTable userLessonTable = null;
-
-            // If records are present in table Lesson.
-            if (table.Rows.Count > 0)
-            {
-                // For every record.
-                foreach (DataRow dr in table.Rows)
-                {
-                    // Create a list item.
-                    HtmlGenericControl listItem = new HtmlGenericControl("li");
-                 
-                    // Get the lesson ID from the record.
-                    int lessonID = Convert.ToInt32(dr["ID"]);
-
-                    LinkButton linkB = new LinkButton();
-
-                    // Check if a record is present in table User_lesson.
-                    userLessonTable = userLesson.GetRecord(UserID, lessonID);
-
-                    // If a record is present in User_lesson table mark the lesson as complete.
-                    if (userLessonTable.Rows.Count == 0)
-                    {
-                        linkB.Text = "<img src=http://localhost:3787/image/c1.jpg> " + dr[1].ToString();
-                    }
-                     else if (userLessonTable.Rows[0].Field<DateTime?>("DateCompleted") == null)
-                    {
-                        linkB.Text = "<img src=http://localhost:3787/image/c1.jpg> " + dr[1].ToString();
-                    }
-                    else
-                    {
-                        linkB.Text = "<img src=http://localhost:3787/image/c2.jpg> " + dr[1].ToString();
-                    }
-
-                    // Add the list item to the unsorted list.
-                    linkB.Attributes.Add("runat", "server");
-                    linkB.CommandArgument = lessonID.ToString();
-                    //  linkB.Attributes.Add("onclick", "lessonRedirect("+ lessonID + ")");
-
-                    linkB.Click += new EventHandler(Redirect);
-                    listItem.Controls.Add(linkB);
-
-                    // Add the list item to the unsorted list.
-                    navSideMenu.Controls.Add(listItem);
-                }
-            }
-    }
+    
 
     protected void Redirect(object sender, EventArgs e)
     {
         Response.Redirect("lesson.aspx?ID=" + ((LinkButton)(sender)).CommandArgument);
+    }
+    #endregion
+
+    #region Private Methods
+    private void BindSideMenu()
+    {
+        LessonBL lesson = new LessonBL();
+
+        // Get all lessons available in table "Lesson"
+        DataTable table = lesson.GetLessons();
+
+        UserLessonBL userLesson = new UserLessonBL();
+        DataTable userLessonTable = null;
+
+        // If records are present in table Lesson.
+        if (table.Rows.Count > 0)
+        {
+            // For every record.
+            foreach (DataRow dr in table.Rows)
+            {
+                // Create a list item.
+                HtmlGenericControl listItem = new HtmlGenericControl("li");
+
+                // Get the lesson ID from the record.
+                int lessonID = Convert.ToInt32(dr["ID"]);
+
+                LinkButton linkB = new LinkButton();
+
+                // Check if a record is present in table User_lesson.
+                userLessonTable = userLesson.GetRecord(UserID, lessonID);
+
+                // If a record is present in User_lesson table mark the lesson as complete.
+                if (userLessonTable.Rows.Count == 0)
+                {
+                    linkB.Text = "<img src=http://localhost:3787/image/c1.jpg> " + dr[1].ToString();
+                }
+                else if (userLessonTable.Rows[0].Field<DateTime?>("DateCompleted") == null)
+                {
+                    linkB.Text = "<img src=http://localhost:3787/image/c1.jpg> " + dr[1].ToString();
+                }
+                else
+                {
+                    linkB.Text = "<img src=http://localhost:3787/image/c2.jpg> " + dr[1].ToString();
+                }
+
+                // Add the list item to the unsorted list.
+                linkB.Attributes.Add("runat", "server");
+                linkB.CommandArgument = lessonID.ToString();
+                //  linkB.Attributes.Add("onclick", "lessonRedirect("+ lessonID + ")");
+
+                linkB.Click += new EventHandler(Redirect);
+                listItem.Controls.Add(linkB);
+
+                // Add the list item to the unsorted list.
+                navSideMenu.Controls.Add(listItem);
+            }
+        }
     }
 
     /// <summary>
@@ -108,7 +107,7 @@ public partial class Default : System.Web.UI.Page
             DataTable user = userBL.GetUser(userID);
 
             // If user has taken the exam there will be a number of correct answers.
-            if (user.Rows[0].Field<int?>("Correct_Answers") != null)
+            if (user.Rows.Count != 0 && user.Rows[0].Field<int?>("Correct_Answers") != null)
             {
                 // Get the number of correct answers for this user.
                 int? correctAnswer = user.Rows[0].Field<int?>("Correct_Answers");
@@ -143,4 +142,5 @@ public partial class Default : System.Web.UI.Page
                                 "</br></br> Completed on: " + date.Date.ToString("D");
             }
         }
-    }
+    #endregion
+}

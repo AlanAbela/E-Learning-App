@@ -234,7 +234,7 @@ public class UserDL
     /// <returns></returns>
     private static string EncyptPassword(string password)
     {
-        string hashedPassword = Crypto.SHA1(password);
+        string hashedPassword = Crypto.SHA256(password);
         return hashedPassword;
     }
 }

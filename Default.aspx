@@ -6,12 +6,6 @@
 
     <script type="text/javascript">
 
-        //function lessonRedirect(id)
-        //{
-        //    window.opener = self;
-        //    window.close();
-        //    window.open("lesson.aspx?ID=" + id);
-        //}
 
         $(document).ready(function () {
 
