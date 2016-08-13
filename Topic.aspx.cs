@@ -22,14 +22,8 @@ public partial class UserInterface_Topic : System.Web.UI.Page
     #region Events
     protected void Page_Load(object sender, EventArgs e)
     {
-        // Check if user has a session.
-        if (Context.Session["UserID"] == null)
-        {
-            Response.Redirect("Login.aspx");
-        }
-        else
-        {
-
+       
+            // Reference USer ID
                 UserID = Convert.ToInt32(Context.Session["UserID"]);
 
                 // Validate Query strings.
@@ -39,25 +33,28 @@ public partial class UserInterface_Topic : System.Web.UI.Page
                 TopicID = Convert.ToInt32(Request.QueryString["ID"]);
                 LessonID = Convert.ToInt32(Request.QueryString["lessonid"]);
 
-                // Bind table, table according to topic ID.
+                // Create example tables according to the topic ID.
                 BindExampleTable();
 
+               // Create an instance of the Topic business logic
                 TopicBL topicBL = new TopicBL();
+
+              // Get the topic record by its ID from the database.
                 DataTable dataTable = topicBL.GetTopicByID(TopicID);
 
+              // Pass the video link to the Iframe instance.
                 videoSource.Src = dataTable.Rows[0].Field<string>("VideoLink");
             
-
-                BindData(TopicID);
+              // Get text content to populate the Topic page.
+                BindContent(TopicID);
 
                 if(!IsPostBack)
                 {
-                    // Insert record if it doesn't exist
+                    // Insert record if it doesn't exist in the linking table between user and topic.
                     userTopicBL = new UserTopicBL();
                     userTopicBL.InsertRecord(UserID, TopicID);
                 }
-
-        }     
+     
     }
 
     /// <summary>
@@ -268,7 +265,7 @@ public partial class UserInterface_Topic : System.Web.UI.Page
     /// Binds topic title and topic description.
     /// </summary>
     /// <param name="topicID"></param>
-    private void BindData(int topicID)
+    private void BindContent(int topicID)
     {
      
             TopicBL topicBL = new TopicBL();
@@ -286,7 +283,10 @@ public partial class UserInterface_Topic : System.Web.UI.Page
     /// </summary>
     private void BindExampleTable()
     {
+        // Create instance of Topic business logic.
         TopicBL topicBL = new TopicBL();
+
+        // Get example 
         DataTable table = topicBL.GetExampleTable(TopicID);
         gvTableExample.DataSource = table;
         gvTableExample.DataBind();

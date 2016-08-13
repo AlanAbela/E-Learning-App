@@ -19,6 +19,7 @@ public partial class Lesson : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
 
+        // If the user is not logged in redirect to login page.
             if (!Context.User.Identity.IsAuthenticated && Context.Session["UserID"] != null)
             {
                 Response.Redirect("Login.aspx");
@@ -102,9 +103,9 @@ public partial class Lesson : System.Web.UI.Page
                 {
                     linkButton.Text = "<img src=http://localhost:3787/image/c2.jpg> " + row.Field<string>("Title").ToString();
                 }
+
                 linkButton.Attributes.Add("runat", "server");
                 linkButton.CommandArgument = topicID.ToString();
-                //linkButton.Attributes.Add("onclick", "topicRedirect("+ row.Field<int>("ID").ToString() + ")");
                 linkButton.Click += new EventHandler(TopicRedirect);
                 listItemTitle.Controls.Add(linkButton);
 

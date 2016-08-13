@@ -19,21 +19,21 @@ public partial class Default : System.Web.UI.Page
     static List<int> LessonIDs { get; set; }
     protected void Page_Load(object sender, EventArgs e)
     {
-       
-       
+          // Pass title string to title label.
              lblTitle.Text = "Welcome to SQL Learning Platform";
+        // Reference the user ID.
              UserID = Convert.ToInt32(Context.Session["UserID"]);
 
+        // Call method to populate side menu.
               BindSideMenu();
 
+        // If not post back calculate final test score.
             if (!IsPostBack)
             {
                 CalculateScore(UserID);
             }     
     }
-
-
-    
+ 
 
     protected void Redirect(object sender, EventArgs e)
     {
@@ -42,53 +42,64 @@ public partial class Default : System.Web.UI.Page
     #endregion
 
     #region Private Methods
+    /// <summary>
+    /// Create side navigation menu.
+    /// </summary>
     private void BindSideMenu()
     {
+        // Create an instance of lesson business logic.
         LessonBL lesson = new LessonBL();
 
         // Get all lessons available in table "Lesson"
-        DataTable table = lesson.GetLessons();
+        DataTable lessons = lesson.GetLessons();
 
+        // Create an instance of UserLesson business logic.
         UserLessonBL userLesson = new UserLessonBL();
+
         DataTable userLessonTable = null;
 
         // If records are present in table Lesson.
-        if (table.Rows.Count > 0)
+        if (lessons.Rows.Count > 0)
         {
-            // For every record.
-            foreach (DataRow dr in table.Rows)
+            // Loop through the lessons rows.
+            foreach (DataRow row in lessons.Rows)
             {
                 // Create a list item.
                 HtmlGenericControl listItem = new HtmlGenericControl("li");
 
-                // Get the lesson ID from the record.
-                int lessonID = Convert.ToInt32(dr["ID"]);
-
+                // Create a link Button.
                 LinkButton linkB = new LinkButton();
 
-                // Check if a record is present in table User_lesson.
+                // Get the lesson ID from the record.
+                int lessonID = Convert.ToInt32(row["ID"]);             
+
+                // Get the record from "User_Lesson" table that contains the user ID and Lesson ID
                 userLessonTable = userLesson.GetRecord(UserID, lessonID);
 
-                // If a record is present in User_lesson table mark the lesson as complete.
+                // If the record is blank, means that the lesson is not complete by the user, so put a white very good image.
                 if (userLessonTable.Rows.Count == 0)
                 {
-                    linkB.Text = "<img src=http://localhost:3787/image/c1.jpg> " + dr[1].ToString();
+                    linkB.Text = "<img src=http://localhost:3787/image/c1.jpg> " + row[1].ToString();
                 }
+                // If the record does not contain a complete date it also means that the lesson is not complete.
                 else if (userLessonTable.Rows[0].Field<DateTime?>("DateCompleted") == null)
                 {
-                    linkB.Text = "<img src=http://localhost:3787/image/c1.jpg> " + dr[1].ToString();
+                    linkB.Text = "<img src=http://localhost:3787/image/c1.jpg> " + row[1].ToString();
                 }
+                // If there is the record with a complete date mark the link button with a green very good sign.
                 else
                 {
-                    linkB.Text = "<img src=http://localhost:3787/image/c2.jpg> " + dr[1].ToString();
+                    linkB.Text = "<img src=http://localhost:3787/image/c2.jpg> " + row[1].ToString();
                 }
 
-                // Add the list item to the unsorted list.
+               // Add runat server attribute to the link button.
                 linkB.Attributes.Add("runat", "server");
+                // Pass the lesson ID to the link button.
                 linkB.CommandArgument = lessonID.ToString();
-                //  linkB.Attributes.Add("onclick", "lessonRedirect("+ lessonID + ")");
-
+                // Add the Redirect event.
                 linkB.Click += new EventHandler(Redirect);
+
+                // Add the link button to the list item.
                 listItem.Controls.Add(linkB);
 
                 // Add the list item to the unsorted list.

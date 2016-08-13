@@ -48,33 +48,40 @@ public partial class UserInterface_Register : System.Web.UI.Page
     protected void valForm_ServerValidate(object source, ServerValidateEventArgs args)
     {
         args.IsValid = true;
-        valForm.ErrorMessage = string.Empty;
-        CustomValidator validator = (CustomValidator)source;
         
+        // Reference the custom validator.
+        valForm.ErrorMessage = string.Empty;
+
+
+        // Compares username to database records for duplicates.
         if (RegisterBL.DuplicateUser(txtUsername.Text) > 0)
         {
             args.IsValid = false;
             valForm.ErrorMessage = "Username already Taken! ";
         }
         
+        // Checks user name length.
         if(txtUsername.Text.Length < 5)
         {
             args.IsValid = false;
             valForm.ErrorMessage = "Username must be 5 or more characters long. ";
         }
 
+        // Checks password length.
         if(txtPassword.Text.Length < 8)
         {
             args.IsValid = false;
             valForm.ErrorMessage = valForm.ErrorMessage + "Password must be 8 or more characters long. ";
         }
 
+        // Checks if password contains white spaces.
         if(txtPassword.Text.Contains(" "))
         {
             args.IsValid = false;
             valForm.ErrorMessage = valForm.ErrorMessage + "Password must not contain white spaces. ";
         }
 
+        // Checks that confirmation password matched the password.
         if(args.IsValid && !txtPassword.Text.Equals(txtConfirmPassword.Text))
         {
             args.IsValid = false;

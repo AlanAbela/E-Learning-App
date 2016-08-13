@@ -27,17 +27,15 @@ public partial class Login : System.Web.UI.Page
       // If login is valid
         if (valForm.IsValid)
         {
+            // Create an instance of the Login business logic.
                 LoginBL loginBL = new LoginBL();
 
             // Retrieve and store the user ID in session.        
             Context.Session["UserID"] = loginBL.GetUserID(txtUsername.Text, txtPassword.Text);
             
-
             // Redirect to requested page or default page.
-            FormsAuthentication.RedirectFromLoginPage(txtUsername.Text, true);
-         
+            FormsAuthentication.RedirectFromLoginPage(txtUsername.Text, true);        
         }
- 
     }
 
     #region Events

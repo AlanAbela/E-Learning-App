@@ -90,6 +90,8 @@ public class TopicDL
 
             // Get the result table of the example query.
             string query = table.Rows[0].Field<string>("query");
+
+            // Execute the query against the database.
             command = new SqlCommand(query, connection);
             reader = command.ExecuteReader();
             table.Reset();

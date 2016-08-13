@@ -16,29 +16,36 @@
         {
             args.IsValid = true;
 
+            // Reference the username.
             var username = document.getElementById('<%= txtUsername.ClientID %>');
+            // Reference the password.
             var password = document.getElementById('<%= txtPassword.ClientID %>');
+            // Reference the confirm password.
             var confirmPassword = document.getElementById('<%=txtConfirmPassword.ClientID %>')
             source.innerHTML = "";
 
+            // Check username length
             if(username.value.length < 5)
             {
                 args.IsValid = false;
                 source.innerHTML = "Username must be 5 or more characters long. ";
             }
             
+            // Check password length
             if(password.value.length < 8)
             {
                 args.IsValid = false;
                 source.innerHTML = source.innerHTML + "Password must be 8 or more characters long. ";
             }
 
+            // Check if password contains white spaces
             if(hasWhiteSpace(password.value))
             {
                 args.IsValid = false;
                 source.innerHTML = source.innerHTML + "Password must not contain white spaces. ";
             }
             
+            // IF password and username are ok, check if confirm password matches the password.
             if(args.IsValid && password.value != confirmPassword.value)
             {
                 args.IsValid = false;
@@ -96,8 +103,10 @@
           </div>
             <div>
          </div>
+        <!-- Custom Validator declaration -->
         <div style="width:100%; text-align:center; display:inline-block;">
-            <asp:CustomValidator ID="valForm" runat="server"  OnServerValidate="valForm_ServerValidate" ClientValidationFunction="ValidateForm" CssClass="alert alert-danger" Display="Dynamic"></asp:CustomValidator>
+            <asp:CustomValidator ID="valForm" runat="server"  OnServerValidate="valForm_ServerValidate" 
+                ClientValidationFunction="ValidateForm" CssClass="alert alert-danger" Display="Dynamic"></asp:CustomValidator>
          </div>
     </form>
 </body>
