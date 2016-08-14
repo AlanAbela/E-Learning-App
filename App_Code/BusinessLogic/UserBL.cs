@@ -34,9 +34,9 @@ public UserBL()
     /// </summary>
     /// <param name="ID"></param>
     /// <param name="correctAnswers"></param>
-    public void InsertCorrectAnswers(int ID, int? correctAnswers)
+    public void UpdateCorrectAnswers(int ID, int? correctAnswers)
     {
-        UserDL.InsertCorrectAnswers(ID, correctAnswers);
+        UserDL.UpdateCorrectAnswers(ID, correctAnswers);
     }
 
     /// <summary>

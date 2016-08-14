@@ -63,7 +63,7 @@
                 </div>
                 <div class="table-holder">
                     <asp:GridView ID="gvTableExample" runat="server" CssClass="table table-striped"></asp:GridView>
-                    <asp:GridView ID="gvTableExample2" runat="server" CssClass="table table-striped" OnRowDataBound="gvTableExample2_RowDataBound"></asp:GridView>
+                    <asp:GridView ID="gvTableExample2" runat="server" CssClass="table table-striped"></asp:GridView>
                     <asp:GridView ID="gvTableExample3" runat="server" CssClass="table table-striped"></asp:GridView>
                 </div>
                 <div style="text-align: center;">

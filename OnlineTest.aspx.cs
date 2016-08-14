@@ -21,7 +21,9 @@ public partial class UserInterface_OnlineTest : System.Web.UI.Page
     {
         if(!IsPostBack)
         {
+            // Build the question pages.
             CreateViews();
+
             PopulateMultiview();
             mvQuestions.ActiveViewIndex = 0;
         }
@@ -149,9 +151,12 @@ public partial class UserInterface_OnlineTest : System.Web.UI.Page
     /// </summary>
     private void CreateViews()
     {
-
+            // Retrieve questions from datatbase.
             DataTable questions = GetQuestions();
+
+            // Decalre a list of type View.
             List<View> views = new List<View>();
+            // Create a question number holder/counter.
             int totalQuestions = 0;
 
             foreach (DataRow row in questions.Rows)
@@ -186,7 +191,7 @@ public partial class UserInterface_OnlineTest : System.Web.UI.Page
                 radioButtonList.DataValueField = "Correct";
                 radioButtonList.DataBind();
 
-                // Create a View to store the above components.
+                // Create a View and store  controls in its control list.
                 View view = new View();
                 view.Controls.Add(hiddenField);
                 view.Controls.Add(hiddenFieldTID);
@@ -204,13 +209,10 @@ public partial class UserInterface_OnlineTest : System.Web.UI.Page
                 view.Controls.Add(radioButtonList);
                 view.Controls.Add(new LiteralControl("</div>"));
 
-                // Store view in list of views.
+                // Add view in list of views.
                 views.Add(view);
-
             }
-
             Views = views;
-
     }
 
     /// <summary>

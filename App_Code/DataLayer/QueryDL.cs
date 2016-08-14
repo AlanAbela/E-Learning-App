@@ -31,8 +31,10 @@ public class QueryDL
     {
         using (connection)
         {
+            // Create SQL command, pass connection and name of stored procedure.
             SqlCommand command = new SqlCommand("GetQueryByTopicID", connection);
             command.CommandType = CommandType.StoredProcedure;
+            // Pass parameter value to the stored procedure.
             command.Parameters.AddWithValue("@topicID", topicID);
 
             connection.Open();
@@ -41,7 +43,8 @@ public class QueryDL
             table = new DataTable();
             table.Load(reader);
 
-            // Use value from table to retrive the records to match with. 
+            // Record returned contains the SQL query. Execute the query against the database
+            // and create a Datatable representation of the query. 
             command = new SqlCommand(table.Rows[0].Field<string>("Query"), connection);
             reader = command.ExecuteReader();
             table = new DataTable();

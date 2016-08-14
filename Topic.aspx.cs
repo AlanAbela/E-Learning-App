@@ -68,7 +68,7 @@ public partial class UserInterface_Topic : System.Web.UI.Page
 
         try
         {
-            // Declare variables
+            // Declare variables.
             gvResultTable.DataSource = null;
             gvResultTable.DataBind();
             lblResult.Visible = false;
@@ -76,51 +76,55 @@ public partial class UserInterface_Topic : System.Web.UI.Page
             EmployeeBL employeeBL = new EmployeeBL();
             bool correct = true;
 
-            // Get table to be compared with.
+            // Retrieve the correct query, execute it against the database, and return a datatable representation.
             DataTable compareTable = queryBL.GetQueryResult(TopicID);
 
-            // If the query is an UPDATE, INSERT or DELETE query
+            // If the query is an UPDATE, INSERT or DELETE query. Get the altered result.
             if(compareTable.Rows.Count == 0)
             {
                 compareTable = new DataTable();
                 compareTable = employeeBL.GetAllEmployee();
             }
 
+            // Reference the user query.
             string query = txtTryItOut.Text;
-            // Remove excessive white spaces
+
+            // Check if user text field contains any characters.
             if (!string.IsNullOrEmpty(txtTryItOut.Text))
             {
                 query = txtTryItOut.Text.Trim();
             }
+            // Inform user to type text.
             else
             {
                 lblResult.Attributes.Add("class", "label label-warning");
                 lblResult.Visible = true;
+                // Retrieve error from XML file.
                 lblResult.Text = ErrorMessage.GetErrorDesc(9).Replace("|","<br/>");
                 return;
             }
 
-            // Reset table befor running user query.
+            // Recreate the table before running the user query.
             employeeBL.RecreateTable();
 
             // Process the user input on the table.
             DataTable resultTable = queryBL.ProcessQuery(query);
 
-            // If the query is an UPDATE, INSERT or DELETE
+            // If the query is an UPDATE, INSERT or DELETE, retrieve the altered table.
             if (resultTable == null || resultTable.Rows.Count == 0)
             {
                 resultTable = new DataTable();
                 resultTable = employeeBL.GetAllEmployee();
             }   
 
-            // If table was not dropped.
+            // If table was not dropped by user query.
             if (employeeBL.IsEmployee() == 1)
             {
                 // Bind to grid view.
                 gvResultTable.DataSource = resultTable;
                 gvResultTable.DataBind();
 
-                // Compare rows and columns.                
+                // Compare no of rows and columns of database's query table to user's query table..                
                 if (compareTable.Rows.Count != resultTable.Rows.Count || compareTable.Columns.Count != resultTable.Columns.Count)
                 {
                     correct = false;
@@ -145,10 +149,12 @@ public partial class UserInterface_Topic : System.Web.UI.Page
             }
             else
             {
+                // If table is dropped set correct to false, bind an empty data table to the 1st grid view.
                 correct = false;
-                // Table was deleted so bind an empty datatable to the gridview.
                 gvResultTable.DataSource = new DataTable();
                 gvResultTable.DataBind();
+
+                // Retrieve error message from XML file.
                 errorMessage = ErrorMessage.GetErrorDesc(8).Replace("|", "<br/>"); ;         
             }
 
@@ -161,10 +167,10 @@ public partial class UserInterface_Topic : System.Web.UI.Page
 
                 userTopicBL = new UserTopicBL();
 
-                // Set completion date
+                // Set Topic completion date.
                 userTopicBL.SetCompleteDate(UserID, TopicID);
 
-                // Check if lesson is complete
+                // Check if lesson is complete, by comparing complete topics with the number of topics under current lesson.
                 TopicBL topicBL = new TopicBL();
                 int countTopicsUnderLesson = topicBL.GetCountTopicsByLessonID(LessonID);
                 int countTopicsCompletedByUser = topicBL.GetCountCompletedTopics(LessonID, UserID);
@@ -176,6 +182,7 @@ public partial class UserInterface_Topic : System.Web.UI.Page
                     userLessonBL.SetCompletionDate(UserID, LessonID);
                 }
             }
+            // If not correct, show the error message to the user.
             else
             {
                 lblResult.Attributes.Add("class", "label label-warning");
@@ -187,26 +194,31 @@ public partial class UserInterface_Topic : System.Web.UI.Page
             employeeBL.RecreateTable();
 
         }
+
+        // This is an attempt to show different messages to the users if the submitted query gives an SQL exception.
         catch (SqlException ex)
         {
+            // Error number 102 refers to bad syntax.
            if(ex.Number == 102)
             {
                 errorMessage = ErrorMessage.GetErrorDesc(3).Replace("|","<br/>");
             }
+           // User tries to create a table (currently not implemeted). Since user has no permission to create en exception is thrown.
            else if(ex.Number == 262)
             {
                 errorMessage = ErrorMessage.GetErrorDesc(7).Replace("|", "<br/>");
             }
+           // Invalid field name.
            else if(ex.Number == 207)
             {
                 errorMessage = ErrorMessage.GetErrorDesc(10).Replace("|", "<br/>");
             }
            else
+           // Currently other types of exceptions show a general error.
             {
                 errorMessage = ErrorMessage.GetErrorDesc(3).Replace("|", "</br>");
             }
-
-         
+      
             lblResult.Attributes.Add("class", "label label-warning");
             lblResult.Visible = true;
             
@@ -286,12 +298,13 @@ public partial class UserInterface_Topic : System.Web.UI.Page
         // Create instance of Topic business logic.
         TopicBL topicBL = new TopicBL();
 
-        // Get example 
+        // Get the first example table
         DataTable table = topicBL.GetExampleTable(TopicID);
         gvTableExample.DataSource = table;
         gvTableExample.DataBind();
 
         DataTable topic = topicBL.GetTopicByID(TopicID);
+        // If the topic has a second example query, populate the second example table.
         if(topic.Rows[0].Field<string>("ExampleQuery2") != null)
         {
             DataTable table2 = topicBL.GetExampleTable2(TopicID);
@@ -299,7 +312,8 @@ public partial class UserInterface_Topic : System.Web.UI.Page
             gvTableExample2.DataBind();
         }
 
-        if(topic.Rows[0].Field<string>("ExampleQuery3") != null)
+        // If the topic has a third example query, populate the third example table.
+        if (topic.Rows[0].Field<string>("ExampleQuery3") != null)
         {
             DataTable table3 = topicBL.GetExampleTable3(TopicID);
             gvTableExample3.DataSource = table3;
@@ -310,14 +324,6 @@ public partial class UserInterface_Topic : System.Web.UI.Page
 
     #endregion
 
-
-    protected void gvTableExample2_RowDataBound(object sender, GridViewRowEventArgs e)
-    {
-        //if (e.Row.Cells.Count > 1)
-        //{
-        //    e.Row.Cells[0].Visible = false;
-        //}
-    }
 
     protected void btnBack_Click(object sender, EventArgs e)
     {

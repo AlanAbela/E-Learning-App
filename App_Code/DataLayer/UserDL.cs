@@ -162,15 +162,15 @@ public class UserDL
     }
 
     /// <summary>
-    /// Insert final test number of correct answers.
+    /// Update final test number of correct answers.
     /// </summary>
     /// <param name="ID"></param>
     /// <param name="correctAnswers"></param>
-    public void InsertCorrectAnswers(int ID, int? correctAnswers)
+    public void UpdateCorrectAnswers(int ID, int? correctAnswers)
     {
         using (SqlConnection conn = new SqlConnection(Connection.ConnectionString(Connection.ConType.One)))
         {
-            SqlCommand command = new SqlCommand("InsertUserCorrectAnswers", conn);
+            SqlCommand command = new SqlCommand("UpdateUserCorrectAnswers", conn);
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@userID", ID);
             command.Parameters.AddWithValue("@correctAnswers", correctAnswers);
