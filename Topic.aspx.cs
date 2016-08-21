@@ -22,9 +22,14 @@ public partial class UserInterface_Topic : System.Web.UI.Page
     #region Events
     protected void Page_Load(object sender, EventArgs e)
     {
-       
-            // Reference USer ID
-                UserID = Convert.ToInt32(Context.Session["UserID"]);
+        // Check if user has authorization.
+        if (!Context.User.Identity.IsAuthenticated && Context.Session["UserID"] != null)
+        {
+            Response.Redirect("Login.aspx");
+        }
+
+        // Reference User ID
+        UserID = Convert.ToInt32(Context.Session["UserID"]);
 
                 // Validate Query strings.
                 Validation();
@@ -54,7 +59,6 @@ public partial class UserInterface_Topic : System.Web.UI.Page
                     userTopicBL = new UserTopicBL();
                     userTopicBL.InsertRecord(UserID, TopicID);
                 }
-     
     }
 
     /// <summary>
@@ -226,7 +230,11 @@ public partial class UserInterface_Topic : System.Web.UI.Page
         }
     }
 
-
+    /// <summary>
+    /// Called on button close click.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void btnClose_Click(object sender, EventArgs e)
     {
         txtTryItOut.Text = string.Empty;
@@ -234,6 +242,16 @@ public partial class UserInterface_Topic : System.Web.UI.Page
         gvResultTable.DataBind();
 
         lblResult.Visible = false;
+    }
+
+    /// <summary>
+    /// Called on button BAck click.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    protected void btnBack_Click(object sender, EventArgs e)
+    {
+        Response.Redirect("lesson.aspx?ID=" + LessonID.ToString());
     }
 
     #endregion
@@ -325,8 +343,4 @@ public partial class UserInterface_Topic : System.Web.UI.Page
     #endregion
 
 
-    protected void btnBack_Click(object sender, EventArgs e)
-    {
-        Response.Redirect("lesson.aspx?ID=" + LessonID.ToString());
-    }
 }

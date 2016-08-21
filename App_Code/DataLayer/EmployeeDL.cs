@@ -6,12 +6,14 @@ using System.Linq;
 using System.Web;
 
 /// <summary>
-/// Summary description for EmployeeDL
+/// Represents Employee.
 /// </summary>
 public class EmployeeDL
 {
     #region Global variables
-   private static string connectionString1 = Connection.ConnectionString(Connection.ConType.One);
+    // Reference connection string.
+    string connectionString = Connection.ConnectionString(Connection.ConType.One);
+    // Declare a datatable variable.
     DataTable table;
     #endregion
 
@@ -25,17 +27,23 @@ public class EmployeeDL
     #endregion
 
     /// <summary>
-    /// Checks if the table employee is present
+    /// Checks if the table employee is present.
     /// </summary>
-    /// <returns>true if present else returns false</returns>
+    /// <returns>
+    /// Retruns 1 if present 0 if not.
+    /// </returns>
     public int IsEmployee ()
     {
-        using (SqlConnection connection = new SqlConnection(connectionString1))
+        // Using an SQL connection.
+        using (SqlConnection connection = new SqlConnection(connectionString))
         {
-            
+            // SQL command to represent an SQL statement or stored procedure.
             SqlCommand command = new SqlCommand("CheckEmployee", connection);
+            // Specify that a stored procedure is used.
             command.CommandType = CommandType.StoredProcedure;
+
             connection.Open();
+            // Execute query and reference the first value.
             int result = Convert.ToInt32(command.ExecuteScalar());
 
             return result;
@@ -47,12 +55,16 @@ public class EmployeeDL
     /// </summary>
     public void RefreshTable()
     {
-        using (SqlConnection connection = new SqlConnection(connectionString1))
+        using (SqlConnection connection = new SqlConnection(connectionString))
         {
+            // SQL command to represent an SQL statement or stored procedure
             SqlCommand command = new SqlCommand("CreateTableEmp", connection);
+            // Specify that a stored procedure is used.
             command.CommandType = CommandType.StoredProcedure;
+
             connection.Open();
 
+            // Execute the query.
             command.ExecuteReader();
         }
     }
@@ -63,12 +75,16 @@ public class EmployeeDL
     /// <returns></returns>
     public DataTable GetEmployee()
     {
-        using (SqlConnection connection = new SqlConnection(connectionString1))
+        using (SqlConnection connection = new SqlConnection(connectionString))
         {
+            // SQL command to represent an SQL statement or stored procedure
             SqlCommand command = new SqlCommand("GetAllEmployee", connection);
+
+            // Specify that a stored procedure is used.
             command.CommandType = CommandType.StoredProcedure;
             connection.Open();
 
+            // Retrieve data.
             SqlDataReader reader = command.ExecuteReader();
             table = new DataTable();
             table.Load(reader);

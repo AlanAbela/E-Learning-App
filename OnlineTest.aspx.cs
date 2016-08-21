@@ -17,6 +17,7 @@ public partial class UserInterface_OnlineTest : System.Web.UI.Page
     public static List<View> Views { get; set; }
     #endregion
 
+    #region Events
     protected void Page_Init(object sender, EventArgs e)
     {
         if(!IsPostBack)
@@ -25,6 +26,8 @@ public partial class UserInterface_OnlineTest : System.Web.UI.Page
             CreateViews();
 
             PopulateMultiview();
+                
+            // set view on first question.
             mvQuestions.ActiveViewIndex = 0;
         }
 
@@ -33,34 +36,38 @@ public partial class UserInterface_OnlineTest : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-       
+        // Check if user has authorization.
+        if (!Context.User.Identity.IsAuthenticated && Context.Session["UserID"] != null)
+        {
+            Response.Redirect("Login.aspx");
+        }
+
         if (!IsPostBack)
         {
             StopWatch = new Stopwatch();
             StopWatch.Start();
-//
-           //  CreateViews();
-            // PopulateMultiview();
         }
-
-     //   PopulateMultiview();
     }
 
     /// <summary>
-    /// Called on button click.
+    /// Called on Submit button click.
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="e"></param>
     protected void btn_Click(object sender, EventArgs e)
     {
+        // Reference the total number of questions.
         int totalQuestions = mvQuestions.Views.Count;
 
+        // If there the index is less than total questions less 1, move to next question.
         if(mvQuestions.ActiveViewIndex < totalQuestions - 1)
         {
             mvQuestions.ActiveViewIndex = mvQuestions.ActiveViewIndex + 1;
         }
+        // If at last question.
         else if(mvQuestions.ActiveViewIndex == totalQuestions - 1)
         {
+            // Stop time and record values
             StopWatch.Stop();
             int[] time = new int[3];
             time[0] = StopWatch.Elapsed.Hours;
@@ -119,7 +126,9 @@ public partial class UserInterface_OnlineTest : System.Web.UI.Page
         }
 
     }
+    #endregion
 
+    #region Private methods
     /// <summary>
     /// Retrieves all questions.
     /// </summary>
@@ -227,6 +236,6 @@ public partial class UserInterface_OnlineTest : System.Web.UI.Page
         }
 
     }
+    #endregion
 
-   
 }

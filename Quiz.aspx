@@ -4,27 +4,8 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <script type="text/javascript">
- <%--       function radioMe(e) {
-  if (!e) e = window.event;
-  var sender = e.target || e.srcElement;
 
-  if (sender.nodeName != 'INPUT') return;
-  var checker = sender;
-  var chkBox = document.getElementById('<%= hdnField.Value %>');
-  var chks = chkBox.getElementsByTagName('INPUT');
-  for (i = 0; i < chks.length; i++) {
-      if (chks[i] != checker)
-      chks[i].checked = false;
-  }--%>
-
-        <%--  $(document).ready(function () {
-     
-      var validatorID = '<%= hdnField.Value %>';
-      var validator = document.getElementById('reqField');
-      validator.ControlToValidate = validatorID;
-      
-  });--%>
-
+        // Redirect to topic and replace current window.
          function topicRedirect(id)
         {
             window.opener = self;
@@ -127,8 +108,6 @@
                         <asp:GridView ID="gvResult" runat="server" AutoGenerateColumns="true" ShowHeader="true" CssClass="table table-striped" OnRowDataBound="gvResult_RowDataBound">
                            <Columns>
                               
-                            <%--    <asp:BoundField DataField="Text" HeaderText="Your Selection" ItemStyle-HorizontalAlign="Left" />
-                                <asp:BoundField DataField="Value" HeaderText="Correct?" ItemStyle-HorizontalAlign="Left" />--%>
                            </Columns>
                         </asp:GridView>
                             </div>

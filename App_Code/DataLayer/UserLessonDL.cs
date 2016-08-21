@@ -11,9 +11,11 @@ using System.Web;
 public class UserLessonDL
 {
     #region Global variables
-    SqlConnection connection = new SqlConnection(Connection.ConnectionString(Connection.ConType.One));
+    // Reference connection string.
+    string connectionString = Connection.ConnectionString(Connection.ConType.One);
+    // Declare a datatable variable.
     DataTable table;
-#endregion
+    #endregion
 
     public UserLessonDL()
     {
@@ -30,17 +32,25 @@ public class UserLessonDL
     /// <param name="lessonID"></param>
     public void InserRecord(int userID, int lessonID)
     {
-        using (connection)
+        // Using an SQL connection.
+        using (SqlConnection connection = new SqlConnection(connectionString))
         {
+            // Create SQL command, pass connection and name of stored procedure.
             SqlCommand command = new SqlCommand("InsertUserLesson", connection);
+
+            // Declare that a store procedure is used.
             command.CommandType = CommandType.StoredProcedure;
+
+            // Add values to the stored procedure.
             command.Parameters.AddWithValue("@userID", userID);
             command.Parameters.AddWithValue("@lessonID", lessonID);
 
             connection.Open();
 
+            // If record exists result is > 0.
             int result = CheckRecord(connection, userID, lessonID);
-
+            
+            // If record does not exist insert a new one.
             if (result == 0)
             {
                 command.ExecuteNonQuery();
@@ -55,10 +65,16 @@ public class UserLessonDL
     /// <param name="lessonID"></param>
     public void InsertDateCompleted(int userID, int lessonID)
     {
-        using (connection)
+        // Using an SQL connection.
+        using (SqlConnection connection = new SqlConnection(connectionString))
         {
+            // Create SQL command, pass connection and name of stored procedure.
             SqlCommand command = new SqlCommand("InsertUserLessonCompleteDate", connection);
+
+            // Declare that a store procedure is used.
             command.CommandType = CommandType.StoredProcedure;
+
+            // Add values to the stored procedure.
             command.Parameters.AddWithValue("@userID", userID);
             command.Parameters.AddWithValue("@lessonID", lessonID);
             command.Parameters.AddWithValue("@date", DateTime.Now);
@@ -70,17 +86,23 @@ public class UserLessonDL
     }
 
 /// <summary>
-/// Insert Mark.
+/// Insert/update mark.
 /// </summary>
 /// <param name="userID"></param>
 /// <param name="lessonID"></param>
 /// <param name="mark"></param>
     public void InsertMark(int userID, int lessonID, int correct, int incorrect)
     {
-        using (connection)
+        // Using an SQL connection.
+        using (SqlConnection connection = new SqlConnection(connectionString))
         {
+            // Create SQL command, pass connection and name of stored procedure.
             SqlCommand command = new SqlCommand("UpdateUserLessonMark", connection);
+
+            // Declare that a store procedure is used.
             command.CommandType = CommandType.StoredProcedure;
+
+            // Add values to the stored procedure.
             command.Parameters.AddWithValue("@userID", userID);
             command.Parameters.AddWithValue("@lessonID", lessonID);
             command.Parameters.AddWithValue("@correct", correct);
@@ -100,10 +122,16 @@ public class UserLessonDL
     /// <returns></returns>
     public DataTable GetRecord(int userID, int lessonID)
     {
-        using (connection)
+        // Using an SQL connection.
+        using (SqlConnection connection = new SqlConnection(connectionString))
         {
+            // Create SQL command, pass connection and name of stored procedure.
             SqlCommand command = new SqlCommand("GetUserLesson", connection);
+
+            // Declare that a store procedure is used.
             command.CommandType = CommandType.StoredProcedure;
+
+            // Add values to the stored procedure.
             command.Parameters.AddWithValue("@userID", userID);
             command.Parameters.AddWithValue("@lessonID", lessonID);
 
@@ -127,10 +155,16 @@ public class UserLessonDL
     /// <param name="dateTime"></param>
     public void InsertQuizTime(int userID, int lessonID, TimeSpan time)
     {
-        using (connection)
+        // Using an SQL connection.
+        using (SqlConnection connection = new SqlConnection(connectionString))
         {
+            // Create SQL command, pass connection and name of stored procedure.
             SqlCommand command = new SqlCommand("InsertUserLessonQuizTime", connection);
+
+            // Declare that a store procedure is used.
             command.CommandType = CommandType.StoredProcedure;
+
+            // Add values to the stored procedure.
             command.Parameters.AddWithValue("@quizTime", time);
             command.Parameters.AddWithValue("@userID", userID);
             command.Parameters.AddWithValue("@lessonID", lessonID);
@@ -152,11 +186,16 @@ public class UserLessonDL
     /// <returns>1 if exists, 0 if not</returns>
     private int CheckRecord(SqlConnection connection, int userID, int lessonID)
     {
-
+        // Create SQL command, pass connection and name of stored procedure.
         SqlCommand command = new SqlCommand("CheckUserLesson", connection);
+
+        // Declare that a store procedure is used.
+        command.CommandType = CommandType.StoredProcedure;
+
+        // Add values to the stored procedure.
         command.Parameters.AddWithValue("@userID", userID);
         command.Parameters.AddWithValue("@lessonID", lessonID);
-        command.CommandType = CommandType.StoredProcedure;
+        
 
         return Convert.ToInt32(command.ExecuteScalar());
     }

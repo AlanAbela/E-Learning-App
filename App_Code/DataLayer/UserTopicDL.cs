@@ -10,8 +10,10 @@ using System.Web;
 /// </summary>
 public class UserTopicDL
 {
-    #region Properties
-    string ConnectionString1 = Connection.ConnectionString(Connection.ConType.One);
+    #region Global variables
+    // Reference connection string.
+    string connectionString = Connection.ConnectionString(Connection.ConType.One);
+    // Declare a datatable variable.
     DataTable table;
     #endregion
 
@@ -29,17 +31,25 @@ public class UserTopicDL
     /// <param name="TopicID"></param>
     public void InsertRecord(int userID, int topicID)
     {
-        using (SqlConnection connection = new SqlConnection(ConnectionString1))
+        // Using an SQL connection.
+        using (SqlConnection connection = new SqlConnection(connectionString))
         {
-          
+            // Create SQL command, pass connection and name of stored procedure.
             SqlCommand command = new SqlCommand("InsertUserTopic", connection);
+
+            // Declare that a store procedure is used.
+            command.CommandType = CommandType.StoredProcedure;
+
+            // Add values to the stored procedure.
             command.Parameters.AddWithValue("@userID", userID);
             command.Parameters.AddWithValue("@topicID", topicID);
-            command.CommandType = CommandType.StoredProcedure;
+            
             connection.Open();
 
+            // Reference int value of the method call CheckRecord
             int result = CheckRecord(connection, userID, topicID);
 
+            // If the result is 0 add a new record.
                 if(result == 0)
             {
                 command.ExecuteNonQuery();
@@ -54,13 +64,20 @@ public class UserTopicDL
     /// <param name="topicID"></param>
     public void SetCompleteDate(int userID, int topicID)
     {
-        using (SqlConnection connection = new SqlConnection(ConnectionString1))
+        // Using an SQL connection.
+        using (SqlConnection connection = new SqlConnection(connectionString))
         {
+            // Create SQL command, pass connection and name of stored procedure.
             SqlCommand command = new SqlCommand("InsertUserTopicCompleteDate", connection);
+
+            // Add values to the stored procedure.
+            command.CommandType = CommandType.StoredProcedure;
+
+            // Add values to the stored procedure.
             command.Parameters.AddWithValue("@userID", userID);
             command.Parameters.AddWithValue("@topicID", topicID);
             command.Parameters.AddWithValue("@date", DateTime.Now);
-            command.CommandType = CommandType.StoredProcedure;
+           
 
             connection.Open();
 
@@ -77,11 +94,18 @@ public class UserTopicDL
 /// <returns></returns>
 public DataTable GetCompleteTopics(int userID)
     {
-        using (SqlConnection connection = new SqlConnection(ConnectionString1))
+        // Using an SQL connection.
+        using (SqlConnection connection = new SqlConnection(connectionString))
         {
+            // Create SQL command, pass connection and name of stored procedure.
             SqlCommand command = new SqlCommand("GetTopicsByUserID", connection);
-            command.Parameters.AddWithValue("@userID", connection);
+
+            // Add values to the stored procedure.
             command.CommandType = CommandType.StoredProcedure;
+
+            // Add values to the stored procedure.
+            command.Parameters.AddWithValue("@userID", userID);
+            
             connection.Open();
 
             SqlDataReader reader = command.ExecuteReader();
@@ -100,12 +124,19 @@ public DataTable GetCompleteTopics(int userID)
     /// <returns></returns>
     public DataTable GetRecord(int userID, int topicID)
     {
-        using (SqlConnection connection = new SqlConnection(ConnectionString1))
+        // Using an SQL connection.
+        using (SqlConnection connection = new SqlConnection(connectionString))
         {
+            // Create SQL command, pass connection and name of stored procedure.
             SqlCommand command = new SqlCommand("GetUserTopic", connection);
+
+            // Add values to the stored procedure.
+            command.CommandType = CommandType.StoredProcedure;
+
+            // Add values to the stored procedure.
             command.Parameters.AddWithValue("@userID", userID);
             command.Parameters.AddWithValue("@topicID", topicID);
-            command.CommandType = CommandType.StoredProcedure;
+            
             connection.Open();
 
             SqlDataReader reader = command.ExecuteReader();

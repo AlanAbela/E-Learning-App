@@ -86,9 +86,7 @@ public partial class UserInterface_Register : System.Web.UI.Page
         {
             args.IsValid = false;
             valForm.ErrorMessage = valForm.ErrorMessage + "Passwords do not match. ";
-        }
-
-       
+        }   
  
     }
 

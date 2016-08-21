@@ -11,7 +11,10 @@ using System.Web;
 public class TopicDL
 {
     #region Global variables
-    string connectionString1 = Connection.ConnectionString(Connection.ConType.One);
+    // Reference connection string.
+    string connectionString = Connection.ConnectionString(Connection.ConType.One);
+
+    // Declare a datatable variable.
     DataTable table;
     #endregion
 
@@ -27,15 +30,21 @@ public class TopicDL
     /// <returns></returns>
     public DataTable GetAllTopicsByLessonID(int lessonID)
     {
-        using (SqlConnection connection = new SqlConnection(connectionString1))
+        // Using an SQL connection, which is instantiated on instance creation.
+        using (SqlConnection connection = new SqlConnection(connectionString))
         {
+            // Create SQL command, pass connection and name of stored procedure.
             SqlCommand command = new SqlCommand("GetAllTopicsByLessonID", connection);
             command.CommandType = CommandType.StoredProcedure;
+            // Pass parameter value to the stored procedure.
             command.Parameters.AddWithValue("@lessonID", lessonID);
 
             connection.Open();
 
+            // Get records from table.
           SqlDataReader reader =  command.ExecuteReader();
+
+            // Fill a datatable with the table records.
             table = new DataTable();
             table.Load(reader);
 
@@ -54,15 +63,21 @@ public class TopicDL
     /// <returns></returns>
     public DataTable GetTopicByID(int topicID)
     {
-        using (SqlConnection connection = new SqlConnection(connectionString1))
+        // Using an SQL connection, which is instantiated on instance creation.
+        using (SqlConnection connection = new SqlConnection(connectionString))
         {
-            SqlCommand command= new SqlCommand("GetTopicByID", connection);
+            // Create SQL command, pass connection and name of stored procedure.
+            SqlCommand command = new SqlCommand("GetTopicByID", connection);
             command.CommandType = CommandType.StoredProcedure;
+            // Pass parameter value to the stored procedure.
             command.Parameters.AddWithValue("@topicID", topicID);
 
             connection.Open();
 
+            // Get records from table.
             SqlDataReader reader = command.ExecuteReader();
+
+            // Fill a datatable with the table records.
             table = new DataTable();
             table.Load(reader);
             
@@ -76,9 +91,11 @@ public class TopicDL
     /// <returns></returns>
     public DataTable GetExampleTable(int topicID)
     {
-        using (SqlConnection connection = new SqlConnection(connectionString1))
+        // Using an SQL connection.
+        using (SqlConnection connection = new SqlConnection(connectionString))
         {
-            // Get the example query
+            // Get the example query.
+            // Create SQL command, pass connection and name of stored procedure.
             SqlCommand command = new SqlCommand("GetExampleQuery", connection);
             command.Parameters.AddWithValue("@topicID", topicID);
             command.CommandType = CommandType.StoredProcedure;
@@ -121,9 +138,10 @@ public class TopicDL
     /// <returns></returns>
     public DataTable GetExampleTable2(int topicID)
     {
-        using (SqlConnection connection = new SqlConnection(connectionString1))
+        // Using an SQL connection, which is instantiated on instance creation.
+        using (SqlConnection connection = new SqlConnection(connectionString))
         {
-            // Get second example query
+            // Get second example query.
             SqlCommand command = new SqlCommand("GetExampleQuery2", connection);
             command.Parameters.AddWithValue("@topicID", topicID);
             command.CommandType = CommandType.StoredProcedure;
@@ -140,7 +158,7 @@ public class TopicDL
             table.Reset();
             table.Load(reader);
 
-            // If example is an UPDATE or INSERT
+            // If example is an UPDATE or INSERT.
             if (table.Rows.Count == 0)
             {
                 command = new SqlCommand("GetAllEmployee", connection);
@@ -148,7 +166,7 @@ public class TopicDL
                 table.Load(reader);
             }
 
-            // Reset the table in case the query changes the fields of the table
+            // Reset the table in case the query changes the fields of the table.
             command = new SqlCommand("CreateTableEmp", connection);
             command.CommandType = CommandType.StoredProcedure;
             command.ExecuteNonQuery();
@@ -164,7 +182,8 @@ public class TopicDL
     /// <returns></returns>
     public DataTable GetExampleTable3(int topicID)
     {
-        using (SqlConnection connection = new SqlConnection(connectionString1))
+        // Using an SQL connection, which is instantiated on instance creation.
+        using (SqlConnection connection = new SqlConnection(connectionString))
         {
             // Get second example query
             SqlCommand command = new SqlCommand("GetExampleQuery3", connection);
@@ -183,7 +202,7 @@ public class TopicDL
             table.Reset();
             table.Load(reader);
 
-            // If example is an UPDATE or INSERT
+            // If example is an UPDATE or INSERT.
             if (table.Rows.Count == 0)
             {
                 command = new SqlCommand("GetAllEmployee", connection);
@@ -204,18 +223,24 @@ public class TopicDL
     /// Retrives all records by lesson ID including users that have completed the topic.
     /// </summary>
     /// <param name="lessonID"></param>
-    /// <returns></returns>
+    /// <returns>
+    /// </returns>
     public DataTable GetTopicsAndUserID(int lessonID)
     {
-        using (SqlConnection connection = new SqlConnection(connectionString1))
+        // Using an SQL connection.
+        using (SqlConnection connection = new SqlConnection(connectionString))
         {
+            // Create SQL command, pass connection and name of stored procedure.
             SqlCommand command = new SqlCommand("GetTopicsRelatedToLessonAndUser", connection);
+            // Pass parameter value to the stored procedure.
             command.Parameters.AddWithValue("@lessonID", lessonID);
             command.CommandType = CommandType.StoredProcedure;
 
             connection.Open();
-
+            // Get records from table.
             SqlDataReader reader = command.ExecuteReader();
+
+            // Fill a datatable with the table records.
             table = new DataTable();
             table.Load(reader);
 
@@ -227,13 +252,19 @@ public class TopicDL
     /// Retrieves the count of all topics by lesson id.
     /// </summary>
     /// <param name="lessonID"></param>
-    /// <returns></returns>
+    /// <returns>
+    /// The number of topics of the defined lesson.
+    /// </returns>
     public int GetCountTopicsByLessonID(int lessonID)
     {
-        using (SqlConnection connection = new SqlConnection(connectionString1))
+        // Using an SQL connection.
+        using (SqlConnection connection = new SqlConnection(connectionString))
         {
+            // Declare an SQL command.
             SqlCommand command = new SqlCommand("CountTopicsByLessonID", connection);
+            // Pass values to the SQL command.
             command.Parameters.AddWithValue("@lessonID", lessonID);
+            // Declare the the SQL command is of type store procedure.
             command.CommandType = CommandType.StoredProcedure;
 
             connection.Open();
@@ -246,14 +277,20 @@ public class TopicDL
     /// Retrieves the number of topics that are complete by for a defined lesson by a defined user.
     /// </summary>
     /// <param name="lessonID"></param>
-    /// <returns></returns>
+    /// <returns>
+    /// the number of complete topics by a user for the defined lesson.
+    /// </returns>
     public int GetCountCompletedTopics(int lessonID, int userID)
     {
-        using (SqlConnection connection = new SqlConnection(connectionString1))
+        // Using an SQL connection.
+        using (SqlConnection connection = new SqlConnection(connectionString))
         {
+            // Declare an SQL command.
             SqlCommand command = new SqlCommand("CountCompleteTopics", connection);
+            // Pass values to the SQL command.
             command.Parameters.AddWithValue("@lessonID", lessonID);
             command.Parameters.AddWithValue("@userID", userID);
+            // Declare the the SQL command is of type store procedure.
             command.CommandType = CommandType.StoredProcedure;
 
             connection.Open();

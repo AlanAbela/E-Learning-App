@@ -1319,3 +1319,29 @@ StackTrace:    at System.Web.Compilation.BuildManager.PostProcessFoundBuildResul
    at System.Web.UI.PageParser.ProcessMainDirectiveAttribute(String deviceName, String name, String value, IDictionary parseData)
    at System.Web.UI.TemplateParser.ProcessMainDirective(IDictionary mainDirective)
 Query: aspxerrorpath=%2fDefault.aspx
+------------*------------
+16/08/2016 08:35:19
+Page: http://localhost:3787/degault.aspx
+Message: The file '/degault.aspx' does not exist.
+StackTrace:    at System.Web.UI.Util.CheckVirtualFileExists(VirtualPath virtualPath)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultInternal(VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVPathBuildResultWithNoAssert(HttpContext context, VirtualPath virtualPath, Boolean noBuild, Boolean allowCrossApp, Boolean allowBuildInPrecompile, Boolean throwIfNotFound, Boolean ensureIsUpToDate)
+   at System.Web.Compilation.BuildManager.GetVirtualPathObjectFactory(VirtualPath virtualPath, HttpContext context, Boolean allowCrossApp, Boolean throwIfNotFound)
+   at System.Web.Compilation.BuildManager.CreateInstanceFromVirtualPath(VirtualPath virtualPath, Type requiredBaseType, HttpContext context, Boolean allowCrossApp)
+   at System.Web.UI.PageHandlerFactory.GetHandlerHelper(HttpContext context, String requestType, VirtualPath virtualPath, String physicalPath)
+   at System.Web.UI.PageHandlerFactory.GetHandler(HttpContext context, String requestType, String virtualPath, String path)
+   at System.Web.HttpApplication.MaterializeHandlerExecutionStep.System.Web.HttpApplication.IExecutionStep.Execute()
+   at System.Web.HttpApplication.ExecuteStep(IExecutionStep step, Boolean& completedSynchronously)
+Query: 
+------------*------------
+18/08/2016 11:20:19
+Page: http://localhost:3787/Topic.aspx
+Message: Invalid Lesson ID.
+  
+StackTrace:    at UserInterface_Topic.Validation() in c:\Users\Alan\Documents\Visual Studio 2015\Projects\E-Learning App\E-Learning App\Topic.aspx.cs:line 272
+   at UserInterface_Topic.Page_Load(Object sender, EventArgs e) in c:\Users\Alan\Documents\Visual Studio 2015\Projects\E-Learning App\E-Learning App\Topic.aspx.cs:line 30
+   at System.Web.Util.CalliEventHandlerDelegateProxy.Callback(Object sender, EventArgs e)
+   at System.Web.UI.Control.OnLoad(EventArgs e)
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+Query: 

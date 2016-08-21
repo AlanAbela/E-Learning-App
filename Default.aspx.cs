@@ -13,14 +13,16 @@ public partial class Default : System.Web.UI.Page
 
     #region Properties
     int UserID { get; set; }
+    static List<int> LessonIDs { get; set; }
     #endregion
 
     #region Events
-    static List<int> LessonIDs { get; set; }
+
     protected void Page_Load(object sender, EventArgs e)
     {
           // Pass title string to title label.
              lblTitle.Text = "Welcome to SQL Learning Platform";
+
         // Reference the user ID.
              UserID = Convert.ToInt32(Context.Session["UserID"]);
 
@@ -34,7 +36,11 @@ public partial class Default : System.Web.UI.Page
             }     
     }
  
-
+    /// <summary>
+    /// Redirect to Lesson.aspx
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     protected void Redirect(object sender, EventArgs e)
     {
         Response.Redirect("lesson.aspx?ID=" + ((LinkButton)(sender)).CommandArgument);

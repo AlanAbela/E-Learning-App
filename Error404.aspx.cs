@@ -9,7 +9,8 @@ public partial class Error404 : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if(Context.Session["UserID"] == null)
+        // If no current user session redirect to login screen.
+        if (Context.Session["UserID"] == null)
         {
             Response.Redirect("Login.aspx");
         }

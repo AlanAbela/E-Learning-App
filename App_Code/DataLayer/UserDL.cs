@@ -13,10 +13,15 @@ using System.Web.Helpers;
 public class UserDL
 {
     #region Properties
-    public DateTime RegisteredDate { get; set; }
     public string Username { get; set;}
     public string Password { get; set;}
-    public int ID {get; set;}
+    #endregion
+
+    #region Global variables
+    // Reference connection string.
+    string connectionString = Connection.ConnectionString(Connection.ConType.One);
+    // Declare a datatable variable.
+    DataTable table;
     #endregion
 
     #region Constructors
@@ -34,44 +39,54 @@ public class UserDL
     /// <param name="password"></param>
     public void RegisterUser()
     {
-        string hashedPassword = EncyptPassword(Password);
+        string hashedPassword = EncriptPassword(Password);
 
-        using (SqlConnection conn = new SqlConnection(Connection.ConnectionString(Connection.ConType.One)))
+        // Using an SQL connection.
+        using (SqlConnection conn = new SqlConnection(connectionString))
         {
-
+            // Create SQL command, pass connection and name of stored procedure.
             SqlCommand command = new SqlCommand("AddRecord", conn);
             command.CommandType = CommandType.StoredProcedure;
+
+            // Add values to the stored procedure.
             command.Parameters.AddWithValue("@username", Username);
             command.Parameters.AddWithValue("@password", hashedPassword);
             command.Parameters.AddWithValue("@date", DateTime.Now);
 
             conn.Open();
-
+            // Execute query.
             command.ExecuteNonQuery();
-            conn.Dispose();
+
         }
     }
 
     /// <summary>
-    /// Gets the deatails of the user.
+    /// Gets the details of the user.
     /// </summary>
     /// <param name="username"></param>
     /// <param name="password"></param>
     /// <returns></returns>
     public DataTable GetUserDetails(string username, string password)
     {
+        // Encripth and reference the enchripted password.
+        string hashedPassword = EncriptPassword(password);
 
-        string hashedPassword = EncyptPassword(password);
+        // Using an SQL connection.
         using (SqlConnection conn = new SqlConnection(Connection.ConnectionString(Connection.ConType.One)))
         {
-
+            // Create SQL command, pass connection and name of stored procedure.
             SqlCommand command = new SqlCommand("GetUser", conn);
+
+            // Define that a store procedure is used.
             command.CommandType = CommandType.StoredProcedure;
+
+            // Pass parameter value to the stored procedure.
             command.Parameters.AddWithValue("@username", username);
             command.Parameters.AddWithValue("@password", hashedPassword);
 
             conn.Open();
 
+            // Fill a datatable with the table records.
             SqlDataReader reader = command.ExecuteReader();
             DataTable table = new DataTable();
             table.Load(reader);
@@ -92,12 +107,16 @@ public class UserDL
     /// <returns>1 if present, 0 if missing.</returns>
     public static int DuplicateUser(string username)
     {
-
+        // Using an SQL connection.
         using (SqlConnection conn = new SqlConnection(Connection.ConnectionString(Connection.ConType.One)))
         {
-
+            // Create SQL command, pass connection and name of stored procedure.
             SqlCommand command = new SqlCommand("GetUserCount", conn);
+
+            // Define that a store procedure is used.
             command.CommandType = CommandType.StoredProcedure;
+
+            // Pass parameter value to the stored procedure.
             command.Parameters.AddWithValue("@username", username);
 
             conn.Open();
@@ -117,13 +136,20 @@ public class UserDL
     /// <returns>1 if present, 0 if missing.</returns>
     public static int AuthenticateUser(string username, string password)
     {
+        //Using an SQL connection.
         using (SqlConnection conn = new SqlConnection(Connection.ConnectionString(Connection.ConType.One)))
         {
-
+            // Create SQL command, pass connection and name of stored procedure.
             SqlCommand command = new SqlCommand("GetUser", conn);
+
+            // Declare that a store procedure is used.
             command.CommandType = CommandType.StoredProcedure;
+            
+            // Encript and reference encripted password.
+            string hashedPassword = UserDL.EncriptPassword(password);
+
+            // Pass parameters to stored procedures.
             command.Parameters.AddWithValue("@username", username);
-            string hashedPassword = UserDL.EncyptPassword(password);
             command.Parameters.AddWithValue("@password", hashedPassword);
 
             conn.Open();
@@ -134,7 +160,6 @@ public class UserDL
         }
     }
 
-
     #endregion
 
     /// <summary>
@@ -144,21 +169,29 @@ public class UserDL
     /// <returns></returns>
     public DataTable GetUserByID(int ID)
     {
+        // Using an SQL connection.
         using (SqlConnection conn = new SqlConnection(Connection.ConnectionString(Connection.ConType.One)))
         {
+            // Create SQL command, pass connection and name of stored procedure.
             SqlCommand command = new SqlCommand("GetUserByID", conn);
+
+            // Declare that a store procedure is used.
             command.CommandType = CommandType.StoredProcedure;
+
+            // Pass parameters to stored procedures.
             command.Parameters.AddWithValue("@userID", ID);
 
             conn.Open();
 
+            // execute the query and reference the returned SqlDataReader
             SqlDataReader reader = command.ExecuteReader();
+
+            // Fill a datatable with the table records.
             DataTable table = new DataTable();
             table.Load(reader);
             conn.Dispose();
             return table;
         }
-
     }
 
     /// <summary>
@@ -168,18 +201,23 @@ public class UserDL
     /// <param name="correctAnswers"></param>
     public void UpdateCorrectAnswers(int ID, int? correctAnswers)
     {
+        // Using an SQL connection.
         using (SqlConnection conn = new SqlConnection(Connection.ConnectionString(Connection.ConType.One)))
         {
+            // Create SQL command, pass connection and name of stored procedure.
             SqlCommand command = new SqlCommand("UpdateUserCorrectAnswers", conn);
+
+            // Declare that a store procedure is used.
             command.CommandType = CommandType.StoredProcedure;
+
+            // Pass parameters to the stored procedure.
             command.Parameters.AddWithValue("@userID", ID);
             command.Parameters.AddWithValue("@correctAnswers", correctAnswers);
 
             conn.Open();
-
+            
             command.ExecuteNonQuery();
 
-            conn.Dispose();
         }
     }
 
@@ -190,10 +228,16 @@ public class UserDL
     /// <param name="time"></param>
     public void InsertTimeTaken (int ID, TimeSpan? time)
     {
+        // Using an SQL connection.
         using (SqlConnection conn = new SqlConnection(Connection.ConnectionString(Connection.ConType.One)))
         {
+            // Create SQL command, pass connection and name of stored procedure.
             SqlCommand command = new SqlCommand("InsertUserTestTime", conn);
+
+            // Declare that a store procedure is used.
             command.CommandType = CommandType.StoredProcedure;
+
+            // Pass parameters to the stored procedure.
             command.Parameters.AddWithValue("@userID", ID);
             command.Parameters.AddWithValue("@time", time);
 
@@ -201,7 +245,6 @@ public class UserDL
 
             command.ExecuteNonQuery();
 
-            conn.Dispose();
         }
     }
 
@@ -212,10 +255,16 @@ public class UserDL
     /// <param name="time"></param>
     public void InsertTestCompleteDate(int ID)
     {
+        // Create SQL command, pass connection and name of stored procedure.
         using (SqlConnection conn = new SqlConnection(Connection.ConnectionString(Connection.ConType.One)))
         {
+            // Create SQL command, pass connection and name of stored procedure.
             SqlCommand command = new SqlCommand("InsertUserFinalTestCompleteDate", conn);
+
+            // Declare that a store procedure is used.
             command.CommandType = CommandType.StoredProcedure;
+
+            // Pass parameters to the stored procedure.
             command.Parameters.AddWithValue("@userID", ID);
             command.Parameters.AddWithValue("@dateCompleted", DateTime.Now);
 
@@ -223,7 +272,6 @@ public class UserDL
 
             command.ExecuteNonQuery();
 
-            conn.Dispose();
         }
     }
 
@@ -232,7 +280,7 @@ public class UserDL
     /// </summary>
     /// <param name="password"></param>
     /// <returns></returns>
-    private static string EncyptPassword(string password)
+    private static string EncriptPassword(string password)
     {
         string hashedPassword = Crypto.SHA256(password);
         return hashedPassword;

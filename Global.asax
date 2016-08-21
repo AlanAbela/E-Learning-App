@@ -19,15 +19,24 @@
        // Code that runs when an unhandled error occurs
         if (HttpContext.Current.Server.GetLastError() != null)
         {
+            // Reference the last exception.
             Exception exception = HttpContext.Current.Server.GetLastError().GetBaseException();
+
+            // Reference url of this request.
             string page = Request.Url.ToString();
+
+            // Reference exception message.
             string message = exception.Message;
+
+            // Referance stacktrace.
             string stackTrace = exception.StackTrace;
+
+            // Reference query string if present.
             string query = Request.QueryString.ToString();
 
+            // Log the referenced data.
            ErrorMessage.LogExceptions(page, message, stackTrace, query);
         }
-
     }
 
     void Session_Start(object sender, EventArgs e)

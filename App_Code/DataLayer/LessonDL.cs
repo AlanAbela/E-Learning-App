@@ -10,15 +10,12 @@ using System.Web;
 /// </summary>
 public class LessonDL
 {
-    #region Properties
-    public int ID { get; set; }
-    public string Title { get; set; }
-    public string Description { get; set; }
-    #endregion
 
-    #region Global Variables
-    SqlConnection connection = new SqlConnection(Connection.ConnectionString(Connection.ConType.One));
-    DataTable table = new DataTable();
+    #region Global variables
+    // Reference connection string.
+    string connectionString = Connection.ConnectionString(Connection.ConType.One);
+    // Declare a datatable variable.
+    DataTable table;
     #endregion
 
     #region Constructor
@@ -36,21 +33,19 @@ public class LessonDL
     /// <returns></returns>
     public DataTable GetAllLessons()
     {
-        // Using an SQL connection, which is instantiated on instance creation
-        using (connection)
+        // Using an SQL connection.
+        using (SqlConnection connection = new SqlConnection(connectionString))
         {
-            // SQL command to represent an SQL statement or stored procedure
+            // SQL command to represent an SQL statement or stored procedure.
             SqlCommand command = new SqlCommand("GetAllLessons", connection);
             // Specify that a stored procedure is used.
             command.CommandType = CommandType.StoredProcedure;
             connection.Open();
 
-            // Retrieve data 
+            // Retrieve data.
             SqlDataReader reader = command.ExecuteReader();
-            // Load the data in a Datatable
+            // Load the data in a Datatable.
             table.Load(reader);
-            // Release all connection resources.
-            connection.Dispose();
 
             return table;
         }
@@ -63,15 +58,22 @@ public class LessonDL
     /// <returns></returns>
     public DataTable GetLessonByID(int ID)
     {
-        using (connection)
+        // Using an SQL connection.
+        using (SqlConnection connection = new SqlConnection(connectionString))
         {
+            // SQL command to represent an SQL statement or stored procedure.
             SqlCommand command = new SqlCommand("GetLessonByID", connection);
+            // Specify that a stored procedure is used.
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@lessonID", ID);
+
             connection.Open();
+
+            // Retrieve data.
             SqlDataReader reader = command.ExecuteReader();
+            // Load the data in a Datatable.
             table.Load(reader);
-            connection.Dispose();
+
             return table;
         }
     }

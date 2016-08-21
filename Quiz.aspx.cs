@@ -17,20 +17,12 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
 
     public DataTable Questions { get; set; }
 
-    public int Hour { get; set; }
-
-    public int Minute { get; set; }
-
-    public int Second { get; set; }
-
-    public bool IsTime { get; set; }
-
     public static Stopwatch StopWatch { get; set; }
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        // Check if user has a ViewState.
-        if (Context.Session["UserID"] == null)
+        // Check if user has authorization.
+        if (!Context.User.Identity.IsAuthenticated && Context.Session["UserID"] != null)
         {
             Response.Redirect("Login.aspx");
         }
@@ -218,14 +210,15 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
                 }
             }
 
+            // If not pre-least question.
             if (mvQuestions.ActiveViewIndex < 4)
             {
-
+                // Move to next question.
                 mvQuestions.ActiveViewIndex = mvQuestions.ActiveViewIndex + 1;
 
+                // If an option selection was made, set control to validate.
                 if (reqField.IsValid == false)
                 {
-
                     if (mvQuestions.ActiveViewIndex == 1)
                     {
                         reqField.ControlToValidate = "chkQuizList1";
@@ -382,23 +375,27 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
 
     protected void gvResult_RowDataBound(object sender, GridViewRowEventArgs e)
     {
-     
             e.Row.Cells[3].Visible = false;
 
             if (e.Row.RowType == DataControlRowType.DataRow)
             {
-
+               // If option selected is the wrong answer.
                 if (e.Row.Cells[2].Text.Equals("No"))
                 {
+                // Declare a Hyper link 
                     HyperLink the_url = new HyperLink();
+                // Pass the related topic url to the hyperlink.
                     the_url.NavigateUrl = "Topic.aspx?ID=" + e.Row.Cells[3].Text + "&lessonid=" + ViewState["lessonID"].ToString();
+
                     TopicBL topicBL = new TopicBL();
+                // Retrieve topic data.
                     DataTable topic = topicBL.GetTopicByID(Convert.ToInt32(e.Row.Cells[3].Text));
+                // Pass topic title to URL.
                     if (topic.Rows.Count > 0)
                     {
                         the_url.Text = topic.Rows[0].Field<string>("Title");
                     }
-
+                    // Add URL to grid view.
                     e.Row.Cells[4].Controls.Add(the_url);
                 }
             }

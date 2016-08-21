@@ -11,9 +11,11 @@ using System.Web;
 public class QueryDL
 {
     #region Global variables
-    SqlConnection connection = new SqlConnection(Connection.ConnectionString(Connection.ConType.One));
-    SqlConnection connection2 = new SqlConnection(Connection.ConnectionString(Connection.ConType.Two));
+    // Reference connection strings.
+    string connectionString = Connection.ConnectionString(Connection.ConType.One);
+    string connectionStringUser = Connection.ConnectionString(Connection.ConType.Two);
 
+    // Declare a datatable variable.
     DataTable table;
     #endregion
 
@@ -29,7 +31,8 @@ public class QueryDL
     /// <returns></returns>
     public DataTable GetResultByQuery(int topicID)
     {
-        using (connection)
+        // Using an SQL connection.
+        using (SqlConnection connection = new SqlConnection(connectionString))
         {
             // Create SQL command, pass connection and name of stored procedure.
             SqlCommand command = new SqlCommand("GetQueryByTopicID", connection);
@@ -56,18 +59,28 @@ public class QueryDL
     /// <summary>
     /// Processes the defined query. 
     /// </summary>
-    /// <param name="query"></param>
-    /// <returns></returns>
+    /// <param name="query">
+    /// string representing an SQL query.
+    /// </param>
+    /// <returns>
+    /// Datatable representing the queried table.
+    /// </returns>
     public DataTable ProcessQuery(string query)
     {
-        using (connection2)
+        // Using an SQL connection.
+        using (SqlConnection connection = new SqlConnection(connectionStringUser))
         {
-            SqlCommand command = new SqlCommand(query, connection2);
-            connection2.Open();
+            // Declare a new sqlcommand to represent the query.
+            SqlCommand command = new SqlCommand(query, connection);
+            connection.Open();
 
+            // Execute query.
             SqlDataReader reader = command.ExecuteReader();
+
+            // Populate a datatable with the returned records.
             table = new DataTable();
             table.Load(reader);
+
             return table;
         }
     }

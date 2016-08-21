@@ -6,33 +6,13 @@
 
     <script type="text/javascript">
 
-      <%--  function topicRedirect(id)
-        {
-            window.opener = self;
-            window.close();
-            window.open("topic.aspx?ID="+id+"&lessonid="+ <%= LessonID.ToString() %>);
-        }--%>
-
-        //function backClick()
-        //{
-        //    window.opener = self;
-        //    window.close();
-        //    window.open("Default.aspx");
-        //}
-
         function quizClick(id)
         {
+            // Open window in self tab.
             window.opener = self;
             window.close();
             window.open("Quiz.aspx?ID="+id);
         }
-
-        $(document).ready(function () {
-            //$("ul li").click(function (e) {
-            //    window.location.replace("topic.aspx?ID=" + $(this).attr("id"), "_self");
-            //    return false;
-            //});
-        });
 
     </script>
 

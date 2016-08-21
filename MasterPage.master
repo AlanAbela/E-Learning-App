@@ -15,72 +15,6 @@
     <script src="../js/jquery.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
 
-
-    <script type="text/javascript">   
-        //function homeRedirect()
-        //{
-        //    window.open("Default.aspx", "_self");
-
-        //}
-        
-
-        $(document).ready(function () {
-
-            //$("#home").parent().children().removeClass("active");
-            //$("#home").addClass("active");
-            //});
-
-            //$("#test").click(function (e) {
-            //    $(this).parent().children().removeClass("active");
-            //    $(this).addClass("active");
-            //    e.preventDefault();
-            //});
-
-            //$("#test").click(function (e) {
-            //    $("#home").removeClass("active");
-            //    $("#test").removeClass("active");
-            //    $("#test").addClass("active");
-          //  });
-            // Highlights selected menu item.
-          //  $("ul li").click(function (e) {
-          //     $(this).parent().children().removeClass("active");
-          //     $(this).addClass("active");
-          ////  e.preventDefault()
-          //      });
-
-         //   $("ul li").click(function (e) {
-               
-              //  document.getElementById('hiddenField').value = $(this).attr("ID");
-             //   $('#hiddenField').val = $(this).attr("ID");
-                //   var v = (this).Attr("ID");
-               // window.open("lesson.aspx?ID=" + $(this).attr("id"));
-              //  $(this).parent().children().removeClass("active");
-              //  $(this).addClass("active");
-
-         //   });
-
-            //$("#navSideMenu a").click(function (e) {
-            //    e.preventDefault();
-            //    $(this).tab("show");
-            //});
-
-            //$("ul.nav-stacked > li > a").on("show.bs.tab", function (e) {
-            //    var id = $(e.target).attr("href").substr(1);
-            //    window.location.hash = id;
-            //});
-
-            //var hash = window.location.hash;
-            //$('#navSideMenu a[href="' + hash + '"]').tab('show');
-
-            //$('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
-            //    localStorage.setItem('activeTab', $(e.target).attr('href'));
-            //});
-            //var activeTab = localStorage.getItem('activeTab');
-            //if (activeTab) {
-            //    $('#myTab a[href="' + activeTab + '"]').tab('show');
-            //}
-        });
-    </script>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
@@ -109,9 +43,7 @@
                             <asp:Button ID="btnSignOut" runat="server" CssClass="btn btn-default navbar-btn" Text="Sign out" OnClick="btnSignOut_Click"/></li>
                     </ul>
                 </div>
-            </div>
-          
-            
+            </div>          
 
                   <!-- Page Container -->
                 <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">

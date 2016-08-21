@@ -13,13 +13,6 @@
 
         });
 
-<%--        function backClick(id)
-        {
-            window.opener = self;
-            window.close();
-            window.open("lesson.aspx?ID=" + <%= LessonID.ToString() %>);
-        }--%>
-
         // If video panel is hidden slide down. If it is visible slide up.
         function showVideo()
         {

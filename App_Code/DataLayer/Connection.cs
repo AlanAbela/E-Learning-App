@@ -5,11 +5,14 @@ using System.Linq;
 using System.Web;
 
 /// <summary>
-/// Summary description for Connection
+/// Represents a database connection
 /// </summary>
 public class Connection
 {
 
+    /// <summary>
+    /// Enum used to distinguish between different connection strings.
+    /// </summary>
    public enum ConType
     {
         One,
@@ -23,13 +26,16 @@ public class Connection
         //
     }
 
-    /// <summary>
-    /// Get the connection string from the config file.
-    /// </summary>
-    /// <returns></returns>
+   /// <summary>
+   /// 
+   /// </summary>
+   /// <param name="conType">
+   /// Define which connection string is returned.
+   /// </param>
+   /// <returns></returns>
     public static string ConnectionString(ConType conType )
     {
-
+        // Reference the database connection string, sourced from the web.config file.
         string conn = ConfigurationManager.ConnectionStrings["localDB"].ConnectionString;
 
         if(conType == ConType.Two)
