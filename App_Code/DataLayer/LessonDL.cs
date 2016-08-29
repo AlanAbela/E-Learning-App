@@ -45,6 +45,7 @@ public class LessonDL
             // Retrieve data.
             SqlDataReader reader = command.ExecuteReader();
             // Load the data in a Datatable.
+            table = new DataTable();
             table.Load(reader);
 
             return table;
@@ -72,6 +73,7 @@ public class LessonDL
             // Retrieve data.
             SqlDataReader reader = command.ExecuteReader();
             // Load the data in a Datatable.
+            table = new DataTable();
             table.Load(reader);
 
             return table;

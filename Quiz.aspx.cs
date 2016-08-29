@@ -324,7 +324,7 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
 
             lblLessonTitle.Text = table.Rows[0].Field<string>("Title");
 
-         //   QuestionBL questionBL = new QuestionBL();
+
             AnswerBL answerBL = new AnswerBL();
             
 
@@ -334,6 +334,7 @@ public partial class UserInterface_Quiz : System.Web.UI.Page
 
                 lblViewQ0.Text = Questions.Rows[0].Field<string>("Question");
                 ViewState["Q0"] = Questions.Rows[0].Field<int>("TopicID");
+
                 // Get the question answer and distractors.
                 chkQuizList0.DataSource = answerBL.GetAnswersByQuestionID(Questions.Rows[0].Field<int>("QuestionID"));
                 chkQuizList0.DataTextField = "Text";

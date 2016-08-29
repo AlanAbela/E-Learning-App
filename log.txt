@@ -1345,3 +1345,109 @@ StackTrace:    at UserInterface_Topic.Validation() in c:\Users\Alan\Documents\Vi
    at System.Web.UI.Control.LoadRecursive()
    at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
 Query: 
+------------*------------
+29/08/2016 10:57:33
+Page: http://localhost:3787/default.aspx
+Message: Object reference not set to an instance of an object.
+StackTrace:    at LessonDL.GetAllLessons() in c:\Users\Alan\Documents\Visual Studio 2015\Projects\E-Learning App\E-Learning App\App_Code\DataLayer\LessonDL.cs:line 48
+   at LessonBL.GetLessons() in c:\Users\Alan\Documents\Visual Studio 2015\Projects\E-Learning App\E-Learning App\App_Code\BusinessLogic\LessonBL.cs:line 29
+   at Default.BindSideMenu() in c:\Users\Alan\Documents\Visual Studio 2015\Projects\E-Learning App\E-Learning App\Default.aspx.cs:line 60
+   at Default.Page_Load(Object sender, EventArgs e) in c:\Users\Alan\Documents\Visual Studio 2015\Projects\E-Learning App\E-Learning App\Default.aspx.cs:line 30
+   at System.Web.Util.CalliEventHandlerDelegateProxy.Callback(Object sender, EventArgs e)
+   at System.Web.UI.Control.OnLoad(EventArgs e)
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+Query: 
+------------*------------
+29/08/2016 10:58:59
+Page: http://localhost:3787/Default.aspx
+Message: Object reference not set to an instance of an object.
+StackTrace:    at LessonDL.GetAllLessons() in c:\Users\Alan\Documents\Visual Studio 2015\Projects\E-Learning App\E-Learning App\App_Code\DataLayer\LessonDL.cs:line 48
+   at LessonBL.GetLessons() in c:\Users\Alan\Documents\Visual Studio 2015\Projects\E-Learning App\E-Learning App\App_Code\BusinessLogic\LessonBL.cs:line 29
+   at Default.BindSideMenu() in c:\Users\Alan\Documents\Visual Studio 2015\Projects\E-Learning App\E-Learning App\Default.aspx.cs:line 60
+   at Default.Page_Load(Object sender, EventArgs e) in c:\Users\Alan\Documents\Visual Studio 2015\Projects\E-Learning App\E-Learning App\Default.aspx.cs:line 30
+   at System.Web.Util.CalliEventHandlerDelegateProxy.Callback(Object sender, EventArgs e)
+   at System.Web.UI.Control.OnLoad(EventArgs e)
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+Query: 
+------------*------------
+29/08/2016 11:02:03
+Page: http://localhost:3787/Default.aspx
+Message: Object reference not set to an instance of an object.
+StackTrace:    at LessonDL.GetAllLessons() in c:\Users\Alan\Documents\Visual Studio 2015\Projects\E-Learning App\E-Learning App\App_Code\DataLayer\LessonDL.cs:line 48
+   at LessonBL.GetLessons() in c:\Users\Alan\Documents\Visual Studio 2015\Projects\E-Learning App\E-Learning App\App_Code\BusinessLogic\LessonBL.cs:line 29
+   at Default.BindSideMenu() in c:\Users\Alan\Documents\Visual Studio 2015\Projects\E-Learning App\E-Learning App\Default.aspx.cs:line 60
+   at Default.Page_Load(Object sender, EventArgs e) in c:\Users\Alan\Documents\Visual Studio 2015\Projects\E-Learning App\E-Learning App\Default.aspx.cs:line 30
+   at System.Web.Util.CalliEventHandlerDelegateProxy.Callback(Object sender, EventArgs e)
+   at System.Web.UI.Control.OnLoad(EventArgs e)
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+Query: 
+------------*------------
+29/08/2016 11:03:48
+Page: http://localhost:3787/lesson.aspx?ID=1
+Message: The INSERT statement conflicted with the FOREIGN KEY constraint "FK_User_Lesson_User". The conflict occurred in database "SLDB", table "dbo.User", column 'ID'.
+The statement has been terminated.
+StackTrace:    at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at UserLessonDL.InserRecord(Int32 userID, Int32 lessonID) in c:\Users\Alan\Documents\Visual Studio 2015\Projects\E-Learning App\E-Learning App\App_Code\DataLayer\UserLessonDL.cs:line 56
+   at UserLessonBL.InserNewRecord(Int32 userID, Int32 lessonID) in c:\Users\Alan\Documents\Visual Studio 2015\Projects\E-Learning App\E-Learning App\App_Code\BusinessLogic\UserLessonBL.cs:line 29
+   at Lesson.Page_Load(Object sender, EventArgs e) in c:\Users\Alan\Documents\Visual Studio 2015\Projects\E-Learning App\E-Learning App\Lesson.aspx.cs:line 41
+   at System.Web.Util.CalliEventHandlerDelegateProxy.Callback(Object sender, EventArgs e)
+   at System.Web.UI.Control.OnLoad(EventArgs e)
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+Query: ID=1
+------------*------------
+29/08/2016 11:04:39
+Page: http://localhost:3787/lesson.aspx?ID=1
+Message: Object reference not set to an instance of an object.
+StackTrace:    at LessonDL.GetLessonByID(Int32 ID) in c:\Users\Alan\Documents\Visual Studio 2015\Projects\E-Learning App\E-Learning App\App_Code\DataLayer\LessonDL.cs:line 76
+   at LessonBL.GetLesson(Int32 ID) in c:\Users\Alan\Documents\Visual Studio 2015\Projects\E-Learning App\E-Learning App\App_Code\BusinessLogic\LessonBL.cs:line 40
+   at Lesson.GetLesson(Int32 ID) in c:\Users\Alan\Documents\Visual Studio 2015\Projects\E-Learning App\E-Learning App\Lesson.aspx.cs:line 232
+   at Lesson.Page_Load(Object sender, EventArgs e) in c:\Users\Alan\Documents\Visual Studio 2015\Projects\E-Learning App\E-Learning App\Lesson.aspx.cs:line 48
+   at System.Web.Util.CalliEventHandlerDelegateProxy.Callback(Object sender, EventArgs e)
+   at System.Web.UI.Control.OnLoad(EventArgs e)
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+Query: ID=1
+------------*------------
+29/08/2016 11:10:13
+Page: http://localhost:3787/lesson.aspx?ID=1
+Message: The INSERT statement conflicted with the FOREIGN KEY constraint "FK_User_Lesson_User". The conflict occurred in database "SLDB", table "dbo.User", column 'ID'.
+The statement has been terminated.
+StackTrace:    at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   at System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   at System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean asyncWrite)
+   at System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   at UserLessonDL.InserRecord(Int32 userID, Int32 lessonID) in c:\Users\Alan\Documents\Visual Studio 2015\Projects\E-Learning App\E-Learning App\App_Code\DataLayer\UserLessonDL.cs:line 56
+   at UserLessonBL.InserNewRecord(Int32 userID, Int32 lessonID) in c:\Users\Alan\Documents\Visual Studio 2015\Projects\E-Learning App\E-Learning App\App_Code\BusinessLogic\UserLessonBL.cs:line 29
+   at Lesson.Page_Load(Object sender, EventArgs e) in c:\Users\Alan\Documents\Visual Studio 2015\Projects\E-Learning App\E-Learning App\Lesson.aspx.cs:line 41
+   at System.Web.Util.CalliEventHandlerDelegateProxy.Callback(Object sender, EventArgs e)
+   at System.Web.UI.Control.OnLoad(EventArgs e)
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+Query: ID=1
+------------*------------
+29/08/2016 11:10:41
+Page: http://localhost:3787/Result.aspx
+Message: Object reference not set to an instance of an object.
+StackTrace:    at UserInterface_Result.Page_Load(Object sender, EventArgs e) in c:\Users\Alan\Documents\Visual Studio 2015\Projects\E-Learning App\E-Learning App\Result.aspx.cs:line 15
+   at System.Web.Util.CalliEventHandlerDelegateProxy.Callback(Object sender, EventArgs e)
+   at System.Web.UI.Control.OnLoad(EventArgs e)
+   at System.Web.UI.Control.LoadRecursive()
+   at System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint)
+Query: 

@@ -88,7 +88,7 @@ public class UserDL
 
             // Fill a datatable with the table records.
             SqlDataReader reader = command.ExecuteReader();
-            DataTable table = new DataTable();
+            table = new DataTable();
             table.Load(reader);
             conn.Dispose();
             return table;
@@ -187,7 +187,7 @@ public class UserDL
             SqlDataReader reader = command.ExecuteReader();
 
             // Fill a datatable with the table records.
-            DataTable table = new DataTable();
+            table = new DataTable();
             table.Load(reader);
             conn.Dispose();
             return table;
