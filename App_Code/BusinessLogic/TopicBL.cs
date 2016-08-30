@@ -14,11 +14,14 @@ public class TopicBL
     TopicDL topicDL {get; set;}
     #endregion
 
+    #region Constructors
     public TopicBL()
     {
         topicDL = new TopicDL();
     }
+    #endregion
 
+    #region Methods
     /// <summary>
     /// Retrieves all topic records that are related to the defined lesson.
     /// </summary>
@@ -27,12 +30,10 @@ public class TopicBL
     public DataTable GetTopicsByLessonID(int ID)
     {
         return  topicDL.GetAllTopicsByLessonID(ID);
-
-        
     }
 
     /// <summary>
-    /// Retrieves a topic record by ID>
+    /// Retrieves a topic record by ID
     /// </summary>
     /// <param name="topicID"></param>
     /// <returns></returns>
@@ -50,13 +51,21 @@ public class TopicBL
         return topicDL.GetExampleTable(topicID);
     }
 
-  ///  Retrieve all records from the example table.
+    /// <summary>
+    /// Retrieve all records from the 2nd example table.
+    /// </summary>
+    /// <param name="topicID"></param>
+    /// <returns></returns>
     public DataTable GetExampleTable2(int topicID)
     {
         return topicDL.GetExampleTable2(topicID);
     }
 
-    ///  Retrieve all records from the example table.
+    /// <summary>
+    /// Retrieve all records from the 3rd example table.
+    /// </summary>
+    /// <param name="topicID"></param>
+    /// <returns></returns>
     public DataTable GetExampleTable3(int topicID)
     {
         return topicDL.GetExampleTable3(topicID);
@@ -73,37 +82,24 @@ public class TopicBL
     }
 
     /// <summary>
-    /// Get the count o all topics uder a defined lesson
+    /// Get the count of all topics under a defined lesson.
     /// </summary>
     /// <param name="lessonID"></param>
     /// <returns></returns>
     public int GetCountTopicsByLessonID(int lessonID)
-    {
-        try
-        {
+    {        
             return topicDL.GetCountTopicsByLessonID(lessonID);
-        }
-        catch (SqlException ex)
-        {
-            throw new Exception();
-        }
     }
 
     /// <summary>
-    /// Get the count of all compete topics under a defined lesson by a defined user.
+    /// Get the count of all complete topics under a defined lesson by a defined user.
     /// </summary>
     /// <param name="lessonID"></param>
     /// <param name="userID"></param>
     /// <returns></returns>
     public int GetCountCompletedTopics(int lessonID, int userID)
     {
-        try
-        { 
         return topicDL.GetCountCompletedTopics(lessonID, userID);
     }
-        catch (SqlException ex)
-        {
-            throw new Exception();
-}
-    }
+    #endregion
 }

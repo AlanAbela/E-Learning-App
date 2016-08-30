@@ -9,7 +9,9 @@ using System.Web;
 /// </summary>
 public class UserTopicBL
 {
-    UserTopicDL userTopicDL;
+    #region Properties
+    public UserTopicDL userTopicDL {get; set;}
+     #endregion
 
     public UserTopicBL()
     {

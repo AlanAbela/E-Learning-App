@@ -11,31 +11,32 @@ namespace BusinessLogic
     /// </summary>
     public class RegisterBL
     {
+        #region Properties
+        UserDL userDL { get; set;}
+        #endregion
+
         #region Constructors
         public RegisterBL()
         {
-            //
-            // TODO: Add constructor logic here
-            //
+            userDL = new UserDL();
         }
         #endregion
 
+        #region Methods
         /// <summary>
         /// RegisterBL user.
         /// </summary>
         /// <param name="username"></param>
         /// <param name="password"></param>
-        #region Static methods
         public void RegisterUser(string username, string password)
         {
            // Remove trailing and bailing empty spaces if any.
            username = username.Trim();
-            UserDL user = new UserDL();
-            user.Username = username;
-            user.Password = password;
+            userDL.Username = username;
+            userDL.Password = password;
 
             // RegisterBL user.
-            user.RegisterUser();
+            userDL.RegisterUser();
         }
 
         /// <summary>

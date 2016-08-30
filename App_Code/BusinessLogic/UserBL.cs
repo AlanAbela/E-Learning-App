@@ -9,14 +9,18 @@ using System.Web;
 /// </summary>
 public class UserBL
 {
+    #region Properties
     public UserDL UserDL {get; set;}
+    #endregion
 
-public UserBL()
+    #region Constructors
+    public UserBL()
     {
         UserDL = new UserDL();
     }
+    #endregion
 
-    #region Public methods
+    #region Methods
     /// <summary>
     /// Retrives a user record.
     /// </summary>
@@ -25,9 +29,7 @@ public UserBL()
     public DataTable GetUser(int userID)
     {
         return UserDL.GetUserByID(userID);
-
     }
-
 
     /// <summary>
     /// Insert final test's number of correct answers.
@@ -58,7 +60,5 @@ public UserBL()
     {
         UserDL.InsertTestCompleteDate(ID);
     }
-
         #endregion
-
     }

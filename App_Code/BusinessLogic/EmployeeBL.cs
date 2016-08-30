@@ -10,16 +10,17 @@ using System.Web;
 public class EmployeeBL
 {
     #region Properties
-    EmployeeDL employeeDL = new EmployeeDL();
+    public EmployeeDL employeeDL { get; set; }
     #endregion
 
+    #region Constructors
     public EmployeeBL()
     {
-        //
-        // TODO: Add constructor logic here
-        //
+        employeeDL = new EmployeeDL();
     }
+    #endregion
 
+    #region Methods
     /// <summary>
     /// Checks if the table employee is present
     /// </summary>
@@ -37,8 +38,13 @@ public class EmployeeBL
         employeeDL.RefreshTable();
     }
 
+    /// <summary>
+    /// Retrieves all records from table Employee.
+    /// </summary>
+    /// <returns></returns>
     public DataTable GetAllEmployee()
     {
         return employeeDL.GetEmployee();
     }
+    #endregion
 }

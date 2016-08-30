@@ -9,12 +9,14 @@ using System.Web;
 /// </summary>
 public class LessonBL
 {
+    #region Properties
+    public LessonDL lessonDL { get; set;}
+    #endregion
+
     #region Constructors
     public LessonBL()
     {
-        //
-        // TODO: Add constructor logic here
-        //
+        lessonDL = new LessonDL();
     }
     #endregion
 
@@ -25,8 +27,7 @@ public class LessonBL
     /// <returns></returns>
     public DataTable GetLessons()
     {
-        LessonDL lesson = new LessonDL();
-        return lesson.GetAllLessons();
+        return lessonDL.GetAllLessons();
     }
 
     /// <summary>
@@ -36,10 +37,7 @@ public class LessonBL
     /// <returns></returns>
     public DataTable GetLesson(int ID)
     {
-        LessonDL lesson = new LessonDL();
-        return lesson.GetLessonByID(ID);
+        return lessonDL.GetLessonByID(ID);
     }
-
-
     #endregion
 }

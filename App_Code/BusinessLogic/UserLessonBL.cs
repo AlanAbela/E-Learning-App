@@ -9,15 +9,18 @@ using System.Web;
 /// </summary>
 public class UserLessonBL
 {
+    #region Properties
+    UserLessonDL userLessonDL { get; set;}
+    #endregion
 
-    UserLessonDL userLessonDL;
+    #region Constructors
     public UserLessonBL()
     {
-        //
-        // TODO: Add constructor logic here
-        //
+        userLessonDL = new UserLessonDL();
     }
+    #endregion
 
+    #region Methods
     /// <summary>
     /// Inserts a new record.
     /// </summary>
@@ -25,18 +28,16 @@ public class UserLessonBL
     /// <param name="lessonID"></param>
     public void InserNewRecord(int userID, int lessonID)
     {
-        userLessonDL = new UserLessonDL();
         userLessonDL.InserRecord(userID, lessonID);
     }
 
     /// <summary>
-    /// Udates record's completion date.
+    /// Updates record's completion date.
     /// </summary>
     /// <param name="userID"></param>
     /// <param name="lessonID"></param>
     public void SetCompletionDate(int userID, int lessonID)
     {
-        userLessonDL = new UserLessonDL();
         userLessonDL.InsertDateCompleted(userID, lessonID);
     }
 
@@ -48,7 +49,6 @@ public class UserLessonBL
     /// <returns></returns>
     public DataTable GetRecord(int userID, int lessonID)
     {
-        userLessonDL = new UserLessonDL();
         return userLessonDL.GetRecord(userID, lessonID);
     }
 
@@ -60,14 +60,18 @@ public class UserLessonBL
     /// <param name="mark"></param>
     public void InsertMark(int userID, int lessonID, int correct, int incorrect)
     {
-        userLessonDL = new UserLessonDL();
         userLessonDL.InsertMark(userID, lessonID, correct, incorrect);
     }
 
+    /// <summary>
+    /// Insert Quiz time.
+    /// </summary>
+    /// <param name="userID"></param>
+    /// <param name="lessonID"></param>
+    /// <param name="time"></param>
     public void InsertQuizTime(int userID, int lessonID, TimeSpan time)
     {
-        userLessonDL = new UserLessonDL();
         userLessonDL.InsertQuizTime(userID, lessonID, time);
     }
-
-    }
+    #endregion
+}

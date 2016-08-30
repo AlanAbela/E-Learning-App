@@ -9,13 +9,16 @@ using System.Web;
 /// </summary>
 public class QueryBL
 {
+    #region Properties
+    QueryDL queryDL { get; set;}
+    #endregion
+
     public QueryBL()
     {
-        //
-        // TODO: Add constructor logic here
-        //
+        queryDL = new QueryDL();
     }
 
+#region Methods
     /// <summary>
     /// Get the query associated with the defined topic.
     /// </summary>
@@ -23,7 +26,6 @@ public class QueryBL
     /// <returns></returns>
     public DataTable GetQueryResult(int topicID)
     {
-        QueryDL queryDL = new QueryDL();
         return queryDL.GetResultByQuery(topicID);
     }
 
@@ -34,7 +36,7 @@ public class QueryBL
     /// <returns></returns>
     public DataTable ProcessQuery(string query)
     {
-        QueryDL queryDL = new QueryDL();
        return queryDL.ProcessQuery(query);
     }
+    #endregion
 }

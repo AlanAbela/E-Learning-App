@@ -9,14 +9,18 @@ using System.Web;
 /// </summary>
 public class LoginBL
 {
+    #region Properties
+    public UserDL userDL { get; set;}
+    #endregion
+
     #region Constructors
     public LoginBL()
     {
-        //
-        // TODO: Add constructor logic here
-        //
+        userDL = new UserDL();
     }
     #endregion
+
+    #region Methods
     /// <summary>
     /// Checks if a record exists with matching user name and password.
     /// </summary>
@@ -28,8 +32,6 @@ public class LoginBL
         return UserDL.AuthenticateUser(username, password);
     }
 
-
-
     /// <summary>
     /// Gets the user ID.
     /// </summary>
@@ -38,10 +40,8 @@ public class LoginBL
     /// <returns></returns>
     public int GetUserID(string username, string password)
     {
-        UserDL userDL = new UserDL();
-
-        DataTable table = userDL.GetUserDetails(username, password); 
-        
+        DataTable table = userDL.GetUserDetails(username, password);      
         return table.Rows[0].Field<int>("ID");
     }
+    #endregion
 }

@@ -14,13 +14,16 @@ public class AnswerBL
     public AnswerDL answerDL {get; set;}
     #endregion
 
+    #region Constructors
     public AnswerBL()
     {
         answerDL = new AnswerDL();
     }
+    #endregion
 
+    #region Methods
     /// <summary>
-    /// Get all option answers realted to the specified question.
+    /// Get all options related to the specified question.
     /// </summary>
     /// <param name="questionID"></param>
     /// <returns></returns>
@@ -28,4 +31,5 @@ public class AnswerBL
     {
         return answerDL.GetAnswersByQuestionID(questionID);
     }
+    #endregion
 }
